@@ -1,12 +1,14 @@
 package com.prog1.slenderman;
 
-import com.prog1.slenderman.game.display.Renderer;
-import com.prog1.slenderman.game.level.Level;
+import com.prog1.slenderman.game.Game;
 
 public class Main {
 
     public static void main(String[] args) {
-        Level level = new Level();
-	    Renderer renderer = new Renderer(level);
+        Game game = new Game();
+
+        while(true) {
+            game.gameLoop();
+        }
     }
 }
