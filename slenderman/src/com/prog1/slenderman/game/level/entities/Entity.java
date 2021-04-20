@@ -18,4 +18,8 @@ public abstract class Entity {
         this.displayChar = displayChar;
         this.displayColor = displayColor;
     }
+
+    public boolean isPaperSurface() {
+        return paperSurface;
+    }
 }

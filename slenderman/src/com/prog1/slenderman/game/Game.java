@@ -18,8 +18,9 @@ public class Game {
         Renderer.Clear();
     }
 
-    public void gameLoop() {
-
+    public boolean gameLoop() {
         Render();
+
+        return true;
     }
 }
