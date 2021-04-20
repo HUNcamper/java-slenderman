@@ -27,7 +27,7 @@ public class MainWindow extends JFrame {
         b2.setBounds(130, 150, 150, 40);//x axis, y axis, width, height
 
         JPanel panel = new JPanel();
-        panel.setBounds(0,0, this.getWidth(), this.getHeight());
+        panel.setBounds(0, 0, this.getWidth(), this.getHeight());
         panel.setVisible(true);
         panel.setSize(400, 500);//400 width and 500 height
         panel.setLayout(null);//using no layout managers
