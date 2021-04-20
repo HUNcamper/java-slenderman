@@ -1,6 +1,7 @@
 package com.prog1.slenderman.game.display;
 
 import com.prog1.slenderman.Main;
+import com.prog1.slenderman.game.Game;
 import com.prog1.slenderman.game.resource.Sound;
 import com.prog1.slenderman.game.resource.Texture;
 import com.prog1.slenderman.game.resource.URLHandler;
@@ -26,22 +27,15 @@ public class MainWindow extends JFrame {
         JButton b2 = new JButton("concrete >:(");//creating instance of JButton
         b2.setBounds(130, 150, 150, 40);//x axis, y axis, width, height
 
-        JPanel panel = new JPanel();
-        panel.setBounds(0, 0, this.getWidth(), this.getHeight());
-        panel.setVisible(true);
-        panel.setSize(400, 500);//400 width and 500 height
-        panel.setLayout(null);//using no layout managers
+        Game.mainView.setBounds(0, 0, this.getWidth(), this.getHeight());
+        Game.mainView.setVisible(true);
+        Game.mainView.setSize(400, 500);//400 width and 500 height
+        Game.mainView.setLayout(null);//using no layout managers
 
-        panel.add(b);//adding button in JFrame
-        panel.add(b2);//adding button in JFrame
+        Game.mainView.add(b);//adding button in JFrame
+        Game.mainView.add(b2);//adding button in JFrame
 
-        this.add(panel);
-
-        this.addComponentListener(new ComponentAdapter() {
-            public void componentResized(ComponentEvent componentEvent) {
-                componentEvent.getComponent();
-            }
-        });
+        this.add(Game.mainView);
 
         b.addActionListener((ActionEvent e) -> {
 
@@ -75,8 +69,8 @@ public class MainWindow extends JFrame {
             }
         });
 
-        for (int y = 0; y < 10; y++) {
-            for (int x = 0; x < 10; x++) {
+        for (int y = 0; y < 20; y++) {
+            for (int x = 0; x < 20; x++) {
 
                 JLabel label = new JLabel();
                 label.setBounds(x * 50, y * 50, 50, 50);
@@ -87,7 +81,7 @@ public class MainWindow extends JFrame {
 
                 label.setIcon(grassTexture.getIcon());
 
-                panel.add(label);
+                Game.mainView.add(label);
             }
         }
 
