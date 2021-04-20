@@ -1,6 +1,7 @@
 package com.prog1.slenderman.game.resource;
 
 import com.prog1.slenderman.Main;
+import com.prog1.slenderman.game.Game;
 
 import javax.sound.sampled.*;
 import java.io.IOException;
@@ -79,9 +80,15 @@ public class Sound {
     public void clipVolume(Clip clip, float vol) {
         FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 
-        float range = gainControl.getMaximum() - gainControl.getMinimum();
-        float gain = (range * volume) + gainControl.getMinimum();
+        /*System.out.println(gainControl.getMinimum() + " -> " + gainControl.getMaximum());
 
-        gainControl.setValue(gain);
+        float range = gainControl.getMaximum() - gainControl.getMinimum();
+        float gain = (range * vol) + gainControl.getMinimum();
+
+        System.out.println(gain);
+
+        gainControl.setValue(gain);*/
+
+        gainControl.setValue(13f * (float) Math.log10(vol) * Game.globalVolume);
     }
 }

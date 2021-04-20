@@ -4,10 +4,10 @@ import com.prog1.slenderman.game.level.Level;
 import com.prog1.slenderman.game.level.LevelGenerator;
 
 public class Game {
-    private Level currentLevel;
+    public static float globalVolume = 1.0f;
 
     public Game() {
-        this.currentLevel = LevelGenerator.random();
+
     }
 
     private void Render() {

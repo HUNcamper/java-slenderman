@@ -10,20 +10,14 @@ import java.nio.Buffer;
 
 public class Texture {
     private BufferedImage texture;
-    private int size_x;
-    private int size_y;
+    private int size_x = -1;
+    private int size_y = -1;
 
-    public Texture(URL imageURL, int size_x, int size_y) {
-        this.size_x = size_x;
-        this.size_y = size_y;
-
+    public Texture(URL imageURL) {
         setTexture(imageURL);
     }
 
-    public Texture(String imagePath, int size_x, int size_y) {
-        this.size_x = size_x;
-        this.size_y = size_y;
-
+    public Texture(String imagePath) {
         try {
             setTexture(URLHandler.convertString(imagePath));
         } catch (Exception e) {
@@ -32,24 +26,44 @@ public class Texture {
         }
     }
 
-    private void setTexture(URL imageURL) {
+    public void resize(int size_x, int size_y) {
+        this.size_x = size_x;
+        this.size_y = size_y;
+
+        Image tmp = this.texture.getScaledInstance(size_x, size_y, Image.SCALE_SMOOTH);
+        BufferedImage dimg = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g2d = dimg.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+
+        this.texture = dimg;
+    }
+
+    public void setTexture(URL imageURL) {
         BufferedImage img = null;
 
         try {
             img = ImageIO.read(imageURL);
-            this.texture = img;
+            setTexture(img);
         } catch (IOException e) {
             e.printStackTrace();
             fallbackTexture();
         }
     }
 
-    private void setTexture(ImageIcon imageIcon) {
-        this.texture = Texture.iconToBuffered(imageIcon);
+    public void setTexture(ImageIcon imageIcon) {
+        setTexture(iconToBuffered(imageIcon));
     }
 
-    private void setTexture(BufferedImage buffered) {
-        this.texture = buffered;
+    public void setTexture(BufferedImage img) {
+        this.texture = img;
+        this.size_x = img.getWidth();
+        this.size_y = img.getHeight();
+    }
+
+    public ImageIcon getIcon() {
+        return bufferedToIcon(this.texture);
     }
 
     private void fallbackTexture() {

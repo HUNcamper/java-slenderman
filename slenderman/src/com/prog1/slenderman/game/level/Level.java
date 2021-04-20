@@ -3,19 +3,20 @@ package com.prog1.slenderman.game.level;
 import com.prog1.slenderman.game.entities.Entity;
 
 public class Level {
-    private final int size_x;
-    private final int size_y;
+    private final int rows;
+    private final int columns;
 
     private Entity[][] entities;
 
     public Level() {
-        this.size_x = 15;
-        this.size_y = 15;
+        this(15, 15);
     }
 
-    public Level(int size_x, int size_y) {
-        this.size_x = size_x;
-        this.size_y = size_y;
+    public Level(int rows, int columns) {
+        this.rows = rows;
+        this.columns = columns;
+
+        this.entities = new Entity[rows][columns];
     }
 
     public void placeEntity(Entity entity, int x, int y) {
