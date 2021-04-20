@@ -10,13 +10,11 @@ public abstract class Entity {
 
     protected boolean paperSurface = false;
 
-    public Entity(int size_x, int size_y, String displayChar, String displayColor) {
+    public Entity(int size_x, int size_y) {
         this.size_x = size_x;
         this.size_y = size_y;
 
         this.display = new String[size_y][size_x];
-        this.displayChar = displayChar;
-        this.displayColor = displayColor;
     }
 
     public boolean isPaperSurface() {
