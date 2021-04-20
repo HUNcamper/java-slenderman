@@ -1,6 +1,6 @@
 package com.prog1.slenderman.game.level;
 
-import com.prog1.slenderman.game.level.entities.Entity;
+import com.prog1.slenderman.game.entities.Entity;
 
 public class Level {
     private final int size_x;
