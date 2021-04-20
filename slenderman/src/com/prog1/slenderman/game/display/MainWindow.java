@@ -9,6 +9,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -34,6 +36,12 @@ public class MainWindow extends JFrame {
         panel.add(b2);//adding button in JFrame
 
         this.add(panel);
+
+        this.addComponentListener(new ComponentAdapter() {
+            public void componentResized(ComponentEvent componentEvent) {
+                componentEvent.getComponent();
+            }
+        });
 
         b.addActionListener((ActionEvent e) -> {
 
