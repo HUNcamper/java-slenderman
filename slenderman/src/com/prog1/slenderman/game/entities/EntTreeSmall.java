@@ -1,6 +1,6 @@
-package com.prog1.slenderman.game.level.entities;
+package com.prog1.slenderman.game.entities;
 
-public class EntTreeSmall extends Entity {
+public class EntTreeSmall extends Prop {
 
     public EntTreeSmall() {
         super(1, 1);
