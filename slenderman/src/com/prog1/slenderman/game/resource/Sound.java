@@ -11,6 +11,23 @@ import java.util.*;
 public class Sound {
     private final HashMap<URL, AudioInputStream> soundList;
     private AudioInputStream audioInputStream;
+    private boolean loop = false;
+    private float volume = 1.0f;
+
+    public void setVolume(float volume) {
+        if(volume < 0.0f) volume = 0.0f;
+        if(volume > 1.0f) volume = 1.0f;
+
+        this.volume = volume;
+    }
+
+    public float getVolume() {
+        return this.volume;
+    }
+
+    public void setLoop(boolean loop) {
+        this.loop = loop;
+    }
 
     public Sound(List<String> soundPathList) throws IOException, UnsupportedAudioFileException {
         // Több db hang fájl
@@ -47,12 +64,29 @@ public class Sound {
 
             if (clip != null) {
                 clip.open(sound);
-                clip.start();
+
+                // Hangerő beállítása
+                clipVolume(clip, this.volume);
+
+                if(this.loop) {
+                    clip.loop(Clip.LOOP_CONTINUOUSLY);
+                } else {
+                    clip.start();
+                }
             }
 
         } catch (Exception e) {
             System.err.println("Nem sikerült lejátszani a " + sound.toString() + " fájlt.");
             e.printStackTrace();
         }
+    }
+
+    public void clipVolume(Clip clip, float vol) {
+        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+
+        float range = gainControl.getMaximum() - gainControl.getMinimum();
+        float gain = (range * volume) + gainControl.getMinimum();
+
+        gainControl.setValue(gain);
     }
 }
