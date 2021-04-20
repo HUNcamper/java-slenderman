@@ -34,12 +34,7 @@ public class Sound {
         this.soundList = new HashMap<URL, AudioInputStream>();
 
         for ( String path : soundPathList) {
-            URL url;
-            if (path.startsWith("/")) {
-                url = Main.class.getResource(path); // Belső resource fájl
-            } else {
-                url = new URL(path); // Külső fájl, absolute path
-            }
+            URL url = URLHandler.convertString(path);
 
             this.soundList.put(url, AudioSystem.getAudioInputStream(url));
         }
