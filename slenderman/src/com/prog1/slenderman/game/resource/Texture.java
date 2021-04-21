@@ -1,22 +1,30 @@
 package com.prog1.slenderman.game.resource;
 
-import com.prog1.slenderman.game.Game;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.Buffer;
 
 public class Texture {
-    private BufferedImage texture;
-    private BufferedImage originalTexture;
-    private int size_x = -1;
-    private int size_y = -1;
+    public static Texture fallbackTexture = new Texture();
+
+    private BufferedImage bufferedImage;
+    private BufferedImage originalBufferedImage;
+    private ImageIcon icon = null;
+    private int size_x = 32;
+    private int size_y = 32;
 
     public boolean applyViewZoom = true;
+
+    public BufferedImage getBufferedImage() {
+        return this.originalBufferedImage;
+    }
+
+    public Texture() {
+        fallbackTexture();
+    }
 
     public Texture(URL imageURL) {
         setTexture(imageURL);
@@ -31,18 +39,27 @@ public class Texture {
         }
     }
 
+    public Texture(BufferedImage bufferedImage) {
+        this.bufferedImage = bufferedImage;
+        this.originalBufferedImage = bufferedImage;
+    }
+
     public void resize(int size_x, int size_y) {
+        if(size_x == this.size_x && size_y == this.size_y) return; // Ha az értékek megegyeznek, ne legyen változás
+
+        this.icon = null; // resized, need new icon
+
         this.size_x = size_x;
         this.size_y = size_y;
 
-        Image tmp = this.originalTexture.getScaledInstance(size_x, size_y, Image.SCALE_SMOOTH);
+        Image tmp = this.originalBufferedImage.getScaledInstance(size_x, size_y, Image.SCALE_SMOOTH);
         BufferedImage dimg = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
 
         Graphics2D g2d = dimg.createGraphics();
         g2d.drawImage(tmp, 0, 0, null);
         g2d.dispose();
 
-        this.texture = dimg;
+        this.bufferedImage = dimg;
     }
 
     public void setTexture(URL imageURL) {
@@ -62,14 +79,18 @@ public class Texture {
     }
 
     public void setTexture(BufferedImage img) {
-        this.texture = img;
-        this.originalTexture = img;
+        this.bufferedImage = img;
+        this.originalBufferedImage = img;
         this.size_x = img.getWidth();
         this.size_y = img.getHeight();
     }
 
     public ImageIcon getIcon() {
-        return bufferedToIcon(this.texture);
+        if (this.icon == null) {
+            this.icon = bufferedToIcon(this.bufferedImage);
+        }
+
+        return this.icon;
     }
 
     private void fallbackTexture() {

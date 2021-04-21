@@ -8,12 +8,16 @@ import java.io.IOException;
 import java.net.URL;
 
 public class URLHandler {
-    public static URL convertString(String path) throws IOException, UnsupportedAudioFileException {
+    public static URL convertString(String path) {
         URL url;
         if (path.startsWith("/")) {
             url = Main.class.getResource(path); // Belső resource fájl
         } else {
-            url = new URL(path); // Külső fájl, absolute path
+            try {
+                url = new URL(path); // Külső fájl, absolute path
+            } catch (Exception e) {
+                return null;
+            }
         }
 
         return url;

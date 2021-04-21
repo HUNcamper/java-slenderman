@@ -2,6 +2,8 @@ package com.prog1.slenderman.game.display;
 
 import com.prog1.slenderman.Main;
 import com.prog1.slenderman.game.Game;
+import com.prog1.slenderman.game.entities.EntFloor;
+import com.prog1.slenderman.game.entities.EntFloorGrass;
 import com.prog1.slenderman.game.resource.Sound;
 import com.prog1.slenderman.game.resource.Texture;
 import com.prog1.slenderman.game.resource.TextureLoader;
@@ -20,7 +22,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainWindow extends JFrame {
-    private JLabel[][] labelArray = new JLabel[15][15];
+    //private JLabel[][] labelArray = new JLabel[15][15];
+    private EntFloor[][] floorArray = new EntFloor[15][15];
     private Texture grassTexture;
 
     public MainWindow() {
@@ -53,6 +56,12 @@ public class MainWindow extends JFrame {
 
                 Sound sound = new Sound(sounds);
                 sound.play();
+
+                for (int y = 0; y < 15; y++) {
+                    for (int x = 0; x < 15; x++) {
+                        floorArray[y][x].setTexture(TextureLoader.loadTexture("/textures/grass.png"));
+                    }
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -72,6 +81,12 @@ public class MainWindow extends JFrame {
 
                 Sound sound = new Sound(sounds);
                 sound.play();
+
+                for (int y = 0; y < 15; y++) {
+                    for (int x = 0; x < 15; x++) {
+                        floorArray[y][x].setTexture(TextureLoader.loadTexture("/textures/stone.png"));
+                    }
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -79,33 +94,18 @@ public class MainWindow extends JFrame {
             update();
         });
 
-        try {
-            this.grassTexture = TextureLoader.loadTexture("/textures/grass.png");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        //this.grassTexture = TextureLoader.loadTexture("/textures/grass.png");
 
         for (int y = 0; y < 15; y++) {
             for (int x = 0; x < 15; x++) {
+                EntFloorGrass grassFloor = new EntFloorGrass(x * 50, y * 50, 50, 50);
+                floorArray[y][x] = grassFloor;
 
-                JLabel label = new JLabel();
-                int xPos = (int) (x * 50 * Game.mainView.zoom);
-                int yPos = (int) (y * 50 * Game.mainView.zoom);
-                int width = (int) (50 * Game.mainView.zoom);
-                int height = (int) (50 * Game.mainView.zoom);
-
-                label.setBounds(xPos, yPos, width, height);
-
-                //Texture grassTexture = new Texture("/textures/grass.png");
-
-                this.grassTexture.resize(label.getWidth(), label.getHeight());
-
-                label.setIcon(this.grassTexture.getIcon());
-
-                labelArray[y][x] = label;
-                Game.mainView.add(label);
+                Game.mainView.add(grassFloor.getLabel());
             }
         }
+
+        System.out.println("Texture count: " + Game.texturePool.values().size());
 
         this.setSize(400, 500);//400 width and 500 height
         this.setLayout(null);//using no layout managers
@@ -133,14 +133,7 @@ public class MainWindow extends JFrame {
 
         for (int y = 0; y < 15; y++) {
             for (int x = 0; x < 15; x++) {
-
-                JLabel label = labelArray[y][x];
-                int xPos = (int) (x * 50 * Game.mainView.zoom) - (int) (Game.mainCamera.pos_x * Game.mainView.zoom);
-                int yPos = (int) (y * 50 * Game.mainView.zoom) - (int) (Game.mainCamera.pos_y * Game.mainView.zoom);
-
-                label.setBounds(xPos, yPos, width, height);
-
-                label.setIcon(grassTexture.getIcon());
+                floorArray[y][x].alignToCameraOffset();
             }
         }
     }

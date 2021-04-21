@@ -2,6 +2,7 @@ package com.prog1.slenderman.game.entities;
 
 import com.prog1.slenderman.game.Game;
 import com.prog1.slenderman.game.display.MainCamera;
+import com.prog1.slenderman.game.display.MainView;
 import com.prog1.slenderman.game.resource.Texture;
 import com.prog1.slenderman.game.resource.TextureLoader;
 
@@ -13,29 +14,32 @@ import java.net.URL;
 public abstract class EntityVisible extends Entity {
     protected int pos_x = 0;
     protected int pos_y = 0;
-    protected int size_x = 32;
-    protected int size_y = 32;
+    protected int size_x = 50;
+    protected int size_y = 50;
     protected JLabel label = new JLabel();
-    protected Texture texture;
+    protected Texture texture = Texture.fallbackTexture;
 
     public EntityVisible() {
-        try {
-            this.texture = TextureLoader.loadTexture("dev");
-        } catch (Exception ignored) {
 
-        }
     }
 
-    public EntityVisible(URL textureURL) {
-        this.texture = TextureLoader.loadTexture(textureURL);
-    }
-
-    public EntityVisible(URL textureURL, int pos_x, int pos_y, int size_x, int size_y) {
-        this(textureURL);
+    public EntityVisible( int pos_x, int pos_y, int size_x, int size_y) {
         this.pos_x = pos_x;
         this.pos_y = pos_y;
         this.size_x = size_x;
         this.size_y = size_y;
+
+        System.out.println("Spawned entity at x" + pos_x + " y" + pos_y);
+
+        this.alignToCameraOffset();
+    }
+
+    public void setTexture(URL textureURL) {
+        this.texture.setTexture(textureURL);
+    }
+
+    public void setTexture(Texture texture) {
+        this.texture = texture;
     }
 
     public Texture getTexture() {
@@ -65,7 +69,19 @@ public abstract class EntityVisible extends Entity {
     }
 
     public void alignToCameraOffset() {
+        MainView view = Game.mainView;
         MainCamera camera = Game.mainCamera;
-        label.setBounds(pos_x - camera.pos_x, pos_y - camera.pos_y, this.size_x, this.size_y);
+
+        //int new_x = (int) (this.pos_x * 50 * view.zoom);
+        //int new_y = (int) (this.pos_y * 50 * view.zoom);
+        int new_x = (int) Math.floor(this.pos_x * view.zoom - camera.pos_x * view.zoom);
+        int new_y = (int) Math.floor(this.pos_y * view.zoom - camera.pos_y * view.zoom);
+        int new_width = (int) Math.floor(this.size_x * view.zoom);
+        int new_height = (int) Math.floor(this.size_y * view.zoom);
+
+        this.label.setBounds(new_x, new_y, new_width, new_height);
+        this.texture.resize(new_width, new_height);
+
+        label.setIcon(this.texture.getIcon());
     }
 }
