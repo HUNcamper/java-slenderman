@@ -1,5 +1,7 @@
 package com.prog1.slenderman.game.resource;
 
+import com.prog1.slenderman.game.Game;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +15,8 @@ public class Texture {
     private BufferedImage originalTexture;
     private int size_x = -1;
     private int size_y = -1;
+
+    public boolean applyViewZoom = true;
 
     public Texture(URL imageURL) {
         setTexture(imageURL);

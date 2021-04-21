@@ -4,9 +4,11 @@ import com.prog1.slenderman.Main;
 import com.prog1.slenderman.game.Game;
 import com.prog1.slenderman.game.resource.Sound;
 import com.prog1.slenderman.game.resource.Texture;
+import com.prog1.slenderman.game.resource.TextureLoader;
 import com.prog1.slenderman.game.resource.URLHandler;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
@@ -77,7 +79,11 @@ public class MainWindow extends JFrame {
             update();
         });
 
-        this.grassTexture = new Texture("/textures/grass.png");
+        try {
+            this.grassTexture = TextureLoader.loadTexture("/textures/grass.png");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         for (int y = 0; y < 15; y++) {
             for (int x = 0; x < 15; x++) {
@@ -119,7 +125,11 @@ public class MainWindow extends JFrame {
         int width = (int) (50 * Game.mainView.zoom);
         int height = (int) (50 * Game.mainView.zoom);
 
-        grassTexture.resize(width, height);
+        for (Texture texture : Game.texturePool.values()) {
+            if (texture.applyViewZoom) {
+                texture.resize(width, height);
+            }
+        }
 
         for (int y = 0; y < 15; y++) {
             for (int x = 0; x < 15; x++) {
