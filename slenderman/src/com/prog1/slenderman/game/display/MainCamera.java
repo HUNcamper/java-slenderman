@@ -1,5 +1,7 @@
 package com.prog1.slenderman.game.display;
 
+import com.prog1.slenderman.game.Game;
+
 public class MainCamera {
     public int pos_x = 0;
     public int pos_y = 0;
@@ -21,5 +23,12 @@ public class MainCamera {
     public void offset(int offset_x, int offset_y) {
         this.pos_x += offset_x;
         this.pos_y += offset_y;
+    }
+
+    public void followPlayer() {
+        int new_x = (int) (Game.mainPlayer.getPos_x() - (Game.mainView.baseResolution_width / Game.mainView.baseZoom)/2);
+        int new_y = (int) (Game.mainPlayer.getPos_y() - (Game.mainView.baseResolution_height / Game.mainView.baseZoom)/2);
+
+        move(new_x, new_y);
     }
 }

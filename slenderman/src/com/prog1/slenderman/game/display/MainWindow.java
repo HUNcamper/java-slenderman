@@ -2,8 +2,7 @@ package com.prog1.slenderman.game.display;
 
 import com.prog1.slenderman.Main;
 import com.prog1.slenderman.game.Game;
-import com.prog1.slenderman.game.entities.EntFloor;
-import com.prog1.slenderman.game.entities.EntFloorGrass;
+import com.prog1.slenderman.game.entities.*;
 import com.prog1.slenderman.game.resource.Sound;
 import com.prog1.slenderman.game.resource.Texture;
 import com.prog1.slenderman.game.resource.TextureLoader;
@@ -40,8 +39,8 @@ public class MainWindow extends JFrame {
         Game.mainView.setSize(400, 500);//400 width and 500 height
         Game.mainView.setLayout(null);//using no layout managers
 
-        Game.mainView.add(b);//adding button in JFrame
-        Game.mainView.add(b2);//adding button in JFrame
+        Game.mainView.add(b, 5, 0);//adding button in JFrame
+        Game.mainView.add(b2, 5, 0);//adding button in JFrame
 
         this.add(Game.mainView);
 
@@ -66,8 +65,9 @@ public class MainWindow extends JFrame {
                 ex.printStackTrace();
             }
 
-            Game.mainCamera.offset(50, 0);
-            update();
+            Game.mainView.baseZoom += 0.2;
+
+            Game.update();
         });
 
         b2.addActionListener((ActionEvent e) -> {
@@ -90,8 +90,10 @@ public class MainWindow extends JFrame {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-            Game.mainCamera.offset(0, 50);
-            update();
+
+            if (Game.mainView.baseZoom-0.2 > 0) Game.mainView.baseZoom -= 0.2;
+
+            Game.update();
         });
 
         //this.grassTexture = TextureLoader.loadTexture("/textures/grass.png");
@@ -101,7 +103,7 @@ public class MainWindow extends JFrame {
                 EntFloorGrass grassFloor = new EntFloorGrass(x * 50, y * 50, 50, 50);
                 floorArray[y][x] = grassFloor;
 
-                Game.mainView.add(grassFloor.getLabel());
+                Game.mainView.add(grassFloor.getLabel(), 0, 0);
             }
         }
 
@@ -121,19 +123,21 @@ public class MainWindow extends JFrame {
         }
     }
 
-    public void update() {
-        int width = (int) (50 * Game.mainView.zoom);
-        int height = (int) (50 * Game.mainView.zoom);
+    @Override
+    public int getHeight() {
+        return super.getHeight() - this.getInsets().top;
+    }
 
+    public void update() {
         for (Texture texture : Game.texturePool.values()) {
             if (texture.applyViewZoom) {
-                texture.resize(width, height);
+                texture.resizeToCameraOffset();
             }
         }
 
-        for (int y = 0; y < 15; y++) {
-            for (int x = 0; x < 15; x++) {
-                floorArray[y][x].alignToCameraOffset();
+        for (Entity ent : Game.entityList) {
+            if (ent instanceof EntityVisible) {
+                ((EntityVisible) ent).alignToCameraOffset();
             }
         }
     }

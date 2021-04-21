@@ -3,15 +3,13 @@ package com.prog1.slenderman.game;
 import com.prog1.slenderman.game.display.MainCamera;
 import com.prog1.slenderman.game.display.MainView;
 import com.prog1.slenderman.game.display.MainWindow;
+import com.prog1.slenderman.game.entities.Entity;
 import com.prog1.slenderman.game.entities.Player;
 import com.prog1.slenderman.game.resource.Texture;
-import com.prog1.slenderman.game.resource.URLHandler;
 
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.io.IOException;
-import java.net.URL;
+import javax.swing.*;
+import java.awt.event.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Game {
@@ -20,25 +18,60 @@ public class Game {
     public static MainCamera mainCamera;
     public static MainView mainView;
     public static Player mainPlayer;
+    public static ArrayList<Entity> entityList;
     public static HashMap<String, Texture> texturePool;
 
     public Game() {
         Game.texturePool = new HashMap<String, Texture>();
+        Game.entityList = new ArrayList<Entity>();
         Game.mainView = new MainView();
         Game.mainCamera = new MainCamera();
         Game.mainWindow = new MainWindow();
-        Game.mainPlayer = new Player();
+        Game.mainPlayer = new Player(0, 0, 50, 50);
 
         Game.mainWindow.update();
 
         Game.mainWindow.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent componentEvent) {
-                Game.mainView.update();
-                Game.mainWindow.update();
+                Game.update();
             }
         });
 
-
         Game.texturePool.put("dev.error", Texture.fallbackTexture);
+
+        Game.mainView.add(Game.mainPlayer.getLabel(), 1, 0);
+
+        Action handleKeyPress = new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                for (Entity ent : Game.entityList) {
+                    if (ent.isAcceptInput()) {
+                        ent.handleInput(e);
+                    }
+                }
+            }
+        };
+
+        addKeyBinding("w", KeyEvent.VK_W, handleKeyPress);
+        addKeyBinding("d", KeyEvent.VK_D, handleKeyPress);
+        addKeyBinding("s", KeyEvent.VK_S, handleKeyPress);
+        addKeyBinding("a", KeyEvent.VK_A, handleKeyPress);
+    }
+
+    public static void update() {
+        Game.mainCamera.followPlayer();
+        Game.mainView.update();
+        Game.mainWindow.update();
+    }
+
+    protected void addKeyBinding(String name, int keyCode, Action action) {
+        InputMap inputMap = Game.mainView.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = Game.mainView.getActionMap();
+
+        inputMap.put(KeyStroke.getKeyStroke(keyCode, 0, false), name + ".pressed");
+        actionMap.put(name + ".pressed", action);
+
+        //inputMap.put(KeyStroke.getKeyStroke(keyCode, 0, true), name + ".released");
+        //actionMap.put(name + ".released", action);
     }
 }

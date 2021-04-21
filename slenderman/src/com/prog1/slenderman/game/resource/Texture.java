@@ -1,5 +1,7 @@
 package com.prog1.slenderman.game.resource;
 
+import com.prog1.slenderman.game.Game;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -60,6 +62,13 @@ public class Texture {
         g2d.dispose();
 
         this.bufferedImage = dimg;
+    }
+
+    public void resizeToCameraOffset() {
+        int width = (int) (50 * Game.mainView.zoom);
+        int height = (int) (50 * Game.mainView.zoom);
+
+        resize(width, height);
     }
 
     public void setTexture(URL imageURL) {

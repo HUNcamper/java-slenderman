@@ -6,12 +6,14 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 
-public class MainView extends JPanel {
-    private final int baseResolution_width = 1920;
-    private final int baseResolution_height = 1080;
+public class MainView extends JLayeredPane {
+    public final int baseResolution_width = 1000;
+    public final int baseResolution_height = 1000;
     private final float baseRatio = (float) baseResolution_width / baseResolution_height;
-    private final float baseZoom = 3f; // change this
+    public float baseZoom = 1f; // change this
     public float zoom = 1f; // automatically calculated at runtime
+
+    public int padding = 100;
 
     public MainView() {
         Border blackline = BorderFactory.createLineBorder(Color.black);
@@ -23,24 +25,27 @@ public class MainView extends JPanel {
         int windowHeight = Game.mainWindow.getHeight();
         float newRatio = (float) windowWidth / windowHeight;
 
-        int x = 0;
-        int y = 0;
+        int new_x = 0;
+        int new_y = 0;
 
         if (newRatio > baseRatio) {
-            Game.mainView.setBounds(x, y, (int) (baseResolution_width * ((float) windowHeight / baseResolution_height)), windowHeight);
+            int new_width = (int) (baseResolution_width * ((float) windowHeight / baseResolution_height)) - this.padding;
+            int new_height = windowHeight - this.padding;
+            new_x = windowWidth/2 - new_width/2;
+            new_y = this.padding/2;
+
+            Game.mainView.setBounds(new_x, new_y, new_width, new_height);
         } else {
-            Game.mainView.setBounds(x, y, windowWidth, (int) (baseResolution_height * ((float) windowWidth / baseResolution_width)));
+            int new_width = windowWidth - this.padding;
+            int new_height = (int) (baseResolution_height * ((float) windowWidth / baseResolution_width)) - this.padding;
+            new_x = this.padding/2;
+            new_y = windowHeight/2 - new_height/2;
+
+            Game.mainView.setBounds(new_x, new_y, new_width, new_height);
         }
 
         int newWidth = Game.mainView.getWidth();
-        int newHeight = Game.mainView.getHeight();
 
         this.zoom = ((float) newWidth / baseResolution_width) * baseZoom;
-
-        //System.out.println(this.zoom);
-
-        //System.out.println("Window size: w" + windowWidth + " h" + windowHeight);
-        //System.out.println("Panel size: w" + newWidth + " h" + newHeight);
-
     }
 }

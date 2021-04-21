@@ -20,10 +20,11 @@ public abstract class EntityVisible extends Entity {
     protected Texture texture = Texture.fallbackTexture;
 
     public EntityVisible() {
-
+        super();
     }
 
     public EntityVisible( int pos_x, int pos_y, int size_x, int size_y) {
+        this();
         this.pos_x = pos_x;
         this.pos_y = pos_y;
         this.size_x = size_x;
@@ -76,10 +77,22 @@ public abstract class EntityVisible extends Entity {
         //int new_y = (int) (this.pos_y * 50 * view.zoom);
         int new_x = (int) Math.floor(this.pos_x * view.zoom - camera.pos_x * view.zoom);
         int new_y = (int) Math.floor(this.pos_y * view.zoom - camera.pos_y * view.zoom);
+
         int new_width = (int) Math.floor(this.size_x * view.zoom);
         int new_height = (int) Math.floor(this.size_y * view.zoom);
 
         this.label.setBounds(new_x, new_y, new_width, new_height);
+
+        label.setIcon(this.texture.getIcon());
+    }
+
+    public void alignTexture() {
+        MainView view = Game.mainView;
+
+        int new_width = (int) Math.floor(this.size_x * view.zoom);
+        int new_height = (int) Math.floor(this.size_y * view.zoom);
+
+        this.label.setBounds(label.getX(), label.getY(), new_width, new_height);
         this.texture.resize(new_width, new_height);
 
         label.setIcon(this.texture.getIcon());
