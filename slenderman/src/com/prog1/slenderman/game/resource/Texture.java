@@ -10,6 +10,7 @@ import java.nio.Buffer;
 
 public class Texture {
     private BufferedImage texture;
+    private BufferedImage originalTexture;
     private int size_x = -1;
     private int size_y = -1;
 
@@ -30,7 +31,7 @@ public class Texture {
         this.size_x = size_x;
         this.size_y = size_y;
 
-        Image tmp = this.texture.getScaledInstance(size_x, size_y, Image.SCALE_SMOOTH);
+        Image tmp = this.originalTexture.getScaledInstance(size_x, size_y, Image.SCALE_SMOOTH);
         BufferedImage dimg = new BufferedImage(size_x, size_y, BufferedImage.TYPE_INT_ARGB);
 
         Graphics2D g2d = dimg.createGraphics();
@@ -58,6 +59,7 @@ public class Texture {
 
     public void setTexture(BufferedImage img) {
         this.texture = img;
+        this.originalTexture = img;
         this.size_x = img.getWidth();
         this.size_y = img.getHeight();
     }

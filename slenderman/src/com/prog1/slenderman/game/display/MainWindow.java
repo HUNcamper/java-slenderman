@@ -8,7 +8,6 @@ import com.prog1.slenderman.game.resource.URLHandler;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -16,8 +15,12 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainWindow extends JFrame {
+    private JLabel[][] labelArray = new JLabel[15][15];
+    private Texture grassTexture;
+
     public MainWindow() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -51,6 +54,9 @@ public class MainWindow extends JFrame {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+
+            Game.mainCamera.offset(50, 0);
+            update();
         });
 
         b2.addActionListener((ActionEvent e) -> {
@@ -67,20 +73,30 @@ public class MainWindow extends JFrame {
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
+            Game.mainCamera.offset(0, 50);
+            update();
         });
 
-        for (int y = 0; y < 20; y++) {
-            for (int x = 0; x < 20; x++) {
+        this.grassTexture = new Texture("/textures/grass.png");
+
+        for (int y = 0; y < 15; y++) {
+            for (int x = 0; x < 15; x++) {
 
                 JLabel label = new JLabel();
-                label.setBounds(x * 50, y * 50, 50, 50);
+                int xPos = (int) (x * 50 * Game.mainView.zoom);
+                int yPos = (int) (y * 50 * Game.mainView.zoom);
+                int width = (int) (50 * Game.mainView.zoom);
+                int height = (int) (50 * Game.mainView.zoom);
 
-                Texture grassTexture = new Texture("/textures/grass.png");
+                label.setBounds(xPos, yPos, width, height);
 
-                grassTexture.resize(label.getWidth(), label.getHeight());
+                //Texture grassTexture = new Texture("/textures/grass.png");
 
-                label.setIcon(grassTexture.getIcon());
+                this.grassTexture.resize(label.getWidth(), label.getHeight());
 
+                label.setIcon(this.grassTexture.getIcon());
+
+                labelArray[y][x] = label;
                 Game.mainView.add(label);
             }
         }
@@ -96,6 +112,26 @@ public class MainWindow extends JFrame {
             ambient.play();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void update() {
+        int width = (int) (50 * Game.mainView.zoom);
+        int height = (int) (50 * Game.mainView.zoom);
+
+        grassTexture.resize(width, height);
+
+        for (int y = 0; y < 15; y++) {
+            for (int x = 0; x < 15; x++) {
+
+                JLabel label = labelArray[y][x];
+                int xPos = (int) (x * 50 * Game.mainView.zoom) - (int) (Game.mainCamera.pos_x * Game.mainView.zoom);
+                int yPos = (int) (y * 50 * Game.mainView.zoom) - (int) (Game.mainCamera.pos_y * Game.mainView.zoom);
+
+                label.setBounds(xPos, yPos, width, height);
+
+                label.setIcon(grassTexture.getIcon());
+            }
         }
     }
 }

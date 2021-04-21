@@ -18,9 +18,12 @@ public class Game {
         Game.mainCamera = new MainCamera();
         Game.mainWindow = new MainWindow();
 
+        Game.mainWindow.update();
+
         Game.mainWindow.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent componentEvent) {
                 Game.mainView.update();
+                Game.mainWindow.update();
             }
         });
     }

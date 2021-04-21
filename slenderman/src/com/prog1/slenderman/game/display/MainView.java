@@ -10,6 +10,8 @@ public class MainView extends JPanel {
     private int baseResolution_width = 1920;
     private int baseResolution_height = 1080;
     private float baseRatio = (float) baseResolution_width / baseResolution_height;
+    private float baseZoom = 3f;
+    public float zoom = 1f;
 
     public MainView() {
         Border blackline = BorderFactory.createLineBorder(Color.black);
@@ -30,9 +32,15 @@ public class MainView extends JPanel {
             Game.mainView.setBounds(x, y, windowWidth, (int) (baseResolution_height * ((float) windowWidth / baseResolution_width)));
         }
 
+        int newWidth = Game.mainView.getWidth();
+        int newHeight = Game.mainView.getHeight();
 
-        System.out.println("Window size: w" + windowWidth + " h" + windowHeight);
-        System.out.println("Panel size: w" + Game.mainView.getWidth() + " h" + Game.mainView.getHeight());
+        this.zoom = ((float) newWidth / baseResolution_width) * baseZoom;
+
+        System.out.println(this.zoom);
+
+        //System.out.println("Window size: w" + windowWidth + " h" + windowHeight);
+        //System.out.println("Panel size: w" + newWidth + " h" + newHeight);
 
     }
 }
