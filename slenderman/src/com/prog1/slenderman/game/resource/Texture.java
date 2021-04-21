@@ -20,6 +20,14 @@ public class Texture {
 
     public boolean applyViewZoom = true;
 
+    public int getWidth() {
+        return size_x;
+    }
+
+    public int getHeight() {
+        return size_y;
+    }
+
     public BufferedImage getBufferedImage() {
         return this.originalBufferedImage;
     }
