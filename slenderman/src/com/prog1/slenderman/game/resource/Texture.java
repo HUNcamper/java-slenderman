@@ -20,6 +20,11 @@ public class Texture {
 
     public boolean applyViewZoom = true;
 
+    public void setSize(int sizeX, int sizeY) {
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
+    }
+
     public int getWidth() {
         return sizeX;
     }

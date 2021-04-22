@@ -39,6 +39,7 @@ public abstract class EntityVisible extends Entity {
 
     public void setTexture(Texture texture) {
         this.texture = texture;
+        this.texture.setSize(this.sizeX, this.sizeY);
         //this.texture.setSizeX(this.sizeX);
         //this.texture.setSizeY(this.sizeY);
     }
@@ -123,18 +124,6 @@ public abstract class EntityVisible extends Entity {
         int new_height = (int) Math.floor(this.getHeight() * view.zoom);
 
         this.label.setBounds(new_x, new_y, new_width, new_height);
-
-        label.setIcon(this.texture.getIcon());
-    }
-
-    public void alignTexture() {
-        MainView view = Game.mainView;
-
-        int new_width = (int) Math.floor(this.getWidth() * view.zoom);
-        int new_height = (int) Math.floor(this.getHeight() * view.zoom);
-
-        this.label.setBounds(label.getX(), label.getY(), new_width, new_height);
-        this.texture.resize(new_width, new_height);
 
         label.setIcon(this.texture.getIcon());
     }

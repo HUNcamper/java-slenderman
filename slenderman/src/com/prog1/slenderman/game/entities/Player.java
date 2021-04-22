@@ -23,6 +23,11 @@ public class Player extends EntityVisible {
         this.directions[2] = TextureLoader.loadTexture("/textures/player/tile001.png");
         this.directions[3] = TextureLoader.loadTexture("/textures/player/tile005.png");
 
+        this.directions[0].setSize(sizeX, sizeY);
+        this.directions[1].setSize(sizeX, sizeY);
+        this.directions[2].setSize(sizeX, sizeY);
+        this.directions[3].setSize(sizeX, sizeY);
+
         this.acceptInput = true;
 
         this.setTexture(this.directions[2]);

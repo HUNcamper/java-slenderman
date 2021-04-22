@@ -10,6 +10,6 @@ public class EntTreeSmall extends Prop {
         this.sizeX = 2;
         this.sizeY = 2;
 
-        this.texture = TextureLoader.loadTexture("/textures/entities/tree_small.png");
+        this.setTexture(TextureLoader.loadTexture("/textures/entities/tree_small.png"));
     }
 }
