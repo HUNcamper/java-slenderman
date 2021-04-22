@@ -53,19 +53,19 @@ public class Player extends EntityVisible {
         switch(dir) {
             case UP:
                 this.texture = this.directions[0];
-                this.setCellY(this.cellY - 50);
+                this.setCellY(this.cellY - 1);
                 break;
             case RIGHT:
                 this.texture = this.directions[1];
-                this.setCellX(this.cellX + 50);
+                this.setCellX(this.cellX + 1);
                 break;
             case DOWN:
                 this.texture = this.directions[2];
-                this.setCellY(this.cellY + 50);
+                this.setCellY(this.cellY + 1);
                 break;
             case LEFT:
                 this.texture = this.directions[3];
-                this.setCellX(this.cellX - 50);
+                this.setCellX(this.cellX - 1);
                 break;
         }
 

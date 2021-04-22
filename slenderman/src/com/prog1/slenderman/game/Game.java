@@ -44,7 +44,8 @@ public class Game {
 
         Game.texturePool.put("dev.error", Texture.fallbackTexture);
 
-        Game.mainView.add(Game.mainPlayer.getLabel(), 1, 0);
+        Game.loadedLevel.spawnEntity(Game.mainPlayer, 1, 0, 0);
+        //Game.mainView.add(Game.mainPlayer.getLabel(), 1, 0);
 
         Action handleKeyPress = new AbstractAction() {
             @Override

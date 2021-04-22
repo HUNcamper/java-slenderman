@@ -29,6 +29,8 @@ public class Level {
                     entities[layer][y][x] = entity;
 
                     entity.setCellX(x);
+                    entity.setCellY(y);
+                    entity.setLayer(layer);
 
                     this.display.add(entity.getLabel(), layer, 0);
                 } else {
@@ -57,20 +59,23 @@ public class Level {
             return false;
         }
 
-        EntityVisible toMove = entities[from_layer][from_cell_y][from_cell_y];
-        Texture texture = toMove.getTexture();
+        EntityVisible toMove = entities[from_layer][from_cell_y][from_cell_x];
 
         entities[to_layer][to_cell_y][to_cell_x] = toMove;
-        entities[from_layer][from_cell_y][from_cell_y] = null;
+        entities[from_layer][from_cell_y][from_cell_x] = null;
 
-        toMove.setCellX(to_cell_x * texture.getWidth());
-        toMove.setCellY(to_cell_y * texture.getHeight());
+        toMove.setCellX(to_cell_x);
+        toMove.setCellY(to_cell_y);
 
         return true;
     }
 
     public boolean offsetEntity(int layer, int cell_x, int cell_y, int offset_x, int offset_y) {
         return moveEntity(layer, cell_x, cell_y, layer, cell_x + offset_x, cell_y + offset_y);
+    }
+
+    public EntityVisible getEntity(int layer, int cellX, int cellY) {
+        return entities[layer][cellY][cellX];
     }
 
     public boolean isOutOfBounds(int cell_x, int cell_y) {
