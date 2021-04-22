@@ -14,8 +14,8 @@ import java.net.URL;
 public abstract class EntityVisible extends Entity {
     protected int pos_x = 0;
     protected int pos_y = 0;
-    protected int size_x = 50;
-    protected int size_y = 50;
+    protected int size_x = 1;
+    protected int size_y = 1;
     protected JLabel label = new JLabel();
     protected Texture texture = Texture.fallbackTexture;
 
@@ -69,6 +69,14 @@ public abstract class EntityVisible extends Entity {
         alignToCameraOffset();
     }
 
+    public int getWidth() {
+        return this.size_x * Game.gridSize;
+    }
+
+    public int getHeight() {
+        return this.size_y * Game.gridSize;
+    }
+
     public void alignToCameraOffset() {
         MainView view = Game.mainView;
         MainCamera camera = Game.mainCamera;
@@ -78,8 +86,8 @@ public abstract class EntityVisible extends Entity {
         int new_x = (int) Math.floor(this.pos_x * view.zoom - camera.pos_x * view.zoom);
         int new_y = (int) Math.floor(this.pos_y * view.zoom - camera.pos_y * view.zoom);
 
-        int new_width = (int) Math.floor(this.size_x * view.zoom);
-        int new_height = (int) Math.floor(this.size_y * view.zoom);
+        int new_width = (int) Math.floor(this.getWidth() * view.zoom);
+        int new_height = (int) Math.floor(this.getHeight() * view.zoom);
 
         this.label.setBounds(new_x, new_y, new_width, new_height);
 
@@ -89,8 +97,8 @@ public abstract class EntityVisible extends Entity {
     public void alignTexture() {
         MainView view = Game.mainView;
 
-        int new_width = (int) Math.floor(this.size_x * view.zoom);
-        int new_height = (int) Math.floor(this.size_y * view.zoom);
+        int new_width = (int) Math.floor(this.getWidth() * view.zoom);
+        int new_height = (int) Math.floor(this.getHeight() * view.zoom);
 
         this.label.setBounds(label.getX(), label.getY(), new_width, new_height);
         this.texture.resize(new_width, new_height);

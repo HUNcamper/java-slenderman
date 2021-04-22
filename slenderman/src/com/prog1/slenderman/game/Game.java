@@ -5,6 +5,8 @@ import com.prog1.slenderman.game.display.MainView;
 import com.prog1.slenderman.game.display.MainWindow;
 import com.prog1.slenderman.game.entities.Entity;
 import com.prog1.slenderman.game.entities.Player;
+import com.prog1.slenderman.game.level.Level;
+import com.prog1.slenderman.game.level.LevelGenerator;
 import com.prog1.slenderman.game.resource.Texture;
 
 import javax.swing.*;
@@ -18,8 +20,10 @@ public class Game {
     public static MainCamera mainCamera;
     public static MainView mainView;
     public static Player mainPlayer;
+    public static Level loadedLevel;
     public static ArrayList<Entity> entityList;
     public static HashMap<String, Texture> texturePool;
+    public static int gridSize = 50;
 
     public Game() {
         Game.texturePool = new HashMap<String, Texture>();
@@ -27,7 +31,8 @@ public class Game {
         Game.mainView = new MainView();
         Game.mainCamera = new MainCamera();
         Game.mainWindow = new MainWindow();
-        Game.mainPlayer = new Player(0, 0, 50, 50);
+        Game.mainPlayer = new Player(0, 0, 1, 1);
+        Game.loadedLevel = LevelGenerator.random();
 
         Game.mainWindow.update();
 
@@ -59,7 +64,7 @@ public class Game {
     }
 
     public static void update() {
-        Game.mainCamera.followPlayer();
+        //Game.mainCamera.followPlayer();
         Game.mainView.update();
         Game.mainWindow.update();
     }
