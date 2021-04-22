@@ -7,10 +7,10 @@ import javax.swing.border.Border;
 import java.awt.*;
 
 public class MainView extends JLayeredPane {
-    public final int baseResolution_width = 1000;
-    public final int baseResolution_height = 1000;
+    public final int baseResolution_width = 1500;
+    public final int baseResolution_height = 1500;
     private final float baseRatio = (float) baseResolution_width / baseResolution_height;
-    public float baseZoom = 1f; // change this
+    public float baseZoom = 2f; // change this
     public float zoom = 1f; // automatically calculated at runtime
 
     public int padding = 100;
