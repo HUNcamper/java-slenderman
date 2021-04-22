@@ -23,8 +23,10 @@ public class MainWindow extends JFrame {
     private EntFloor[][] floorArray = new EntFloor[15][15];
     private Texture grassTexture;
 
+    private JLabel titleLabel;
+
     public MainWindow() {
-        this.getContentPane().setBackground( Color.BLACK );
+        this.getContentPane().setBackground(Color.BLACK);
 
         this.setSize(1280, 720);
 
@@ -39,12 +41,22 @@ public class MainWindow extends JFrame {
         Game.mainView.setBounds(0, 0, this.getWidth(), this.getHeight());
         Game.mainView.setVisible(true);
         Game.mainView.setSize(1280, 720);
-        Game.mainView.setLayout(null);//using no layout managers
+        Game.mainView.setLayout(null); //using no layout managers
 
         Game.mainView.add(b, 5, 0);//adding button in JFrame
         Game.mainView.add(b2, 5, 0);//adding button in JFrame
 
         this.add(Game.mainView);
+
+        this.setUndecorated(true);
+        this.getRootPane().setWindowDecorationStyle( JRootPane. FRAME );
+
+        this.titleLabel = new JLabel("SLENDERMAN", SwingConstants.CENTER);
+        this.titleLabel.setBounds(0, 0, 1000, 32);
+
+        this.titleLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 32));
+
+        this.add(this.titleLabel);
 
         b.addActionListener((ActionEvent e) -> {
 
@@ -75,7 +87,7 @@ public class MainWindow extends JFrame {
                 ex.printStackTrace();
             }
 
-            if (Game.mainView.baseZoom-0.2 > 0) Game.mainView.baseZoom -= 0.2;
+            if (Game.mainView.baseZoom - 0.2 > 0) Game.mainView.baseZoom -= 0.2;
 
             Game.update();
         });
@@ -126,5 +138,7 @@ public class MainWindow extends JFrame {
                 ((EntityVisible) ent).alignToCameraOffset();
             }
         }
+
+        this.titleLabel.setBounds(CenterFactory.CenterHorizontal(this.titleLabel), this.titleLabel.getY(), this.titleLabel.getWidth(), this.titleLabel.getHeight());
     }
 }

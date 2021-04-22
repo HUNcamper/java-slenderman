@@ -14,8 +14,8 @@ public class Sound {
     private Clip clip;
 
     public void setVolume(float volume) {
-        if(volume < 0.0f) volume = 0.0f;
-        if(volume > 1.0f) volume = 1.0f;
+        if (volume < 0.0f) volume = 0.0f;
+        if (volume > 1.0f) volume = 1.0f;
 
         this.volume = volume;
     }

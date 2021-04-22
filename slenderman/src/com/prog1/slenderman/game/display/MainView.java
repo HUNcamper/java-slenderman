@@ -31,15 +31,15 @@ public class MainView extends JLayeredPane {
         if (newRatio > baseRatio) {
             int new_width = (int) (baseResolution_width * ((float) windowHeight / baseResolution_height)) - this.padding;
             int new_height = windowHeight - this.padding;
-            new_x = windowWidth/2 - new_width/2;
-            new_y = this.padding/2;
+            new_x = windowWidth / 2 - new_width / 2;
+            new_y = this.padding / 2;
 
             Game.mainView.setBounds(new_x, new_y, new_width, new_height);
         } else {
             int new_width = windowWidth - this.padding;
             int new_height = (int) (baseResolution_height * ((float) windowWidth / baseResolution_width)) - this.padding;
-            new_x = this.padding/2;
-            new_y = windowHeight/2 - new_height/2;
+            new_x = this.padding / 2;
+            new_y = windowHeight / 2 - new_height / 2;
 
             Game.mainView.setBounds(new_x, new_y, new_width, new_height);
         }
