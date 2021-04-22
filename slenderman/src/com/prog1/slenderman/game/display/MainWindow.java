@@ -100,7 +100,7 @@ public class MainWindow extends JFrame {
 
         for (int y = 0; y < 15; y++) {
             for (int x = 0; x < 15; x++) {
-                EntFloorGrass grassFloor = new EntFloorGrass(x * 50, y * 50, 1, 1);
+                EntFloorGrass grassFloor = new EntFloorGrass(x, y, 1, 1);
                 floorArray[y][x] = grassFloor;
 
                 Game.mainView.add(grassFloor.getLabel(), 0, 0);
