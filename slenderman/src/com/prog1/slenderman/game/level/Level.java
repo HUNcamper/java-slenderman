@@ -1,5 +1,6 @@
 package com.prog1.slenderman.game.level;
 
+import com.prog1.slenderman.game.Game;
 import com.prog1.slenderman.game.entities.EntityVisible;
 import com.prog1.slenderman.game.resource.Texture;
 
@@ -8,7 +9,7 @@ import javax.swing.*;
 public class Level {
     private final int rows;
     private final int columns;
-    private JLayeredPane display;
+    private final JLayeredPane display = Game.mainView;
 
     private EntityVisible[][][] entities;
 
@@ -22,12 +23,18 @@ public class Level {
     public boolean spawnEntity(EntityVisible entity, int layer, int cell_x, int cell_y) {
         if (isOutOfBounds(cell_x, cell_y)) return false;
 
-        if (entities[layer][cell_y][cell_x] == null) {
-            entities[layer][cell_y][cell_x] = entity;
+        for (int y = cell_y; y < cell_y + entity.getSizeY(); y++) {
+            for (int x = cell_x; x < cell_x + entity.getSizeX(); x++) {
+                if (entities[layer][y][x] == null) {
+                    entities[layer][y][x] = entity;
 
-            this.display.add(entity.getLabel(), layer, 0);
+                    entity.setCellX(x);
 
-            return true;
+                    this.display.add(entity.getLabel(), layer, 0);
+                } else {
+                    return false;
+                }
+            }
         }
 
         return false;
@@ -56,8 +63,8 @@ public class Level {
         entities[to_layer][to_cell_y][to_cell_x] = toMove;
         entities[from_layer][from_cell_y][from_cell_y] = null;
 
-        toMove.setPos_x(to_cell_x * texture.getWidth());
-        toMove.setPos_y(to_cell_y * texture.getHeight());
+        toMove.setCellX(to_cell_x * texture.getWidth());
+        toMove.setCellY(to_cell_y * texture.getHeight());
 
         return true;
     }

@@ -4,9 +4,7 @@ import com.prog1.slenderman.game.Game;
 import com.prog1.slenderman.game.resource.Texture;
 import com.prog1.slenderman.game.resource.TextureLoader;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 
 public class Player extends EntityVisible {
     Texture[] directions = new Texture[4]; // 0 up, 1 right, 2 down, 3 left
@@ -55,19 +53,19 @@ public class Player extends EntityVisible {
         switch(dir) {
             case UP:
                 this.texture = this.directions[0];
-                this.setPos_y(this.pos_y - 50);
+                this.setCellY(this.cellY - 50);
                 break;
             case RIGHT:
                 this.texture = this.directions[1];
-                this.setPos_x(this.pos_x + 50);
+                this.setCellX(this.cellX + 50);
                 break;
             case DOWN:
                 this.texture = this.directions[2];
-                this.setPos_y(this.pos_y + 50);
+                this.setCellY(this.cellY + 50);
                 break;
             case LEFT:
                 this.texture = this.directions[3];
-                this.setPos_x(this.pos_x - 50);
+                this.setCellX(this.cellX - 50);
                 break;
         }
 

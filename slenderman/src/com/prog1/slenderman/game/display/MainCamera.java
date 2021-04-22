@@ -26,8 +26,8 @@ public class MainCamera {
     }
 
     public void followPlayer() {
-        int new_x = (int) (Game.mainPlayer.getPos_x() - (Game.mainView.baseResolution_width / Game.mainView.baseZoom)/2);
-        int new_y = (int) (Game.mainPlayer.getPos_y() - (Game.mainView.baseResolution_height / Game.mainView.baseZoom)/2);
+        int new_x = (int) (Game.mainPlayer.getCellX() - (Game.mainView.baseResolution_width / Game.mainView.baseZoom)/2);
+        int new_y = (int) (Game.mainPlayer.getCellY() - (Game.mainView.baseResolution_height / Game.mainView.baseZoom)/2);
 
         move(new_x, new_y);
     }

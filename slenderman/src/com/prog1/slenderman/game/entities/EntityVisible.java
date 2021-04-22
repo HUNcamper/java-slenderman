@@ -4,18 +4,15 @@ import com.prog1.slenderman.game.Game;
 import com.prog1.slenderman.game.display.MainCamera;
 import com.prog1.slenderman.game.display.MainView;
 import com.prog1.slenderman.game.resource.Texture;
-import com.prog1.slenderman.game.resource.TextureLoader;
 
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
-import java.io.IOException;
 import java.net.URL;
 
 public abstract class EntityVisible extends Entity {
-    protected int pos_x = 0;
-    protected int pos_y = 0;
-    protected int size_x = 1;
-    protected int size_y = 1;
+    protected int cellX = 0;
+    protected int cellY = 0;
+    protected int sizeX = 1;
+    protected int sizeY = 1;
     protected JLabel label = new JLabel();
     protected Texture texture = Texture.fallbackTexture;
 
@@ -23,14 +20,14 @@ public abstract class EntityVisible extends Entity {
         super();
     }
 
-    public EntityVisible( int pos_x, int pos_y, int size_x, int size_y) {
+    public EntityVisible(int cellX, int cellY, int sizeX, int sizeY) {
         this();
-        this.pos_x = pos_x;
-        this.pos_y = pos_y;
-        this.size_x = size_x;
-        this.size_y = size_y;
+        this.cellX = cellX;
+        this.cellY = cellY;
+        this.sizeX = sizeX;
+        this.sizeY = sizeY;
 
-        System.out.println("Spawned entity at x" + pos_x + " y" + pos_y);
+        System.out.println("Spawned entity at x" + cellX + " y" + cellY);
 
         this.alignToCameraOffset();
     }
@@ -51,30 +48,50 @@ public abstract class EntityVisible extends Entity {
         return this.label;
     }
 
-    public int getPos_x() {
-        return pos_x;
+    public void setCellX(int cellX) {
+        this.cellX = cellX;
     }
 
-    public int getPos_y() {
-        return pos_y;
+    public void setCellY(int cellY) {
+        this.cellY = cellY;
     }
 
-    public void setPos_x(int pos_x) {
-        this.pos_x = pos_x;
-        alignToCameraOffset();
+    public int getCellX() {
+        return cellX;
     }
 
-    public void setPos_y(int pos_y) {
-        this.pos_y = pos_y;
-        alignToCameraOffset();
+    public int getCellY() {
+        return cellY;
+    }
+
+    public int getPosX() {
+        return this.cellX * Game.gridSize;
+    }
+
+    public int getPosY() {
+        return this.cellY * Game.gridSize;
+    }
+
+    public int getSizeX() {
+        return this.sizeX;
+    }
+
+    public int getSizeY() {
+        return this.sizeY;
     }
 
     public int getWidth() {
-        return this.size_x * Game.gridSize;
+        return this.sizeX * Game.gridSize;
     }
 
     public int getHeight() {
-        return this.size_y * Game.gridSize;
+        return this.sizeY * Game.gridSize;
+    }
+
+    public void setCellPos(int cellX, int cellY) {
+        this.cellX = cellX;
+        this.cellY = cellY;
+        alignToCameraOffset();
     }
 
     public void alignToCameraOffset() {
@@ -83,8 +100,8 @@ public abstract class EntityVisible extends Entity {
 
         //int new_x = (int) (this.pos_x * 50 * view.zoom);
         //int new_y = (int) (this.pos_y * 50 * view.zoom);
-        int new_x = (int) Math.floor(this.pos_x * view.zoom - camera.pos_x * view.zoom);
-        int new_y = (int) Math.floor(this.pos_y * view.zoom - camera.pos_y * view.zoom);
+        int new_x = (int) Math.floor(this.cellX * view.zoom - camera.pos_x * view.zoom);
+        int new_y = (int) Math.floor(this.cellY * view.zoom - camera.pos_y * view.zoom);
 
         int new_width = (int) Math.floor(this.getWidth() * view.zoom);
         int new_height = (int) Math.floor(this.getHeight() * view.zoom);
