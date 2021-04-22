@@ -8,6 +8,7 @@ import com.prog1.slenderman.game.entities.Entity;
 import com.prog1.slenderman.game.entities.Player;
 import com.prog1.slenderman.game.level.Level;
 import com.prog1.slenderman.game.level.LevelGenerator;
+import com.prog1.slenderman.game.resource.Sound;
 import com.prog1.slenderman.game.resource.Texture;
 
 import javax.swing.*;
@@ -24,11 +25,13 @@ public class Game {
     public static Level loadedLevel;
     public static ArrayList<Entity> entityList;
     public static HashMap<String, Texture> texturePool;
+    public static HashMap<String, Sound> soundPool;
     public static int gridSize = 50;
     public static boolean newStep = false;
 
     public Game() {
         Game.texturePool = new HashMap<String, Texture>();
+        Game.soundPool = new HashMap<String, Sound>();
         Game.entityList = new ArrayList<Entity>();
         Game.mainView = new MainView();
         Game.mainCamera = new MainCamera();
@@ -68,7 +71,7 @@ public class Game {
     }
 
     public static void update() {
-        Game.mainCamera.followPlayer();
+        //Game.mainCamera.followPlayer();
         Game.mainView.update();
         Game.mainWindow.update();
 
@@ -79,6 +82,8 @@ public class Game {
         Game.newStep = false;
 
         System.out.println("Currently used textures: " + Game.texturePool.size());
+
+        System.gc();
     }
 
     protected void addKeyBinding(String name, int keyCode, Action action) {

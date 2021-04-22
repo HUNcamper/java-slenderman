@@ -8,6 +8,7 @@ import com.prog1.slenderman.game.resource.*;
 import javax.imageio.ImageIO;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
@@ -23,6 +24,10 @@ public class MainWindow extends JFrame {
     private Texture grassTexture;
 
     public MainWindow() {
+        this.getContentPane().setBackground( Color.BLACK );
+
+        this.setSize(1280, 720);
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JButton b = new JButton("grass :)");//creating instance of JButton
@@ -33,7 +38,7 @@ public class MainWindow extends JFrame {
 
         Game.mainView.setBounds(0, 0, this.getWidth(), this.getHeight());
         Game.mainView.setVisible(true);
-        Game.mainView.setSize(400, 500);//400 width and 500 height
+        Game.mainView.setSize(1280, 720);
         Game.mainView.setLayout(null);//using no layout managers
 
         Game.mainView.add(b, 5, 0);//adding button in JFrame
@@ -44,15 +49,6 @@ public class MainWindow extends JFrame {
         b.addActionListener((ActionEvent e) -> {
 
             try {
-                ArrayList<String> sounds = new ArrayList<String>();
-                sounds.add("/sound/footsteps/grass1.wav");
-                sounds.add("/sound/footsteps/grass2.wav");
-                sounds.add("/sound/footsteps/grass3.wav");
-                sounds.add("/sound/footsteps/grass4.wav");
-
-                Sound sound = new Sound(sounds);
-                sound.play();
-
                 for (int y = 0; y < 15; y++) {
                     for (int x = 0; x < 15; x++) {
                         floorArray[y][x].setTexture(TextureLoader.loadTexture("/textures/grass.png"));
@@ -70,15 +66,6 @@ public class MainWindow extends JFrame {
         b2.addActionListener((ActionEvent e) -> {
 
             try {
-                ArrayList<String> sounds = new ArrayList<String>();
-                sounds.add("/sound/footsteps/concrete1.wav");
-                sounds.add("/sound/footsteps/concrete2.wav");
-                sounds.add("/sound/footsteps/concrete3.wav");
-                sounds.add("/sound/footsteps/concrete4.wav");
-
-                Sound sound = new Sound(sounds);
-                sound.play();
-
                 for (int y = 0; y < 15; y++) {
                     for (int x = 0; x < 15; x++) {
                         floorArray[y][x].setTexture(TextureLoader.loadTexture("/textures/stone.png"));
@@ -124,7 +111,7 @@ public class MainWindow extends JFrame {
 
     @Override
     public int getHeight() {
-        return super.getHeight() - this.getInsets().top;
+        return super.getHeight();
     }
 
     public void update() {

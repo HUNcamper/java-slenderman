@@ -10,7 +10,7 @@ public abstract class TextureLoader {
     public static Texture loadTexture(String imageName) {
         if (!Game.texturePool.containsKey(imageName)) {
             Texture texture = new Texture(imageName);
-            Game.texturePool.put(imageName.toString(), texture);
+            Game.texturePool.put(imageName, texture);
         }
 
         return Game.texturePool.get(imageName);

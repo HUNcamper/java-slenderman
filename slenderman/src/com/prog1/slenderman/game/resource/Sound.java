@@ -1,19 +1,17 @@
 package com.prog1.slenderman.game.resource;
 
-import com.prog1.slenderman.Main;
 import com.prog1.slenderman.game.Game;
 
 import javax.sound.sampled.*;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.*;
 
 public class Sound {
-    private final HashMap<URL, AudioInputStream> soundList;
     private AudioInputStream audioInputStream;
     private boolean loop = false;
     private float volume = 1.0f;
+    private URL soundpath;
+    private Clip clip;
 
     public void setVolume(float volume) {
         if(volume < 0.0f) volume = 0.0f;
@@ -30,50 +28,32 @@ public class Sound {
         this.loop = loop;
     }
 
-    public Sound(List<String> soundPathList) throws IOException, UnsupportedAudioFileException {
-        // Több db hang fájl
-        this.soundList = new HashMap<URL, AudioInputStream>();
+    public Sound(String soundPath) throws IOException, UnsupportedAudioFileException {
+        // Egy db hang fájl
+        URL url = URLHandler.convertString(soundPath);
 
-        for ( String path : soundPathList) {
-            URL url = URLHandler.convertString(path);
-
-            this.soundList.put(url, AudioSystem.getAudioInputStream(url));
+        this.audioInputStream = AudioSystem.getAudioInputStream(url);
+        try {
+            this.clip = AudioSystem.getClip();
+            this.clip.open(this.audioInputStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (this.clip != null) {
+            clipVolume(this.clip, this.volume);
         }
     }
 
-    public Sound(String path) throws IOException, UnsupportedAudioFileException {
-        // Egy db hang fájl. Egy elemű lista igazából
-        this(new ArrayList<String>(Collections.singletonList(path)));
-    }
-
     public void play() {
-        Random rand = new Random();
+        if (this.clip != null) {
+            this.clip.stop();
+            this.clip.setMicrosecondPosition(0);
 
-        Clip clip = null;
-        Set<URL> keys = this.soundList.keySet();
-        int index = rand.nextInt(keys.size());
-        URL randKey = (URL)keys.toArray()[index];
-        AudioInputStream sound = this.soundList.get(randKey);
-
-        try {
-            clip = AudioSystem.getClip();
-
-            if (clip != null) {
-                clip.open(sound);
-
-                // Hangerő beállítása
-                clipVolume(clip, this.volume);
-
-                if(this.loop) {
-                    clip.loop(Clip.LOOP_CONTINUOUSLY);
-                } else {
-                    clip.start();
-                }
+            if (this.loop) {
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+            } else {
+                clip.start();
             }
-
-        } catch (Exception e) {
-            System.err.println("Nem sikerült lejátszani a " + sound.toString() + " fájlt.");
-            e.printStackTrace();
         }
     }
 

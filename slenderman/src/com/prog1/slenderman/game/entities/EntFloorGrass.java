@@ -1,6 +1,7 @@
 package com.prog1.slenderman.game.entities;
 
 import com.prog1.slenderman.game.resource.Sound;
+import com.prog1.slenderman.game.resource.SoundLoader;
 import com.prog1.slenderman.game.resource.TextureLoader;
 
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -12,10 +13,10 @@ public class EntFloorGrass extends EntFloor {
         super(pos_x, pos_y, size_x, size_y);
         this.setTexture(TextureLoader.loadTexture("/textures/grass.png"));
 
-        this.sounds = new ArrayList<String>();
-        sounds.add("/sound/footsteps/grass1.wav");
-        sounds.add("/sound/footsteps/grass2.wav");
-        sounds.add("/sound/footsteps/grass3.wav");
-        sounds.add("/sound/footsteps/grass4.wav");
+        this.sounds = new ArrayList<>();
+        this.sounds.add("/sound/footsteps/grass1.wav");
+        this.sounds.add("/sound/footsteps/grass2.wav");
+        this.sounds.add("/sound/footsteps/grass3.wav");
+        this.sounds.add("/sound/footsteps/grass4.wav");
     }
 }
