@@ -20,17 +20,17 @@ public class Level {
         this.entities = new EntityVisible[layers][rows][columns];
     }
 
-    public boolean spawnEntity(EntityVisible entity, int layer, int cell_x, int cell_y) {
-        if (isOutOfBounds(cell_x, cell_y)) return false;
+    public boolean spawnEntity(EntityVisible entity, int layer, int cellX, int cellY) {
+        if (isOutOfBounds(cellX, cellY)) return false;
 
-        for (int y = cell_y; y < cell_y + entity.getSizeY(); y++) {
-            for (int x = cell_x; x < cell_x + entity.getSizeX(); x++) {
+        entity.cellX = cellX;
+        entity.cellY = cellY;
+        entity.setLayer(layer);
+
+        for (int y = cellY; y < cellY + entity.getSizeY(); y++) {
+            for (int x = cellX; x < cellX + entity.getSizeX(); x++) {
                 if (entities[layer][y][x] == null) {
                     entities[layer][y][x] = entity;
-
-                    entity.setCellX(x);
-                    entity.setCellY(y);
-                    entity.setLayer(layer);
 
                     this.display.add(entity.getLabel(), layer, 0);
                 } else {
@@ -54,8 +54,7 @@ public class Level {
     public boolean moveEntity(int fromLayer, int fromCellX, int fromCellY, int toLayer, int toCellX, int toCellY) {
         if (isOutOfBounds(fromCellX, fromCellY) || isOutOfBounds(toCellX, toCellY)) return false;
 
-        if (entities[fromLayer][fromCellY][fromCellX] == null ||
-                entities[toLayer][toCellY][toCellX] != null) {
+        if (isEmpty(fromLayer, fromCellX, fromCellY) || !isEmpty(toLayer, toCellX, toCellY)) {
             return false;
         }
 
@@ -76,6 +75,10 @@ public class Level {
 
     public EntityVisible getEntity(int layer, int cellX, int cellY) {
         return entities[layer][cellY][cellX];
+    }
+
+    public boolean isEmpty(int layer, int cellX, int cellY) {
+        return entities[layer][cellY][cellX] == null;
     }
 
     public boolean isOutOfBounds(int cell_x, int cell_y) {

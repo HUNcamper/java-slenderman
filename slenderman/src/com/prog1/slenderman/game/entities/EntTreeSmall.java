@@ -10,6 +10,8 @@ public class EntTreeSmall extends Prop {
         this.sizeX = 2;
         this.sizeY = 2;
 
+        System.out.println("Spawned a tree!!! at: x" + this.cellX + " y" + this.cellY);
+
         this.setTexture(TextureLoader.loadTexture("/textures/entities/tree_small.png"));
     }
 }

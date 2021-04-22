@@ -80,15 +80,6 @@ public class Sound {
     public void clipVolume(Clip clip, float vol) {
         FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 
-        /*System.out.println(gainControl.getMinimum() + " -> " + gainControl.getMaximum());
-
-        float range = gainControl.getMaximum() - gainControl.getMinimum();
-        float gain = (range * vol) + gainControl.getMinimum();
-
-        System.out.println(gain);
-
-        gainControl.setValue(gain);*/
-
         gainControl.setValue(13f * (float) Math.log10(vol) * Game.globalVolume);
     }
 }

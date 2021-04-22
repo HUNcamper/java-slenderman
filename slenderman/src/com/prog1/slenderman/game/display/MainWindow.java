@@ -100,7 +100,9 @@ public class MainWindow extends JFrame {
                 EntFloorGrass grassFloor = new EntFloorGrass(x, y, 1, 1);
                 floorArray[y][x] = grassFloor;
 
-                Game.mainView.add(grassFloor.getLabel(), 0, 0);
+                //Game.mainView.add(grassFloor.getLabel(), 0, 0);
+
+                Game.loadedLevel.spawnEntity(grassFloor, 0, x, y);
             }
         }
 

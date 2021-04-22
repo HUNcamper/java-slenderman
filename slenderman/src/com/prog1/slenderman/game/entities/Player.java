@@ -33,6 +33,21 @@ public class Player extends EntityVisible {
         this.setTexture(this.directions[2]);
     }
 
+    public EntityVisible checkCollision(int layer, int x, int y) {
+        return Game.loadedLevel.getEntity(layer, x, y);
+    }
+
+    public void playFootstep() {
+        System.out.println("Trying to play sound at x" + this.cellX + " y" + this.cellY);
+        EntityVisible floor = Game.loadedLevel.getEntity(0, this.cellX, this.cellY);
+
+        if (floor != null) {
+            if (floor instanceof EntFloor) {
+                ((EntFloor) floor).step();
+            }
+        }
+    }
+
     @Override
     public void handleInput(ActionEvent e) {
         String key = e.getActionCommand();
@@ -73,6 +88,8 @@ public class Player extends EntityVisible {
                 this.setCellX(this.cellX - 1);
                 break;
         }
+
+        playFootstep();
 
         Game.update();
     }

@@ -25,15 +25,16 @@ public class Game {
     public static ArrayList<Entity> entityList;
     public static HashMap<String, Texture> texturePool;
     public static int gridSize = 50;
+    public static boolean newStep = false;
 
     public Game() {
         Game.texturePool = new HashMap<String, Texture>();
         Game.entityList = new ArrayList<Entity>();
         Game.mainView = new MainView();
         Game.mainCamera = new MainCamera();
-        Game.mainWindow = new MainWindow();
-        Game.mainPlayer = new Player(1, 1, 2, 2);
         Game.loadedLevel = LevelGenerator.random();
+        Game.mainWindow = new MainWindow();
+        Game.mainPlayer = new Player(0, 0, 1, 1);
 
         Game.mainWindow.update();
 
@@ -45,8 +46,8 @@ public class Game {
 
         Game.texturePool.put("dev.error", Texture.fallbackTexture);
 
-        Game.loadedLevel.spawnEntity(Game.mainPlayer, 1, 0, 0);
-        Game.loadedLevel.spawnEntity(new EntTreeSmall(), 1, 6, 6);
+        Game.loadedLevel.spawnEntity(Game.mainPlayer, 1, 3, 3);
+        Game.loadedLevel.spawnEntity(new EntTreeSmall(), 2, 6, 6);
         //Game.mainView.add(Game.mainPlayer.getLabel(), 1, 0);
 
         Action handleKeyPress = new AbstractAction() {
@@ -67,9 +68,17 @@ public class Game {
     }
 
     public static void update() {
-        //Game.mainCamera.followPlayer();
+        Game.mainCamera.followPlayer();
         Game.mainView.update();
         Game.mainWindow.update();
+
+        for (Entity ent : Game.entityList) {
+            ent.update();
+        }
+
+        Game.newStep = false;
+
+        System.out.println("Currently used textures: " + Game.texturePool.size());
     }
 
     protected void addKeyBinding(String name, int keyCode, Action action) {

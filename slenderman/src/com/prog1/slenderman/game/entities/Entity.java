@@ -21,4 +21,8 @@ public abstract class Entity {
     public void handleInput(ActionEvent e) {
 
     }
+
+    public void update() {
+
+    }
 }
