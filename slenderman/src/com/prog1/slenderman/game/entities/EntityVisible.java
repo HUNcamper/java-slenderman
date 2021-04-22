@@ -8,6 +8,13 @@ import com.prog1.slenderman.game.resource.Texture;
 import javax.swing.*;
 import java.net.URL;
 
+enum LayerType {
+    LAYER_FLOOR,
+    LAYER_COLLIDE,
+    LAYER_NOCOLLIDE,
+    LAYER_SLENDERMAN
+};
+
 public abstract class EntityVisible extends Entity {
     public int cellX = 0;
     public int cellY = 0;

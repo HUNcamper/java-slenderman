@@ -75,11 +75,13 @@ public class Game {
         Game.mainView.update();
         Game.mainWindow.update();
 
-        for (Entity ent : Game.entityList) {
-            ent.update();
-        }
+        if (Game.newStep) {
+            for (Entity ent : Game.entityList) {
+                ent.update();
+            }
 
-        Game.newStep = false;
+            Game.newStep = false;
+        }
 
         System.out.println("Currently used textures: " + Game.texturePool.size());
 

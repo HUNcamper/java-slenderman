@@ -43,8 +43,8 @@ public class MainWindow extends JFrame {
         Game.mainView.setSize(1280, 720);
         Game.mainView.setLayout(null); //using no layout managers
 
-        Game.mainView.add(b, 5, 0);//adding button in JFrame
-        Game.mainView.add(b2, 5, 0);//adding button in JFrame
+        //Game.mainView.add(b, 5, 0);//adding button in JFrame
+        //Game.mainView.add(b2, 5, 0);//adding button in JFrame
 
         this.add(Game.mainView);
 

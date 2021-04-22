@@ -70,6 +70,8 @@ public class Player extends EntityVisible {
     }
 
     public void move(Direction dir) {
+        Game.newStep = true;
+
         switch(dir) {
             case UP:
                 this.texture = this.directions[0];

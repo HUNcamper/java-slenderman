@@ -75,8 +75,8 @@ public class Texture {
     }
 
     public void resizeToCameraOffset() {
-        int width = (int) (Game.gridSize * this.sizeX * Game.mainView.zoom);
-        int height = (int) (Game.gridSize * this.sizeY * Game.mainView.zoom);
+        int width = (int) Math.floor(Game.gridSize * this.sizeX * Game.mainView.zoom);
+        int height = (int) Math.floor(Game.gridSize * this.sizeY * Game.mainView.zoom);
 
         resize(width, height);
     }
