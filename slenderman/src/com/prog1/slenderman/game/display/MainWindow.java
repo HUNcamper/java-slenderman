@@ -3,10 +3,7 @@ package com.prog1.slenderman.game.display;
 import com.prog1.slenderman.Main;
 import com.prog1.slenderman.game.Game;
 import com.prog1.slenderman.game.entities.*;
-import com.prog1.slenderman.game.resource.Sound;
-import com.prog1.slenderman.game.resource.Texture;
-import com.prog1.slenderman.game.resource.TextureLoader;
-import com.prog1.slenderman.game.resource.URLHandler;
+import com.prog1.slenderman.game.resource.*;
 
 import javax.imageio.ImageIO;
 import javax.sound.sampled.UnsupportedAudioFileException;

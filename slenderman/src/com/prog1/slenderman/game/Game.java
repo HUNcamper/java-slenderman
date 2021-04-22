@@ -3,6 +3,7 @@ package com.prog1.slenderman.game;
 import com.prog1.slenderman.game.display.MainCamera;
 import com.prog1.slenderman.game.display.MainView;
 import com.prog1.slenderman.game.display.MainWindow;
+import com.prog1.slenderman.game.entities.EntTreeSmall;
 import com.prog1.slenderman.game.entities.Entity;
 import com.prog1.slenderman.game.entities.Player;
 import com.prog1.slenderman.game.level.Level;
@@ -31,7 +32,7 @@ public class Game {
         Game.mainView = new MainView();
         Game.mainCamera = new MainCamera();
         Game.mainWindow = new MainWindow();
-        Game.mainPlayer = new Player(0, 0, 1, 1);
+        Game.mainPlayer = new Player(1, 1, 2, 2);
         Game.loadedLevel = LevelGenerator.random();
 
         Game.mainWindow.update();
@@ -45,6 +46,7 @@ public class Game {
         Game.texturePool.put("dev.error", Texture.fallbackTexture);
 
         Game.loadedLevel.spawnEntity(Game.mainPlayer, 1, 0, 0);
+        Game.loadedLevel.spawnEntity(new EntTreeSmall(), 1, 6, 6);
         //Game.mainView.add(Game.mainPlayer.getLabel(), 1, 0);
 
         Action handleKeyPress = new AbstractAction() {

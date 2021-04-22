@@ -51,21 +51,21 @@ public class Level {
         return true;
     }
 
-    public boolean moveEntity(int from_layer, int from_cell_x, int from_cell_y, int to_layer, int to_cell_x, int to_cell_y) {
-        if (isOutOfBounds(from_cell_x, from_cell_y) || isOutOfBounds(to_cell_x, to_cell_y)) return false;
+    public boolean moveEntity(int fromLayer, int fromCellX, int fromCellY, int toLayer, int toCellX, int toCellY) {
+        if (isOutOfBounds(fromCellX, fromCellY) || isOutOfBounds(toCellX, toCellY)) return false;
 
-        if (entities[from_layer][from_cell_y][from_cell_x] == null ||
-                entities[to_layer][to_cell_y][to_cell_x] != null) {
+        if (entities[fromLayer][fromCellY][fromCellX] == null ||
+                entities[toLayer][toCellY][toCellX] != null) {
             return false;
         }
 
-        EntityVisible toMove = entities[from_layer][from_cell_y][from_cell_x];
+        EntityVisible toMove = entities[fromLayer][fromCellY][fromCellX];
 
-        entities[to_layer][to_cell_y][to_cell_x] = toMove;
-        entities[from_layer][from_cell_y][from_cell_x] = null;
+        entities[toLayer][toCellY][toCellX] = toMove;
+        entities[fromLayer][fromCellY][fromCellX] = null;
 
-        toMove.setCellX(to_cell_x);
-        toMove.setCellY(to_cell_y);
+        toMove.cellX = toCellX;
+        toMove.cellY = toCellY;
 
         return true;
     }

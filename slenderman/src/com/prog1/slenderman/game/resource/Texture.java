@@ -15,8 +15,8 @@ public class Texture {
     private BufferedImage bufferedImage;
     private BufferedImage originalBufferedImage;
     private ImageIcon icon = null;
-    private int sizeX = Game.gridSize;
-    private int sizeY = Game.gridSize;
+    private int sizeX = 1;
+    private int sizeY = 1;
 
     public boolean applyViewZoom = true;
 
@@ -54,16 +54,13 @@ public class Texture {
         this.originalBufferedImage = bufferedImage;
     }
 
-    public void resize(int sizeX, int sizeY) {
-        if(sizeX == this.sizeX && sizeY == this.sizeY) return; // Ha az értékek megegyeznek, ne legyen változás
+    public void resize(int width, int height) {
+        if(width == bufferedImage.getWidth() && height == bufferedImage.getHeight()) return; // Ha az értékek megegyeznek, ne legyen változás
 
         this.icon = null; // resized, need new icon
 
-        this.sizeX = sizeX;
-        this.sizeY = sizeY;
-
-        Image tmp = this.originalBufferedImage.getScaledInstance(sizeX, sizeY, Image.SCALE_SMOOTH);
-        BufferedImage dimg = new BufferedImage(sizeX, sizeY, BufferedImage.TYPE_INT_ARGB);
+        Image tmp = this.originalBufferedImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        BufferedImage dimg = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
         Graphics2D g2d = dimg.createGraphics();
         g2d.drawImage(tmp, 0, 0, null);
@@ -73,8 +70,8 @@ public class Texture {
     }
 
     public void resizeToCameraOffset() {
-        int width = (int) (Game.gridSize * Game.mainView.zoom);
-        int height = (int) (Game.gridSize * Game.mainView.zoom);
+        int width = (int) (Game.gridSize * this.sizeX * Game.mainView.zoom);
+        int height = (int) (Game.gridSize * this.sizeY * Game.mainView.zoom);
 
         resize(width, height);
     }
@@ -98,8 +95,8 @@ public class Texture {
     public void setTexture(BufferedImage img) {
         this.bufferedImage = img;
         this.originalBufferedImage = img;
-        this.sizeX = img.getWidth();
-        this.sizeY = img.getHeight();
+        //this.sizeX = img.getWidth();
+        //this.sizeY = img.getHeight();
     }
 
     public ImageIcon getIcon() {
@@ -112,7 +109,7 @@ public class Texture {
 
     private void fallbackTexture() {
         // Error texture
-        BufferedImage image = new BufferedImage(this.sizeX, this.sizeY, BufferedImage.TYPE_INT_RGB);
+        BufferedImage image = new BufferedImage(this.sizeX * Game.gridSize, this.sizeY * Game.gridSize, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics = image.createGraphics();
 
         graphics.setPaint(new Color(194, 0, 0));

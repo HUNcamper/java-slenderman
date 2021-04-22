@@ -31,7 +31,7 @@ public class Player extends EntityVisible {
     @Override
     public void handleInput(ActionEvent e) {
         String key = e.getActionCommand();
-        System.out.println("Pressed: " + key);
+        //System.out.println("Pressed: " + key);
 
         switch(key) {
             case "w":

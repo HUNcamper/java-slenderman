@@ -9,8 +9,8 @@ import javax.swing.*;
 import java.net.URL;
 
 public abstract class EntityVisible extends Entity {
-    protected int cellX = 0;
-    protected int cellY = 0;
+    public int cellX = 0;
+    public int cellY = 0;
     protected int sizeX = 1;
     protected int sizeY = 1;
     protected int layer = 0;
@@ -39,10 +39,12 @@ public abstract class EntityVisible extends Entity {
 
     public void setTexture(Texture texture) {
         this.texture = texture;
+        //this.texture.setSizeX(this.sizeX);
+        //this.texture.setSizeY(this.sizeY);
     }
 
     public Texture getTexture() {
-        return texture;
+        return this.texture;
     }
 
     public JLabel getLabel() {
@@ -99,6 +101,8 @@ public abstract class EntityVisible extends Entity {
         if (Game.loadedLevel.getEntity(layer, this.cellX, this.cellY) != this) return false;
         if (!Game.loadedLevel.moveEntity(layer, this.cellX, this.cellY, layer, cellX, cellY)) return false;
 
+        System.out.println("Success");
+
         this.cellX = cellX;
         this.cellY = cellY;
         alignToCameraOffset();
@@ -112,8 +116,8 @@ public abstract class EntityVisible extends Entity {
 
         //int new_x = (int) (this.pos_x * 50 * view.zoom);
         //int new_y = (int) (this.pos_y * 50 * view.zoom);
-        int new_x = (int) Math.floor(this.cellX * this.getWidth() * view.zoom - camera.pos_x * view.zoom);
-        int new_y = (int) Math.floor(this.cellY * this.getHeight() * view.zoom - camera.pos_y * view.zoom);
+        int new_x = (int) Math.floor(this.cellX * Game.gridSize * view.zoom - camera.pos_x * view.zoom);
+        int new_y = (int) Math.floor(this.cellY * Game.gridSize * view.zoom - camera.pos_y * view.zoom);
 
         int new_width = (int) Math.floor(this.getWidth() * view.zoom);
         int new_height = (int) Math.floor(this.getHeight() * view.zoom);
