@@ -89,6 +89,12 @@ public class MainWindow extends JFrame {
         }
         this.titleLabel.setText("PAGES: " + Game.pagesCollected);
         this.titleLabel.setBounds(0, 0, Game.mainWindow.getWidth(), this.titleLabel.getHeight());
-        this.interactLabel.setBounds(0, 0, Game.mainView.getWidth(), Game.mainView.getHeight());
+
+        if (Game.mainPlayer.canInteract()) {
+            this.interactLabel.setVisible(true);
+            this.interactLabel.setBounds(0, 0, Game.mainView.getWidth(), Game.mainView.getHeight());
+        } else if (this.interactLabel.isVisible()) {
+            this.interactLabel.setVisible(false);
+        }
     }
 }

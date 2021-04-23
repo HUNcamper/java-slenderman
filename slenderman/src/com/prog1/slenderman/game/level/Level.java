@@ -6,13 +6,7 @@ import com.prog1.slenderman.game.entities.prop.PropTreeSmall;
 import com.prog1.slenderman.game.entities.EntityVisible;
 
 import javax.swing.*;
-
-enum Layer {
-    LAYER_FLOOR,
-    LAYER_PLAYER,
-    LAYER_PROP,
-    LAYER_SLENDERMAN
-};
+import java.util.List;
 
 public class Level {
     private final int rows;
@@ -21,14 +15,23 @@ public class Level {
 
     private EntityVisible[][][] entities;
 
+    public static int manhattanDistance(int x1, int y1, int x2, int y2) {
+        return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+    }
+
+    public List<int[]> getManhattanCoordinates(int cellX, int cellY, int distance, boolean maximum) {
+        for (int y = 0; y < this.rows; y++) {
+            for (int x = 0; x < this.columns; x++) {
+                if (Level.manhattanDistance(cellX, cellY, x, y) < distance)
+            }
+        }
+    }
+
     public Level(int layers, int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
 
         this.entities = new EntityVisible[layers][rows][columns];
-
-        spawnEntity(new PropTreeSmall(), 2, 6, 6);
-        spawnEntity(new PropRock(), 2, 2, 2);
     }
 
     public boolean spawnEntity(EntityVisible entity, int layer, int cellX, int cellY) {
@@ -85,6 +88,8 @@ public class Level {
     }
 
     public EntityVisible getEntity(int layer, int cellX, int cellY) {
+        if (isOutOfBounds(cellX, cellY)) return null;
+
         return entities[layer][cellY][cellX];
     }
 

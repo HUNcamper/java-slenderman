@@ -3,6 +3,7 @@ package com.prog1.slenderman.game.entities;
 import com.prog1.slenderman.game.Game;
 import com.prog1.slenderman.game.entities.floor.EntFloor;
 import com.prog1.slenderman.game.entities.prop.Prop;
+import com.prog1.slenderman.game.level.Level;
 import com.prog1.slenderman.game.resource.Sound;
 import com.prog1.slenderman.game.resource.SoundLoader;
 import com.prog1.slenderman.game.resource.Texture;
@@ -11,15 +12,19 @@ import com.prog1.slenderman.game.resource.TextureLoader;
 import java.awt.event.ActionEvent;
 
 public class Player extends EntityVisible {
-    private Texture[] directions = new Texture[4]; // 0 up, 1 right, 2 down, 3 left
+    private final Texture[] directions = new Texture[4]; // 0 up, 1 right, 2 down, 3 left
     private Prop interactWith;
-    private Sound paperSound;
 
     public static enum Direction {
         UP,
         RIGHT,
         DOWN,
         LEFT
+    }
+
+    @Override
+    public void newStep() {
+        System.out.println("Manhattan distance from 0: " + Level.manhattanDistance(0, 0, this.cellX, this.cellY));
     }
 
     public Player(int pos_x, int pos_y, int size_x, int size_y) {
@@ -37,8 +42,6 @@ public class Player extends EntityVisible {
         this.acceptInput = true;
 
         this.setTexture(this.directions[2]);
-
-        this.paperSound = SoundLoader.loadSound("/sound/paper.wav");
     }
 
     private Prop getPaperSurface(int x, int y) {
@@ -90,19 +93,16 @@ public class Player extends EntityVisible {
         if (this.interactWith == null) return;
 
         this.interactWith.interact();
-        paperSound.play();
 
         if (!this.interactWith.canInteract()) {
-            disableInteract();
+            this.interactWith = null;
         }
+
+        Game.update();
     }
 
-    public void enableInteract(Prop prop) {
-        this.interactWith = prop;
-    }
-
-    public void disableInteract() {
-        this.interactWith = null;
+    public boolean canInteract() {
+        return this.interactWith != null;
     }
 
     @Override
@@ -125,13 +125,12 @@ public class Player extends EntityVisible {
                 break;
             case "f":
                 interact();
-                Game.update();
                 break;
         }
     }
 
     public void move(Direction dir) {
-        disableInteract();
+        this.interactWith = null;
 
         switch (dir) {
             case UP:
@@ -139,36 +138,38 @@ public class Player extends EntityVisible {
                 if (!checkCollision(2, this.cellX, this.cellY - 1)) {
                     this.setCellY(this.cellY - 1);
                     Game.newStep = true;
+                    playFootstep();
                 }
-                enableInteract(getPaperSurface(this.cellX, this.cellY - 1));
+                this.interactWith = getPaperSurface(this.cellX, this.cellY - 1);
                 break;
             case RIGHT:
                 this.texture = this.directions[1];
                 if (!checkCollision(2, this.cellX + 1, this.cellY)) {
                     this.setCellX(this.cellX + 1);
                     Game.newStep = true;
+                    playFootstep();
                 }
-                enableInteract(getPaperSurface(this.cellX + 1, this.cellY));
+                this.interactWith = getPaperSurface(this.cellX + 1, this.cellY);
                 break;
             case DOWN:
                 this.texture = this.directions[2];
                 if (!checkCollision(2, this.cellX, this.cellY + 1)) {
                     this.setCellY(this.cellY + 1);
                     Game.newStep = true;
+                    playFootstep();
                 }
-                enableInteract(getPaperSurface(this.cellX, this.cellY + 1));
+                this.interactWith = getPaperSurface(this.cellX, this.cellY + 1);
                 break;
             case LEFT:
                 this.texture = this.directions[3];
                 if (!checkCollision(2, this.cellX - 1, this.cellY)) {
                     this.setCellX(this.cellX - 1);
                     Game.newStep = true;
+                    playFootstep();
                 }
-                enableInteract(getPaperSurface(this.cellX - 1, this.cellY));
+                this.interactWith = getPaperSurface(this.cellX - 1, this.cellY);
                 break;
         }
-
-        playFootstep();
 
         Game.update();
     }

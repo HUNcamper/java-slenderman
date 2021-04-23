@@ -9,7 +9,6 @@ public class PropRock extends Prop {
         this.paperSurface = true;
         this.sizeX = 3;
         this.sizeY = 3;
-        this.collisions = true;
 
         this.setTexture(TextureLoader.loadTexture("/textures/entities/rock.png"));
     }
