@@ -6,6 +6,8 @@ import com.prog1.slenderman.game.entities.prop.PropTreeSmall;
 import com.prog1.slenderman.game.entities.EntityVisible;
 
 import javax.swing.*;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Level {
@@ -20,11 +22,25 @@ public class Level {
     }
 
     public List<int[]> getManhattanCoordinates(int cellX, int cellY, int distance, boolean maximum) {
+        List<int[]> coordinateList = new ArrayList<int[]>();
+
         for (int y = 0; y < this.rows; y++) {
             for (int x = 0; x < this.columns; x++) {
-                if (Level.manhattanDistance(cellX, cellY, x, y) < distance)
+                int manhattan = Level.manhattanDistance(cellX, cellY, x, y);
+
+                if (maximum) {
+                    if (manhattan <= distance) {
+                        coordinateList.add(new int[]{x, y});
+                    }
+                } else {
+                    if (manhattan >= distance) {
+                        coordinateList.add(new int[]{x, y});
+                    }
+                }
             }
         }
+
+        return coordinateList;
     }
 
     public Level(int layers, int rows, int columns) {
