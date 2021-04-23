@@ -11,8 +11,9 @@ import com.prog1.slenderman.game.resource.TextureLoader;
 import java.awt.event.ActionEvent;
 
 public class Player extends EntityVisible {
-    Texture[] directions = new Texture[4]; // 0 up, 1 right, 2 down, 3 left
-    Sound paperSound;
+    private Texture[] directions = new Texture[4]; // 0 up, 1 right, 2 down, 3 left
+    private Prop interactWith;
+    private Sound paperSound;
 
     public static enum Direction {
         UP,
@@ -56,7 +57,7 @@ public class Player extends EntityVisible {
 
             if (prop.hasPaper) {
                 System.out.println("Paper!!");
-                paperSound.play();
+                //interactWithProp(prop);
                 return prop;
             }
         }
@@ -85,6 +86,25 @@ public class Player extends EntityVisible {
         }
     }
 
+    public void interact() {
+        if (this.interactWith == null) return;
+
+        this.interactWith.interact();
+        paperSound.play();
+
+        if (!this.interactWith.canInteract()) {
+            disableInteract();
+        }
+    }
+
+    public void enableInteract(Prop prop) {
+        this.interactWith = prop;
+    }
+
+    public void disableInteract() {
+        this.interactWith = null;
+    }
+
     @Override
     public void handleInput(ActionEvent e) {
         String key = e.getActionCommand();
@@ -103,10 +123,15 @@ public class Player extends EntityVisible {
             case "a":
                 move(Direction.LEFT);
                 break;
+            case "f":
+                interact();
+                Game.update();
+                break;
         }
     }
 
     public void move(Direction dir) {
+        disableInteract();
 
         switch (dir) {
             case UP:
@@ -115,7 +140,7 @@ public class Player extends EntityVisible {
                     this.setCellY(this.cellY - 1);
                     Game.newStep = true;
                 }
-                getPaperSurface(this.cellX, this.cellY - 1);
+                enableInteract(getPaperSurface(this.cellX, this.cellY - 1));
                 break;
             case RIGHT:
                 this.texture = this.directions[1];
@@ -123,7 +148,7 @@ public class Player extends EntityVisible {
                     this.setCellX(this.cellX + 1);
                     Game.newStep = true;
                 }
-                getPaperSurface(this.cellX + 1, this.cellY);
+                enableInteract(getPaperSurface(this.cellX + 1, this.cellY));
                 break;
             case DOWN:
                 this.texture = this.directions[2];
@@ -131,7 +156,7 @@ public class Player extends EntityVisible {
                     this.setCellY(this.cellY + 1);
                     Game.newStep = true;
                 }
-                getPaperSurface(this.cellX, this.cellY + 1);
+                enableInteract(getPaperSurface(this.cellX, this.cellY + 1));
                 break;
             case LEFT:
                 this.texture = this.directions[3];
@@ -139,7 +164,7 @@ public class Player extends EntityVisible {
                     this.setCellX(this.cellX - 1);
                     Game.newStep = true;
                 }
-                getPaperSurface(this.cellX - 1, this.cellY);
+                enableInteract(getPaperSurface(this.cellX - 1, this.cellY));
                 break;
         }
 

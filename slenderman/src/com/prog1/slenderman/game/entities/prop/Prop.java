@@ -1,5 +1,6 @@
 package com.prog1.slenderman.game.entities.prop;
 
+import com.prog1.slenderman.game.Game;
 import com.prog1.slenderman.game.entities.EntityVisible;
 
 import java.net.URL;
@@ -14,6 +15,15 @@ public class Prop extends EntityVisible {
 
     public Prop(int pos_x, int pos_y, int size_x, int size_y) {
         super(pos_x, pos_y, size_x, size_y);
+    }
+
+    public void interact() {
+        this.hasPaper = false;
+        Game.pagesCollected++;
+    }
+
+    public boolean canInteract() {
+        return this.hasPaper;
     }
 
     public boolean isPaperSurface() {

@@ -1,7 +1,7 @@
 package com.prog1.slenderman.game.level;
 
 import com.prog1.slenderman.game.Game;
-import com.prog1.slenderman.game.entities.prop.PropRockSmall;
+import com.prog1.slenderman.game.entities.prop.PropRock;
 import com.prog1.slenderman.game.entities.prop.PropTreeSmall;
 import com.prog1.slenderman.game.entities.EntityVisible;
 
@@ -28,7 +28,7 @@ public class Level {
         this.entities = new EntityVisible[layers][rows][columns];
 
         spawnEntity(new PropTreeSmall(), 2, 6, 6);
-        spawnEntity(new PropRockSmall(), 2, 3, 3);
+        spawnEntity(new PropRock(), 2, 2, 2);
     }
 
     public boolean spawnEntity(EntityVisible entity, int layer, int cellX, int cellY) {

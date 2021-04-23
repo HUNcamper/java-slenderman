@@ -6,6 +6,6 @@ public abstract class LevelGenerator {
     }
 
     public static Level random() {
-        return new Level(3, 15, 15);
+        return new Level(4, 15, 15);
     }
 }

@@ -64,6 +64,7 @@ public class Game {
         addKeyBinding("d", KeyEvent.VK_D, handleKeyPress);
         addKeyBinding("s", KeyEvent.VK_S, handleKeyPress);
         addKeyBinding("a", KeyEvent.VK_A, handleKeyPress);
+        addKeyBinding("f", KeyEvent.VK_F, handleKeyPress);
 
         Game.update();
     }
@@ -87,8 +88,8 @@ public class Game {
     }
 
     protected void addKeyBinding(String name, int keyCode, Action action) {
-        InputMap inputMap = Game.mainView.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
-        ActionMap actionMap = Game.mainView.getActionMap();
+        InputMap inputMap = Game.mainWindow.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+        ActionMap actionMap = Game.mainWindow.getRootPane().getActionMap();
 
         inputMap.put(KeyStroke.getKeyStroke(keyCode, 0, false), name + ".pressed");
         actionMap.put(name + ".pressed", action);

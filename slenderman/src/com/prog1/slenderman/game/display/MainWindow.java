@@ -11,11 +11,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 
 public class MainWindow extends JFrame {
-    //private JLabel[][] labelArray = new JLabel[15][15];
-    private EntFloor[][] floorArray = new EntFloor[15][15];
-    private Texture grassTexture;
-
     private JLabel titleLabel;
+    private JLabel interactLabel;
 
     public MainWindow() {
         this.getContentPane().setBackground(Color.BLACK);
@@ -24,74 +21,34 @@ public class MainWindow extends JFrame {
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JButton b = new JButton("grass :)");//creating instance of JButton
-        b.setBounds(130, 100, 150, 40);//x axis, y axis, width, height
-
-        JButton b2 = new JButton("concrete >:(");//creating instance of JButton
-        b2.setBounds(130, 150, 150, 40);//x axis, y axis, width, height
-
         Game.mainView.setBounds(0, 0, this.getWidth(), this.getHeight());
         Game.mainView.setVisible(true);
         Game.mainView.setSize(1280, 720);
         Game.mainView.setLayout(null); //using no layout managers
 
-        //Game.mainView.add(b, 5, 0);//adding button in JFrame
-        //Game.mainView.add(b2, 5, 0);//adding button in JFrame
-
         this.add(Game.mainView);
+
+        this.interactLabel = new JLabel("Press 'F' to pick up", SwingConstants.CENTER);
+        this.interactLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 32));
+        this.interactLabel.setForeground(Color.WHITE);
+        Game.mainView.add(this.interactLabel, 4, 0);
+        //this.interactLabel.setBounds(CenterFactory.CenterHorizontal(this.interactLabel, Game.mainView.getWidth()), CenterFactory.CenterVertical(this.interactLabel, Game.mainView.getHeight()), 100, 100 );
 
         this.setUndecorated(true);
         this.getRootPane().setWindowDecorationStyle( JRootPane. FRAME );
 
-        this.titleLabel = new JLabel("SLENDERMAN", SwingConstants.CENTER);
-        this.titleLabel.setBounds(0, 0, 1000, 32);
-
+        this.titleLabel = new JLabel("PAGES: ", SwingConstants.CENTER);
+        this.titleLabel.setBounds(0, 0, 0, 32);
         this.titleLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 32));
+        this.titleLabel.setForeground(Color.WHITE);
 
         this.add(this.titleLabel);
-
-        b.addActionListener((ActionEvent e) -> {
-
-            try {
-                for (int y = 0; y < 15; y++) {
-                    for (int x = 0; x < 15; x++) {
-                        floorArray[y][x].setTexture(TextureLoader.loadTexture("/textures/grass.png"));
-                    }
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-
-            Game.mainView.baseZoom += 0.2;
-
-            Game.update();
-        });
-
-        b2.addActionListener((ActionEvent e) -> {
-
-            try {
-                for (int y = 0; y < 15; y++) {
-                    for (int x = 0; x < 15; x++) {
-                        floorArray[y][x].setTexture(TextureLoader.loadTexture("/textures/stone.png"));
-                    }
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-
-            if (Game.mainView.baseZoom - 0.2 > 0) Game.mainView.baseZoom -= 0.2;
-
-            Game.update();
-        });
 
         //this.grassTexture = TextureLoader.loadTexture("/textures/grass.png");
 
         for (int y = 0; y < 15; y++) {
             for (int x = 0; x < 15; x++) {
                 EntFloorGrass grassFloor = new EntFloorGrass(x, y, 1, 1);
-                floorArray[y][x] = grassFloor;
-
-                //Game.mainView.add(grassFloor.getLabel(), 0, 0);
 
                 Game.loadedLevel.spawnEntity(grassFloor, 0, x, y);
             }
@@ -130,7 +87,8 @@ public class MainWindow extends JFrame {
                 ((EntityVisible) ent).alignToCameraOffset();
             }
         }
-
-        this.titleLabel.setBounds(CenterFactory.CenterHorizontal(this.titleLabel), this.titleLabel.getY(), this.titleLabel.getWidth(), this.titleLabel.getHeight());
+        this.titleLabel.setText("PAGES: " + Game.pagesCollected);
+        this.titleLabel.setBounds(0, 0, Game.mainWindow.getWidth(), this.titleLabel.getHeight());
+        this.interactLabel.setBounds(0, 0, Game.mainView.getWidth(), Game.mainView.getHeight());
     }
 }

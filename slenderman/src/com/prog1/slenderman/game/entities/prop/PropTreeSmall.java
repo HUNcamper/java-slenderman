@@ -13,6 +13,6 @@ public class PropTreeSmall extends Prop {
 
         System.out.println("Spawned a tree!!! at: x" + this.cellX + " y" + this.cellY);
 
-        this.setTexture(TextureLoader.loadTexture("/textures/entities/tree_small.png"));
+        this.setTexture(TextureLoader.loadTexture("/textures/entities/tree.png"));
     }
 }
