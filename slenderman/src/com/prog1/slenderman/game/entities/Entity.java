@@ -19,7 +19,7 @@ public abstract class Entity {
 
     }
 
-    public void update() {
+    public void newStep() {
 
     }
 }

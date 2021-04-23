@@ -1,10 +1,18 @@
 package com.prog1.slenderman.game.level;
 
 import com.prog1.slenderman.game.Game;
+import com.prog1.slenderman.game.entities.PropRockSmall;
+import com.prog1.slenderman.game.entities.PropTreeSmall;
 import com.prog1.slenderman.game.entities.EntityVisible;
-import com.prog1.slenderman.game.resource.Texture;
 
 import javax.swing.*;
+
+enum Layer {
+    LAYER_FLOOR,
+    LAYER_PLAYER,
+    LAYER_PROP,
+    LAYER_SLENDERMAN
+};
 
 public class Level {
     private final int rows;
@@ -18,6 +26,9 @@ public class Level {
         this.columns = columns;
 
         this.entities = new EntityVisible[layers][rows][columns];
+
+        spawnEntity(new PropTreeSmall(), 2, 6, 6);
+        spawnEntity(new PropRockSmall(), 2, 3, 3);
     }
 
     public boolean spawnEntity(EntityVisible entity, int layer, int cellX, int cellY) {

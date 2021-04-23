@@ -3,7 +3,6 @@ package com.prog1.slenderman.game;
 import com.prog1.slenderman.game.display.MainCamera;
 import com.prog1.slenderman.game.display.MainView;
 import com.prog1.slenderman.game.display.MainWindow;
-import com.prog1.slenderman.game.entities.EntTreeSmall;
 import com.prog1.slenderman.game.entities.Entity;
 import com.prog1.slenderman.game.entities.Player;
 import com.prog1.slenderman.game.level.Level;
@@ -28,6 +27,7 @@ public class Game {
     public static HashMap<String, Sound> soundPool;
     public static int gridSize = 50;
     public static boolean newStep = false;
+    public static int pagesCollected = 0;
 
     public Game() {
         Game.texturePool = new HashMap<String, Texture>();
@@ -50,8 +50,6 @@ public class Game {
         Game.texturePool.put("dev.error", Texture.fallbackTexture);
 
         Game.loadedLevel.spawnEntity(Game.mainPlayer, 1, 3, 3);
-        Game.loadedLevel.spawnEntity(new EntTreeSmall(), 2, 6, 6);
-        //Game.mainView.add(Game.mainPlayer.getLabel(), 1, 0);
 
         Action handleKeyPress = new AbstractAction() {
             @Override
@@ -77,7 +75,7 @@ public class Game {
 
         if (Game.newStep) {
             for (Entity ent : Game.entityList) {
-                ent.update();
+                ent.newStep();
             }
 
             Game.newStep = false;

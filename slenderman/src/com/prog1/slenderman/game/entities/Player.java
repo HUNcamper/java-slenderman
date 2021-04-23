@@ -33,8 +33,14 @@ public class Player extends EntityVisible {
         this.setTexture(this.directions[2]);
     }
 
-    public EntityVisible checkCollision(int layer, int x, int y) {
-        return Game.loadedLevel.getEntity(layer, x, y);
+    public boolean checkCollision(int layer, int x, int y) {
+        if (Game.loadedLevel.isOutOfBounds(x, y)) return true;
+
+        EntityVisible ent = Game.loadedLevel.getEntity(layer, x, y);
+
+        if (ent != null && ent.collisions) return true;
+
+        return false;
     }
 
     public void playFootstep() {
@@ -70,24 +76,35 @@ public class Player extends EntityVisible {
     }
 
     public void move(Direction dir) {
-        Game.newStep = true;
 
         switch(dir) {
             case UP:
                 this.texture = this.directions[0];
-                this.setCellY(this.cellY - 1);
+                if (!checkCollision(2, this.cellX, this.cellY - 1)) {
+                    this.setCellY(this.cellY - 1);
+                    Game.newStep = true;
+                }
                 break;
             case RIGHT:
                 this.texture = this.directions[1];
-                this.setCellX(this.cellX + 1);
+                if (!checkCollision(2, this.cellX + 1, this.cellY)) {
+                    this.setCellX(this.cellX + 1);
+                    Game.newStep = true;
+                }
                 break;
             case DOWN:
                 this.texture = this.directions[2];
-                this.setCellY(this.cellY + 1);
+                if (!checkCollision(2, this.cellX, this.cellY + 1)) {
+                    this.setCellY(this.cellY + 1);
+                    Game.newStep = true;
+                }
                 break;
             case LEFT:
                 this.texture = this.directions[3];
-                this.setCellX(this.cellX - 1);
+                if (!checkCollision(2, this.cellX - 1, this.cellY)) {
+                    this.setCellX(this.cellX - 1);
+                    Game.newStep = true;
+                }
                 break;
         }
 

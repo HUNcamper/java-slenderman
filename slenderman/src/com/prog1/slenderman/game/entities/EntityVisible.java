@@ -8,13 +8,6 @@ import com.prog1.slenderman.game.resource.Texture;
 import javax.swing.*;
 import java.net.URL;
 
-enum LayerType {
-    LAYER_FLOOR,
-    LAYER_COLLIDE,
-    LAYER_NOCOLLIDE,
-    LAYER_SLENDERMAN
-};
-
 public abstract class EntityVisible extends Entity {
     public int cellX = 0;
     public int cellY = 0;
@@ -23,6 +16,8 @@ public abstract class EntityVisible extends Entity {
     protected int layer = 0;
     protected JLabel label = new JLabel();
     protected Texture texture = Texture.fallbackTexture;
+
+    public boolean collisions = true;
 
     public EntityVisible() {
         super();
