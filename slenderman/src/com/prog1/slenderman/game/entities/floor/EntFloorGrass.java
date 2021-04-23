@@ -1,11 +1,7 @@
-package com.prog1.slenderman.game.entities;
+package com.prog1.slenderman.game.entities.floor;
 
-import com.prog1.slenderman.game.resource.Sound;
-import com.prog1.slenderman.game.resource.SoundLoader;
 import com.prog1.slenderman.game.resource.TextureLoader;
 
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class EntFloorGrass extends EntFloor {

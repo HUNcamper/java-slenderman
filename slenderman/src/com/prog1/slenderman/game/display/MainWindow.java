@@ -1,22 +1,14 @@
 package com.prog1.slenderman.game.display;
 
-import com.prog1.slenderman.Main;
 import com.prog1.slenderman.game.Game;
 import com.prog1.slenderman.game.entities.*;
+import com.prog1.slenderman.game.entities.floor.EntFloor;
+import com.prog1.slenderman.game.entities.floor.EntFloorGrass;
 import com.prog1.slenderman.game.resource.*;
 
-import javax.imageio.ImageIO;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainWindow extends JFrame {
     //private JLabel[][] labelArray = new JLabel[15][15];

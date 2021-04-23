@@ -39,8 +39,6 @@ public class Game {
         Game.mainWindow = new MainWindow();
         Game.mainPlayer = new Player(0, 0, 1, 1);
 
-        Game.mainWindow.update();
-
         Game.mainWindow.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent componentEvent) {
                 Game.update();
@@ -49,7 +47,7 @@ public class Game {
 
         Game.texturePool.put("dev.error", Texture.fallbackTexture);
 
-        Game.loadedLevel.spawnEntity(Game.mainPlayer, 1, 3, 3);
+        Game.loadedLevel.spawnEntity(Game.mainPlayer, 1, 0, 0);
 
         Action handleKeyPress = new AbstractAction() {
             @Override
@@ -66,6 +64,8 @@ public class Game {
         addKeyBinding("d", KeyEvent.VK_D, handleKeyPress);
         addKeyBinding("s", KeyEvent.VK_S, handleKeyPress);
         addKeyBinding("a", KeyEvent.VK_A, handleKeyPress);
+
+        Game.update();
     }
 
     public static void update() {

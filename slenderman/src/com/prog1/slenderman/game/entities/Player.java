@@ -1,6 +1,8 @@
 package com.prog1.slenderman.game.entities;
 
 import com.prog1.slenderman.game.Game;
+import com.prog1.slenderman.game.entities.floor.EntFloor;
+import com.prog1.slenderman.game.entities.prop.Prop;
 import com.prog1.slenderman.game.resource.Texture;
 import com.prog1.slenderman.game.resource.TextureLoader;
 
@@ -33,6 +35,29 @@ public class Player extends EntityVisible {
         this.setTexture(this.directions[2]);
     }
 
+    private Prop getPaperSurface(int x, int y) {
+        // Először megnézzük, hogy a player pozícióján van-e collision nélküli prop
+        EntityVisible ent = Game.loadedLevel.getEntity(2, this.cellX, this.cellY);
+        if (!(ent instanceof Prop)) {
+            // Ami előttünk van
+            ent = Game.loadedLevel.getEntity(2, x, y);
+
+            // Nincs collision, ne vehessük le róla a papírt, hacsak nem benne állunk
+            if (ent != null && !ent.collisions) return null;
+        }
+
+        if (ent instanceof Prop) {
+            Prop prop = (Prop) ent;
+
+            if (prop.hasPaper) {
+                System.out.println("Paper!!");
+                return prop;
+            }
+        }
+
+        return null;
+    }
+
     public boolean checkCollision(int layer, int x, int y) {
         if (Game.loadedLevel.isOutOfBounds(x, y)) return true;
 
@@ -59,7 +84,7 @@ public class Player extends EntityVisible {
         String key = e.getActionCommand();
         //System.out.println("Pressed: " + key);
 
-        switch(key) {
+        switch (key) {
             case "w":
                 move(Direction.UP);
                 break;
@@ -77,13 +102,14 @@ public class Player extends EntityVisible {
 
     public void move(Direction dir) {
 
-        switch(dir) {
+        switch (dir) {
             case UP:
                 this.texture = this.directions[0];
                 if (!checkCollision(2, this.cellX, this.cellY - 1)) {
                     this.setCellY(this.cellY - 1);
                     Game.newStep = true;
                 }
+                getPaperSurface(this.cellX, this.cellY - 1);
                 break;
             case RIGHT:
                 this.texture = this.directions[1];
@@ -91,6 +117,7 @@ public class Player extends EntityVisible {
                     this.setCellX(this.cellX + 1);
                     Game.newStep = true;
                 }
+                getPaperSurface(this.cellX + 1, this.cellY);
                 break;
             case DOWN:
                 this.texture = this.directions[2];
@@ -98,6 +125,7 @@ public class Player extends EntityVisible {
                     this.setCellY(this.cellY + 1);
                     Game.newStep = true;
                 }
+                getPaperSurface(this.cellX, this.cellY + 1);
                 break;
             case LEFT:
                 this.texture = this.directions[3];
@@ -105,6 +133,7 @@ public class Player extends EntityVisible {
                     this.setCellX(this.cellX - 1);
                     Game.newStep = true;
                 }
+                getPaperSurface(this.cellX - 1, this.cellY);
                 break;
         }
 

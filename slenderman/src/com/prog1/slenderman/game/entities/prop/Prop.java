@@ -1,9 +1,12 @@
-package com.prog1.slenderman.game.entities;
+package com.prog1.slenderman.game.entities.prop;
+
+import com.prog1.slenderman.game.entities.EntityVisible;
 
 import java.net.URL;
 
 public class Prop extends EntityVisible {
     protected boolean paperSurface = false;
+    public boolean hasPaper = true;
 
     public Prop() {
         super();

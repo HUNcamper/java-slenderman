@@ -1,8 +1,8 @@
 package com.prog1.slenderman.game.level;
 
 import com.prog1.slenderman.game.Game;
-import com.prog1.slenderman.game.entities.PropRockSmall;
-import com.prog1.slenderman.game.entities.PropTreeSmall;
+import com.prog1.slenderman.game.entities.prop.PropRockSmall;
+import com.prog1.slenderman.game.entities.prop.PropTreeSmall;
 import com.prog1.slenderman.game.entities.EntityVisible;
 
 import javax.swing.*;

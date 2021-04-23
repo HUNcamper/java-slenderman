@@ -1,6 +1,7 @@
-package com.prog1.slenderman.game.entities;
+package com.prog1.slenderman.game.entities.floor;
 
 import com.prog1.slenderman.game.Game;
+import com.prog1.slenderman.game.entities.EntityVisible;
 import com.prog1.slenderman.game.resource.Sound;
 import com.prog1.slenderman.game.resource.SoundLoader;
 
