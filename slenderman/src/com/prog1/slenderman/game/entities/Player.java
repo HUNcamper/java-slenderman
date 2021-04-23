@@ -3,6 +3,8 @@ package com.prog1.slenderman.game.entities;
 import com.prog1.slenderman.game.Game;
 import com.prog1.slenderman.game.entities.floor.EntFloor;
 import com.prog1.slenderman.game.entities.prop.Prop;
+import com.prog1.slenderman.game.resource.Sound;
+import com.prog1.slenderman.game.resource.SoundLoader;
 import com.prog1.slenderman.game.resource.Texture;
 import com.prog1.slenderman.game.resource.TextureLoader;
 
@@ -10,6 +12,7 @@ import java.awt.event.ActionEvent;
 
 public class Player extends EntityVisible {
     Texture[] directions = new Texture[4]; // 0 up, 1 right, 2 down, 3 left
+    Sound paperSound;
 
     public static enum Direction {
         UP,
@@ -33,6 +36,8 @@ public class Player extends EntityVisible {
         this.acceptInput = true;
 
         this.setTexture(this.directions[2]);
+
+        this.paperSound = SoundLoader.loadSound("/sound/paper.wav");
     }
 
     private Prop getPaperSurface(int x, int y) {
@@ -51,6 +56,7 @@ public class Player extends EntityVisible {
 
             if (prop.hasPaper) {
                 System.out.println("Paper!!");
+                paperSound.play();
                 return prop;
             }
         }
