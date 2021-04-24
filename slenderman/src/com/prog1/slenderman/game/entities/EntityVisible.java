@@ -16,6 +16,7 @@ public abstract class EntityVisible extends Entity {
     protected int layer = 0;
     protected JLabel label = new JLabel();
     protected Texture texture = Texture.fallbackTexture;
+    protected boolean visible = true;
 
     public boolean collisions = true;
 
@@ -33,6 +34,15 @@ public abstract class EntityVisible extends Entity {
         System.out.println("Spawned entity at x" + cellX + " y" + cellY);
 
         this.alignToCameraOffset();
+    }
+
+    public void setVisible(boolean visible) {
+        this.label.setVisible(visible);
+        this.visible = visible;
+    }
+
+    public boolean isVisible() {
+        return visible;
     }
 
     public void setTexture(URL textureURL) {

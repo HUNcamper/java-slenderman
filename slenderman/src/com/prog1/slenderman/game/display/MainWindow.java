@@ -59,15 +59,6 @@ public class MainWindow extends JFrame {
         this.setSize(400, 500);//400 width and 500 height
         this.setLayout(null);//using no layout managers
         this.setVisible(true);//making the frame visible
-
-        try {
-            Sound ambient = new Sound("/sound/ambient/frogs_loop1.wav");
-            ambient.setLoop(true);
-            ambient.setVolume(0.1f);
-            ambient.play();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

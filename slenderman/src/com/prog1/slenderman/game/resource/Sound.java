@@ -46,14 +46,20 @@ public class Sound {
 
     public void play() {
         if (this.clip != null) {
-            this.clip.stop();
-            this.clip.setMicrosecondPosition(0);
+            stop();
 
             if (this.loop) {
                 clip.loop(Clip.LOOP_CONTINUOUSLY);
             } else {
                 clip.start();
             }
+        }
+    }
+
+    public void stop() {
+        if (this.clip != null) {
+            this.clip.stop();
+            this.clip.setMicrosecondPosition(0);
         }
     }
 

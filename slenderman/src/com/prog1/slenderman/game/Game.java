@@ -4,7 +4,9 @@ import com.prog1.slenderman.game.display.MainCamera;
 import com.prog1.slenderman.game.display.MainView;
 import com.prog1.slenderman.game.display.MainWindow;
 import com.prog1.slenderman.game.entities.Entity;
+import com.prog1.slenderman.game.entities.MusicPlayer;
 import com.prog1.slenderman.game.entities.Player;
+import com.prog1.slenderman.game.entities.SlenderManOverlay;
 import com.prog1.slenderman.game.level.Level;
 import com.prog1.slenderman.game.level.LevelGenerator;
 import com.prog1.slenderman.game.resource.Sound;
@@ -16,6 +18,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Game {
+    public static SlenderManOverlay slenderOverlay;
     public static float globalVolume = 1.0f;
     public static MainWindow mainWindow;
     public static MainCamera mainCamera;
@@ -38,6 +41,9 @@ public class Game {
         Game.loadedLevel = LevelGenerator.random();
         Game.mainWindow = new MainWindow();
         Game.mainPlayer = new Player(0, 0, 1, 1);
+        Game.slenderOverlay = new SlenderManOverlay();
+
+        Game.loadedLevel.spawnEntity(Game.slenderOverlay, 4, 0, 0);
 
         Game.mainWindow.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent componentEvent) {
@@ -48,6 +54,17 @@ public class Game {
         Game.texturePool.put("dev.error", Texture.fallbackTexture);
 
         Game.loadedLevel.spawnEntity(Game.mainPlayer, 1, 0, 0);
+
+        MusicPlayer mp = new MusicPlayer(); // automatikusan updateli a newStep metódus
+
+        try {
+            Sound ambient = new Sound("/sound/ambient/frogs_loop1.wav");
+            ambient.setLoop(true);
+            ambient.setVolume(0.1f);
+            ambient.play();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         Action handleKeyPress = new AbstractAction() {
             @Override
@@ -75,11 +92,11 @@ public class Game {
         Game.mainWindow.update();
 
         if (Game.newStep) {
+            Game.newStep = false;
+
             for (Entity ent : Game.entityList) {
                 ent.newStep();
             }
-
-            Game.newStep = false;
         }
 
         System.out.println("Currently used textures: " + Game.texturePool.size());

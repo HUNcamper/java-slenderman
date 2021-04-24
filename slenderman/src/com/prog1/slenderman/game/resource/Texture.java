@@ -17,6 +17,7 @@ public class Texture {
     private ImageIcon icon = null;
     private int sizeX = 1;
     private int sizeY = 1;
+    private float opacity = 1.0f;
 
     public boolean applyViewZoom = true;
 
@@ -59,8 +60,19 @@ public class Texture {
         this.originalBufferedImage = bufferedImage;
     }
 
+    public void setOpacity(float amount) {
+        if (amount == this.opacity) return;
+        this.opacity = amount;
+
+        int width = bufferedImage.getWidth();
+        int height = bufferedImage.getHeight();
+
+        resize(width, height);
+    }
+
     public void resize(int width, int height) {
-        if(width == bufferedImage.getWidth() && height == bufferedImage.getHeight()) return; // Ha az értékek megegyeznek, ne legyen változás
+        if (width == bufferedImage.getWidth() && height == bufferedImage.getHeight() && this.opacity == 1.0f)
+            return; // Ha az értékek megegyeznek, ne legyen változás
 
         this.icon = null; // resized, need new icon
 
@@ -68,6 +80,7 @@ public class Texture {
         BufferedImage dimg = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 
         Graphics2D g2d = dimg.createGraphics();
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, this.opacity));
         g2d.drawImage(tmp, 0, 0, null);
         g2d.dispose();
 

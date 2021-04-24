@@ -1,6 +1,7 @@
 package com.prog1.slenderman.game.level;
 
 import com.prog1.slenderman.game.Game;
+import com.prog1.slenderman.game.entities.Entity;
 import com.prog1.slenderman.game.entities.prop.PropRock;
 import com.prog1.slenderman.game.entities.prop.PropTreeSmall;
 import com.prog1.slenderman.game.entities.EntityVisible;
@@ -26,6 +27,8 @@ public class Level {
 
         for (int y = 0; y < this.rows; y++) {
             for (int x = 0; x < this.columns; x++) {
+                if (x == cellX && y == cellY) continue;
+
                 int manhattan = Level.manhattanDistance(cellX, cellY, x, y);
 
                 if (maximum) {
@@ -41,6 +44,14 @@ public class Level {
         }
 
         return coordinateList;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public int getColumns() {
+        return columns;
     }
 
     public Level(int layers, int rows, int columns) {
