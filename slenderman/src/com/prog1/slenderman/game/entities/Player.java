@@ -14,6 +14,7 @@ import java.awt.event.ActionEvent;
 public class Player extends EntityVisible {
     private final Texture[] directions = new Texture[4]; // 0 up, 1 right, 2 down, 3 left
     private Prop interactWith;
+    private Direction facing;
 
     public static enum Direction {
         UP,
@@ -25,6 +26,10 @@ public class Player extends EntityVisible {
     @Override
     public void newStep() {
         System.out.println("Manhattan distance from 0: " + Level.manhattanDistance(0, 0, this.cellX, this.cellY));
+    }
+
+    public Direction getFacing() {
+        return facing;
     }
 
     public Player(int pos_x, int pos_y, int size_x, int size_y) {
@@ -135,42 +140,40 @@ public class Player extends EntityVisible {
         switch (dir) {
             case UP:
                 this.texture = this.directions[0];
-                if (!checkCollision(2, this.cellX, this.cellY - 1)) {
-                    this.setCellY(this.cellY - 1);
-                    Game.newStep = true;
-                    playFootstep();
-                }
-                this.interactWith = getPaperSurface(this.cellX, this.cellY - 1);
+                move(this.cellX, this.cellY - 1);
+                //this.interactWith = getPaperSurface(this.cellX, this.cellY - 1);
                 break;
             case RIGHT:
                 this.texture = this.directions[1];
-                if (!checkCollision(2, this.cellX + 1, this.cellY)) {
-                    this.setCellX(this.cellX + 1);
-                    Game.newStep = true;
-                    playFootstep();
-                }
-                this.interactWith = getPaperSurface(this.cellX + 1, this.cellY);
+                move(this.cellX + 1, this.cellY);
+                //this.interactWith = getPaperSurface(this.cellX + 1, this.cellY);
                 break;
             case DOWN:
                 this.texture = this.directions[2];
-                if (!checkCollision(2, this.cellX, this.cellY + 1)) {
-                    this.setCellY(this.cellY + 1);
-                    Game.newStep = true;
-                    playFootstep();
-                }
-                this.interactWith = getPaperSurface(this.cellX, this.cellY + 1);
+                move(this.cellX, this.cellY + 1);
+                //this.interactWith = getPaperSurface(this.cellX, this.cellY + 1);
                 break;
             case LEFT:
                 this.texture = this.directions[3];
-                if (!checkCollision(2, this.cellX - 1, this.cellY)) {
-                    this.setCellX(this.cellX - 1);
-                    Game.newStep = true;
-                    playFootstep();
-                }
-                this.interactWith = getPaperSurface(this.cellX - 1, this.cellY);
+                move(this.cellX - 1, this.cellY);
+                //this.interactWith = getPaperSurface(this.cellX - 1, this.cellY);
                 break;
         }
 
+        this.facing = dir;
+
         Game.update();
+    }
+
+    public void move(int x, int y) {
+        int xDiff = x - this.cellX ;
+        int yDiff = y - this.cellY;
+
+        if (!checkCollision(2, x, y)) {
+            this.setCellPos(x, y);
+            Game.newStep = true;
+            playFootstep();
+        }
+        this.interactWith = getPaperSurface(x + xDiff, y + yDiff);
     }
 }
