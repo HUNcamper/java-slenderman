@@ -4,7 +4,6 @@ import com.prog1.slenderman.game.Game;
 import com.prog1.slenderman.game.level.Level;
 import com.prog1.slenderman.game.resource.Sound;
 import com.prog1.slenderman.game.resource.SoundLoader;
-import com.prog1.slenderman.game.resource.Texture;
 import com.prog1.slenderman.game.resource.TextureLoader;
 
 import java.util.List;
@@ -64,7 +63,9 @@ public class SlenderMan extends EntityVisible {
     }
 
     public void overlayAppear(float opacity, int soundIndex, boolean jumpscare) {
-        if (this.jumpscareAlreadyHappening) return;
+        float cOpacity = Game.slenderOverlay.texture.getOpacity();
+
+        if (this.jumpscareAlreadyHappening && cOpacity == opacity) return;
 
         this.nearbySounds[soundIndex].play();
         if (jumpscare) this.pianoSound.play();
@@ -78,6 +79,11 @@ public class SlenderMan extends EntityVisible {
     public void moveSlender() {
         int playerX = Game.mainPlayer.getCellX();
         int playerY = Game.mainPlayer.getCellY();
+
+        if (this.cellX == playerX && this.cellY == playerY) {
+            gameOver();
+            return;
+        }
 
         int distance = 5;
         boolean maximum = false;
@@ -97,7 +103,7 @@ public class SlenderMan extends EntityVisible {
         this.setCellPos(location[0], location[1]);
     }
 
-    public void handleOverlay() {
+    public void handleDistance() {
         int playerX = Game.mainPlayer.getCellX();
         int playerY = Game.mainPlayer.getCellY();
 
@@ -116,6 +122,7 @@ public class SlenderMan extends EntityVisible {
             case 0:
                 break;
             default:
+                // Túl messze van, ne mutassa
                 Game.slenderOverlay.setVisible(false);
                 this.setVisible(false);
                 break;
@@ -123,21 +130,20 @@ public class SlenderMan extends EntityVisible {
     }
 
     public void tryJumpscare() {
+        // Ha player előtt van, akkor legyen jumpscare
         Player.Direction dir = Game.mainPlayer.getFacing();
         int xDiff = this.cellX - Game.mainPlayer.getCellX();
         int yDiff = this.cellY - Game.mainPlayer.getCellY();
-
-        System.out.println("ydiff: " + yDiff + " xdiff: " + xDiff);
 
         boolean ok = false;
 
         if (dir == Player.Direction.UP && xDiff == 0 && yDiff == -1) {
             ok = true;
-        } else if(dir == Player.Direction.LEFT && xDiff == -1 && yDiff == 0) {
+        } else if (dir == Player.Direction.LEFT && xDiff == -1 && yDiff == 0) {
             ok = true;
-        } else if(dir == Player.Direction.DOWN && xDiff == 0 && yDiff == 1) {
+        } else if (dir == Player.Direction.DOWN && xDiff == 0 && yDiff == 1) {
             ok = true;
-        } else if(dir == Player.Direction.RIGHT && xDiff == 1 && yDiff == 0) {
+        } else if (dir == Player.Direction.RIGHT && xDiff == 1 && yDiff == 0) {
             ok = true;
         }
 
@@ -153,15 +159,20 @@ public class SlenderMan extends EntityVisible {
         }
     }
 
+    private void gameOver() {
+        overlayAppear(1.0f, 2, false);
+        Game.gameOver(true);
+    }
+
     @Override
     public void newStep() {
         updateStatus();
         if (this.status == 0) return;
         this.jumpscareAlreadyHappening = false;
 
-        moveSlender();
         stopSounds();
+        moveSlender();
         tryJumpscare();
-        handleOverlay();
+        handleDistance();
     }
 }

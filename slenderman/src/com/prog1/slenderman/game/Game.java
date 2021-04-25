@@ -86,6 +86,14 @@ public class Game {
         Game.update();
     }
 
+    public static void gameOver(boolean fail) {
+        if (fail) {
+            System.out.println("Game over!");
+            //Game.mainPlayer.setVisible(false);
+            Game.mainPlayer.setAcceptInput(false);
+        }
+    }
+
     public static void update() {
         //Game.mainCamera.followPlayer();
         Game.mainView.update();

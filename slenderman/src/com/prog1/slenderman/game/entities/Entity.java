@@ -11,6 +11,10 @@ public abstract class Entity {
         return this.acceptInput;
     }
 
+    public void setAcceptInput(boolean acceptInput) {
+        this.acceptInput = acceptInput;
+    }
+
     public Entity() {
         Game.entityList.add(this);
     }

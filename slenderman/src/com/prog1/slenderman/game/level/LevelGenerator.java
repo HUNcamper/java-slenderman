@@ -1,5 +1,6 @@
 package com.prog1.slenderman.game.level;
 
+import com.prog1.slenderman.game.Game;
 import com.prog1.slenderman.game.entities.SlenderMan;
 import com.prog1.slenderman.game.entities.SlenderManOverlay;
 import com.prog1.slenderman.game.entities.prop.*;

@@ -61,18 +61,21 @@ public class Texture {
     }
 
     public void setOpacity(float amount) {
-        if (amount == this.opacity) return;
-        this.opacity = amount;
-
         int width = bufferedImage.getWidth();
         int height = bufferedImage.getHeight();
 
-        resize(width, height);
+        resize(width, height, amount);
     }
 
-    public void resize(int width, int height) {
-        if (width == bufferedImage.getWidth() && height == bufferedImage.getHeight() && this.opacity == 1.0f)
+    public float getOpacity() {
+        return this.opacity;
+    }
+
+    public void resize(int width, int height, float opacity) {
+        if (width == bufferedImage.getWidth() && height == bufferedImage.getHeight() && this.opacity == opacity)
             return; // Ha az értékek megegyeznek, ne legyen változás
+
+        this.opacity = opacity;
 
         this.icon = null; // resized, need new icon
 
@@ -91,7 +94,7 @@ public class Texture {
         int width = (int) Math.floor(Game.gridSize * this.sizeX * Game.mainView.zoom);
         int height = (int) Math.floor(Game.gridSize * this.sizeY * Game.mainView.zoom);
 
-        resize(width, height);
+        resize(width, height, this.opacity);
     }
 
     public void setTexture(URL imageURL) {
@@ -132,6 +135,8 @@ public class Texture {
 
         graphics.setPaint(new Color(194, 0, 0));
         graphics.fillRect(0, 0, image.getWidth(), image.getHeight());
+        graphics.setPaint(new Color(255, 255, 255));
+        graphics.drawString("MISSING", 0, 10);
 
         setTexture(image);
     }
