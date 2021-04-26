@@ -9,6 +9,9 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 
+/**
+ * Textúrát kezelő osztály
+ */
 public class Texture {
     public static Texture fallbackTexture = new Texture();
 
@@ -21,31 +24,60 @@ public class Texture {
 
     public boolean applyViewZoom = true;
 
+    /**
+     * Textúra méretének beállítása<br>
+     *     Ez a méret cellaméret, nem térbeli hosszúság/magasság.
+     * @param sizeX X cellaméret
+     * @param sizeY Y cellaméret
+     */
     public void setSize(int sizeX, int sizeY) {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
     }
 
+    /**
+     * Textúra cella hosszúságának lekérdezése
+     * @return Cella hosszúság
+     */
     public int getWidth() {
         return sizeX;
     }
 
+    /**
+     * Textúra cella magasságának lekérdezése
+     * @return Cella magasság
+     */
     public int getHeight() {
         return sizeY;
     }
 
+    /**
+     * Buffered image lekérdezése a textúrából
+     * @return Textúra BufferedImage adattagja
+     */
     public BufferedImage getBufferedImage() {
         return this.originalBufferedImage;
     }
 
+    /**
+     * Textúra inicializálása MISSING textúrával
+     */
     public Texture() {
         fallbackTexture();
     }
 
+    /**
+     * Textúra inicializálása URL alapján
+     * @param imageURL Textúra elérési URL-je
+     */
     public Texture(URL imageURL) {
         setTexture(imageURL);
     }
 
+    /**
+     * Textúra inicializálása elérési útvonal alapján
+     * @param imagePath Textúra elérési útvonala
+     */
     public Texture(String imagePath) {
         try {
             setTexture(URLHandler.convertString(imagePath));
@@ -55,11 +87,19 @@ public class Texture {
         }
     }
 
+    /**
+     * Textúra inicializálása BufferedImage alapján
+     * @param bufferedImage BufferedImage
+     */
     public Texture(BufferedImage bufferedImage) {
         this.bufferedImage = bufferedImage;
         this.originalBufferedImage = bufferedImage;
     }
 
+    /**
+     * Áttettszőség beállítása
+     * @param amount Áttettszőség mértéke 0.0 és 1.0 között (0: láthatatlan, 1: teljesen látható)
+     */
     public void setOpacity(float amount) {
         int width = bufferedImage.getWidth();
         int height = bufferedImage.getHeight();
@@ -67,10 +107,20 @@ public class Texture {
         resize(width, height, amount);
     }
 
+    /**
+     * Áttettszőség lekérdezése
+     * @return Áttettszőség 0.0 és 1.0 között
+     */
     public float getOpacity() {
         return this.opacity;
     }
 
+    /**
+     * Textúra átméretezése, és áttettszőség módosítása
+     * @param width Szélesség
+     * @param height Magasság
+     * @param opacity Áttettszőség mértéke 0.0 és 1.0 között (0: láthatatlan, 1: teljesen látható)
+     */
     public void resize(int width, int height, float opacity) {
         if (width == bufferedImage.getWidth() && height == bufferedImage.getHeight() && this.opacity == opacity)
             return; // Ha az értékek megegyeznek, ne legyen változás
@@ -90,6 +140,10 @@ public class Texture {
         this.bufferedImage = dimg;
     }
 
+    /**
+     * View zoom-ra átméretezés<br>
+     *     View zoom akkor történhet, mikor átméretezzük az ablakot
+     */
     public void resizeToCameraOffset() {
         int width = (int) Math.floor(Game.gridSize * this.sizeX * Game.mainView.zoom);
         int height = (int) Math.floor(Game.gridSize * this.sizeY * Game.mainView.zoom);
@@ -97,6 +151,10 @@ public class Texture {
         resize(width, height, this.opacity);
     }
 
+    /**
+     * Textúra átállítása URL alapján
+     * @param imageURL Textúra URL útvonala
+     */
     public void setTexture(URL imageURL) {
         BufferedImage img = null;
 
@@ -109,10 +167,18 @@ public class Texture {
         }
     }
 
+    /**
+     * Textúra átállítása ImageIcon alapján
+     * @param imageIcon Swing ImageIcon
+     */
     public void setTexture(ImageIcon imageIcon) {
         setTexture(iconToBuffered(imageIcon));
     }
 
+    /**
+     * Textúra átállítása BufferedImage alapján
+     * @param img Swing BufferedImage
+     */
     public void setTexture(BufferedImage img) {
         this.bufferedImage = img;
         this.originalBufferedImage = img;
@@ -120,6 +186,10 @@ public class Texture {
         //this.sizeY = img.getHeight();
     }
 
+    /**
+     * Textúra ImageIcon formátumú lekérdezése
+     * @return Swing ImageIcon
+     */
     public ImageIcon getIcon() {
         if (this.icon == null) {
             this.icon = bufferedToIcon(this.bufferedImage);
@@ -128,6 +198,9 @@ public class Texture {
         return this.icon;
     }
 
+    /**
+     * MISSING textúra, akkor használatos, mikor egy adott textúra elérési útvonala hibás, vagy a fájl nem található.
+     */
     private void fallbackTexture() {
         // Error texture
         BufferedImage image = new BufferedImage(this.sizeX * Game.gridSize, this.sizeY * Game.gridSize, BufferedImage.TYPE_INT_RGB);
@@ -141,6 +214,11 @@ public class Texture {
         setTexture(image);
     }
 
+    /**
+     * ImageIcon átkonvertálása BufferedImage formátumba
+     * @param icon Swing ImageIcon
+     * @return Swing BufferedImage
+     */
     private static BufferedImage iconToBuffered(ImageIcon icon) {
         BufferedImage bi = new BufferedImage(
                 icon.getIconWidth(),
@@ -154,6 +232,11 @@ public class Texture {
         return bi;
     }
 
+    /**
+     * BufferedImage átkonvertálása ImageIcon formátumba
+     * @param buffered Swing BufferedImage
+     * @return Swing ImageIcon
+     */
     private static ImageIcon bufferedToIcon(BufferedImage buffered) {
         return new ImageIcon(buffered);
     }

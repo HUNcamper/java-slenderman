@@ -7,7 +7,15 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.net.URL;
 
+/**
+ * URL-ek kezelésére szolgáló osztály
+ */
 public class URLHandler {
+    /**
+     * String elérési útvonal átkonvertálása URL formátumba
+     * @param path Elérési útvonal
+     * @return URL osztály
+     */
     public static URL convertString(String path) {
         URL url;
         if (path.startsWith("/")) {

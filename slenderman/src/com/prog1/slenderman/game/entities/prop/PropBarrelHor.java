@@ -2,8 +2,14 @@ package com.prog1.slenderman.game.entities.prop;
 
 import com.prog1.slenderman.game.resource.TextureLoader;
 
+/**
+ * Vízszintes hordót leíró tereptárgy osztály
+ */
 public class PropBarrelHor extends Prop {
 
+    /**
+     * Vízszintes hordó és textúra inicializálás
+     */
     public PropBarrelHor() {
         super();
         this.paperSurface = true;

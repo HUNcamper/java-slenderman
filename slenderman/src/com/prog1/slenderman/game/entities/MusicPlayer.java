@@ -6,12 +6,18 @@ import com.prog1.slenderman.game.resource.Sound;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
+/**
+ * Háttér zene lejátszásra használt osztály
+ */
 public class MusicPlayer extends Entity {
     private ArrayList<String> music;
     private int previousCollected = 0;
     private Sound nowPlaying = null;
     private int playingIndex = -1;
 
+    /**
+     * Zene osztály inicializálása, hangok importálása
+     */
     public MusicPlayer() {
         this.acceptInput = true;
 
@@ -22,6 +28,10 @@ public class MusicPlayer extends Entity {
         this.music.add("/sound/ost/7.wav");
     }
 
+    /**
+     * Adott indexű zene lejátszása, és az előzőleg lejátszott megállítása
+     * @param index Zene index
+     */
     public void PlayMusic(int index) {
         if (index < 0 || index >= this.music.size()) return;
 
@@ -43,6 +53,10 @@ public class MusicPlayer extends Entity {
         }
     }
 
+    /**
+     * Billentyű input kezelése, amint a játékos felvesz papírt, a zene megváltozhat a papírok számának függvényében
+     * @param e Swing ActionEvent
+     */
     @Override
     public void handleInput(ActionEvent e) {
         if (e.getActionCommand().equals("f")) {

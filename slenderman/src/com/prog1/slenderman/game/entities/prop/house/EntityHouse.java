@@ -9,11 +9,18 @@ import com.prog1.slenderman.game.level.Level;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Egy teljes házat leíró, elhelyezhető entitás
+ */
 public class EntityHouse extends EntityVisible {
     private Prop[][] house; // [height][width]
     private final int width = 6;
     private final int height = 6;
 
+    /**
+     * Ház inicializálása egy megadott mérettel és elrendezéssel.<br>
+     *     Az elrendezést a walls 2D tömb írja le, a számok a falak textúra indexeit írják le.
+     */
     public EntityHouse() {
         this.house = new Prop[height][width];
         int[][] walls = new int[height][width];
@@ -28,6 +35,10 @@ public class EntityHouse extends EntityVisible {
         createWalls(walls);
     }
 
+    /**
+     * Összes fal tereptárgy átfutása, és csak egyre engedjük meg, hogy lehetséges papír felület legyen.<br>
+     *     Ez a feladat leírás miatt kell, ugyanis egy tereptárgyra (itt a ház egy tereptárgy alapvetően) csak egy papír kerülhet.
+     */
     private void allowOnePaper() {
         ArrayList<Prop> list = new ArrayList<Prop>();
 
@@ -50,6 +61,10 @@ public class EntityHouse extends EntityVisible {
         }
     }
 
+    /**
+     * Falak példányosítása egy 2D szám tömb alapján. Ha -1 szerepel, nem lesz példányosítva fal.
+     * @param walls 2D szám tömb, a falak textúra indexével ellátva
+     */
     private void createWalls(int[][] walls) {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -59,6 +74,9 @@ public class EntityHouse extends EntityVisible {
         }
     }
 
+    /**
+     * Falak elhelyezése a pályán
+     */
     private void spawnHouseWalls() {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -71,6 +89,10 @@ public class EntityHouse extends EntityVisible {
         }
     }
 
+    /**
+     * Járható felület elhelyezése a pályán, a ház alatt.<br>
+     *     Ha már van meglévő járható felület, akkor azok kicserélése.
+     */
     private void spawnFloor() {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -82,6 +104,12 @@ public class EntityHouse extends EntityVisible {
         }
     }
 
+    /**
+     * Pályán való elhelyezés után hívódik meg.<br>
+     *     Ezt az entitást kitöröljük, hisz a falak már reprezentálják a házat.<br>
+     *         Ezután elhelyezzük a falakat, padlót, és csak egyik falra engedünk papírt helyezni.
+     * @param level Pálya, amin el lett helyezve
+     */
     @Override
     public void spawned(Level level) {
         super.spawned(level);

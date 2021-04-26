@@ -4,9 +4,20 @@ import com.prog1.slenderman.game.resource.TextureLoader;
 
 import java.util.ArrayList;
 
+/**
+ * Fű textúrájú járható felületet leíró osztály
+ */
 public class EntFloorGrass extends EntFloor {
-    public EntFloorGrass(int pos_x, int pos_y, int size_x, int size_y) {
-        super(pos_x, pos_y, size_x, size_y);
+
+    /**
+     * Járható felület inicializálása adott koordinátákon és méretben
+     * @param posX X koordináta
+     * @param posY Y koordináta
+     * @param sizeX X méret
+     * @param sizeY Y méret
+     */
+    public EntFloorGrass(int posX, int posY, int sizeX, int sizeY) {
+        super(posX, posY, sizeX, sizeY);
         this.setTexture(TextureLoader.loadTexture("/textures/grass_dark.png"));
 
         this.sounds = new ArrayList<>();

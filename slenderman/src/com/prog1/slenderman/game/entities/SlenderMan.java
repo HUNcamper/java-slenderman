@@ -9,12 +9,18 @@ import com.prog1.slenderman.game.resource.TextureLoader;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Slendermant leíró osztály
+ */
 public class SlenderMan extends EntityVisible {
     private Sound[] nearbySounds;
     private Sound pianoSound;
     private int status = 0;
     private boolean jumpscareAlreadyHappening = false;
 
+    /**
+     * Slenderman inicializálása textúrákkal és hangeffektusokkal
+     */
     public SlenderMan() {
         this.setTexture(TextureLoader.loadTexture("/textures/slenderman/him.png"));
         this.nearbySounds = new Sound[3];
@@ -31,6 +37,11 @@ public class SlenderMan extends EntityVisible {
         this.setVisible(false);
     }
 
+    /**
+     * Koordináta páros listából random páros kiválasztása
+     * @param list Koordináta párok listája
+     * @return Egy random koordináta páros
+     */
     public int[] randomPos(List<int[]> list) {
         Random r = new Random();
 
@@ -38,6 +49,9 @@ public class SlenderMan extends EntityVisible {
         return list.get(index);
     }
 
+    /**
+     * Státusz frissítése
+     */
     public void updateStatus() {
         switch (Game.pagesCollected) {
             case 0:
@@ -62,6 +76,12 @@ public class SlenderMan extends EntityVisible {
         }
     }
 
+    /**
+     * Slenderman overlay megjelenítése és hozzá kötött hang lejátszása
+     * @param opacity Áttetszőség mértéke 0.0 és 1.0 között
+     * @param soundIndex Hang indexe
+     * @param jumpscare Igaz, ha ez egy jumpscare, Hamis ha nem
+     */
     public void overlayAppear(float opacity, int soundIndex, boolean jumpscare) {
         float cOpacity = Game.slenderOverlay.texture.getOpacity();
 
@@ -76,6 +96,9 @@ public class SlenderMan extends EntityVisible {
         Game.update();
     }
 
+    /**
+     * Slenderman mozgatása a játékos köré a jelenlegi státusz alapján
+     */
     public void moveSlender() {
         int playerX = Game.mainPlayer.getCellX();
         int playerY = Game.mainPlayer.getCellY();
@@ -103,6 +126,9 @@ public class SlenderMan extends EntityVisible {
         this.setCellPos(location[0], location[1]);
     }
 
+    /**
+     * Játékos és slenderman közötti távolság alapján az overlay megjelenítése
+     */
     public void handleDistance() {
         int playerX = Game.mainPlayer.getCellX();
         int playerY = Game.mainPlayer.getCellY();
@@ -129,6 +155,10 @@ public class SlenderMan extends EntityVisible {
         }
     }
 
+    /**
+     * Jumpscare megkísérlése<br>
+     *     Akkor nem sikerül, ha slenderman nem a player előtt van, vagy már volt jumpscare meghívva egy lépéssel ezelőtt
+     */
     public void tryJumpscare() {
         // Ha player előtt van, akkor legyen jumpscare
         Player.Direction dir = Game.mainPlayer.getFacing();
@@ -152,6 +182,9 @@ public class SlenderMan extends EntityVisible {
         }
     }
 
+    /**
+     * Minden hang megállítása
+     */
     private void stopSounds() {
 
         for (Sound sound : nearbySounds) {
@@ -159,11 +192,17 @@ public class SlenderMan extends EntityVisible {
         }
     }
 
+    /**
+     * Játék vége
+     */
     private void gameOver() {
         overlayAppear(1.0f, 2, false);
         Game.gameOver(true);
     }
 
+    /**
+     * Játékos új lépése után kezeljük Slenderman lépését
+     */
     @Override
     public void newStep() {
         updateStatus();

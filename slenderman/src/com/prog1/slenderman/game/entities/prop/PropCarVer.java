@@ -2,8 +2,14 @@ package com.prog1.slenderman.game.entities.prop;
 
 import com.prog1.slenderman.game.resource.TextureLoader;
 
+/**
+ * Függőleges autót leíró tereptárgy osztály
+ */
 public class PropCarVer extends Prop {
 
+    /**
+     * Függőleges autó és textúra inicializálás
+     */
     public PropCarVer() {
         super();
         this.paperSurface = true;

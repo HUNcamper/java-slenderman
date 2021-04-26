@@ -17,6 +17,11 @@ import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * A játék osztály írja le a játék működését, és tárolja a fontosabb globális játékelemeket.
+ *
+ * @version 1.0
+ */
 public class Game {
     public static SlenderManOverlay slenderOverlay;
     public static float globalVolume = 1.0f;
@@ -32,13 +37,16 @@ public class Game {
     public static boolean newStep = false;
     public static int pagesCollected = 0;
 
+    /**
+     * Játék inicializálása
+     */
     public Game() {
         Game.texturePool = new HashMap<String, Texture>();
         Game.soundPool = new HashMap<String, Sound>();
         Game.entityList = new ArrayList<Entity>();
         Game.mainView = new MainView();
         Game.mainCamera = new MainCamera();
-        Game.loadedLevel = LevelGenerator.random();
+        Game.loadedLevel = LevelGenerator.preMade();
         Game.mainWindow = new MainWindow();
         Game.mainPlayer = new Player(0, 0, 1, 1);
         Game.slenderOverlay = new SlenderManOverlay();
@@ -86,6 +94,11 @@ public class Game {
         Game.update();
     }
 
+    /**
+     * A játék érjen véget.
+     *
+     * @param fail Vesztett a player?
+     */
     public static void gameOver(boolean fail) {
         if (fail) {
             System.out.println("Game over!");
@@ -94,6 +107,10 @@ public class Game {
         }
     }
 
+    /**
+     * Elemek megjelenítésének frissítése,<br>
+     * illetve új lépésnél jelzés az entitásoknak
+     */
     public static void update() {
         //Game.mainCamera.followPlayer();
         Game.mainView.update();
@@ -112,14 +129,18 @@ public class Game {
         System.gc();
     }
 
+    /**
+     * Billentyű lenyomás figyelése
+     *
+     * @param name    Jelző név
+     * @param keyCode Billentyűkód
+     * @param action  Swing Action
+     */
     protected void addKeyBinding(String name, int keyCode, Action action) {
         InputMap inputMap = Game.mainWindow.getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap actionMap = Game.mainWindow.getRootPane().getActionMap();
 
         inputMap.put(KeyStroke.getKeyStroke(keyCode, 0, false), name + ".pressed");
         actionMap.put(name + ".pressed", action);
-
-        //inputMap.put(KeyStroke.getKeyStroke(keyCode, 0, true), name + ".released");
-        //actionMap.put(name + ".released", action);
     }
 }

@@ -9,14 +9,27 @@ import java.net.URL;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Játható felületet leíró osztály
+ */
 public abstract class EntFloor extends EntityVisible {
     protected List<String> sounds = null;
     protected Sound sound = null;
 
-    public EntFloor(int pos_x, int pos_y, int size_x, int size_y) {
-        super(pos_x, pos_y, size_x, size_y);
+    /**
+     * Járható felület inicializálása adott koordinátákon és méretben
+     * @param posX X koordináta
+     * @param posY Y koordináta
+     * @param sizeX X méret
+     * @param sizeY Y méret
+     */
+    public EntFloor(int posX, int posY, int sizeX, int sizeY) {
+        super(posX, posY, sizeX, sizeY);
     }
 
+    /**
+     * A felületen lépés lekezelése, beállított hangok közül egy random lejátszása
+     */
     public void step() {
         if (this.sounds != null) {
             Random r = new Random();

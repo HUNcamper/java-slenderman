@@ -1,0 +1,9 @@
+com.prog1.slenderman
+com.prog1.slenderman.game
+com.prog1.slenderman.game.display
+com.prog1.slenderman.game.entities
+com.prog1.slenderman.game.entities.floor
+com.prog1.slenderman.game.entities.prop
+com.prog1.slenderman.game.entities.prop.house
+com.prog1.slenderman.game.level
+com.prog1.slenderman.game.resource
