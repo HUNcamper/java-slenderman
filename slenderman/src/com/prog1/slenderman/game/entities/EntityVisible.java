@@ -3,6 +3,7 @@ package com.prog1.slenderman.game.entities;
 import com.prog1.slenderman.game.Game;
 import com.prog1.slenderman.game.display.MainCamera;
 import com.prog1.slenderman.game.display.MainView;
+import com.prog1.slenderman.game.level.Level;
 import com.prog1.slenderman.game.resource.Texture;
 
 import javax.swing.*;
@@ -17,6 +18,7 @@ public abstract class EntityVisible extends Entity {
     protected JLabel label = new JLabel();
     protected Texture texture = Texture.fallbackTexture;
     protected boolean visible = true;
+    protected Level level = null;
 
     public boolean collisions = true;
 
@@ -106,6 +108,10 @@ public abstract class EntityVisible extends Entity {
 
     public int getHeight() {
         return this.sizeY * Game.gridSize;
+    }
+
+    public void spawned(Level level) {
+        this.level = level;
     }
 
     public boolean setCellPos(int cellX, int cellY) {

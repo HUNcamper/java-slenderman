@@ -141,22 +141,18 @@ public class Player extends EntityVisible {
             case UP:
                 this.texture = this.directions[0];
                 move(this.cellX, this.cellY - 1);
-                //this.interactWith = getPaperSurface(this.cellX, this.cellY - 1);
                 break;
             case RIGHT:
                 this.texture = this.directions[1];
                 move(this.cellX + 1, this.cellY);
-                //this.interactWith = getPaperSurface(this.cellX + 1, this.cellY);
                 break;
             case DOWN:
                 this.texture = this.directions[2];
                 move(this.cellX, this.cellY + 1);
-                //this.interactWith = getPaperSurface(this.cellX, this.cellY + 1);
                 break;
             case LEFT:
                 this.texture = this.directions[3];
                 move(this.cellX - 1, this.cellY);
-                //this.interactWith = getPaperSurface(this.cellX - 1, this.cellY);
                 break;
         }
 
@@ -166,14 +162,21 @@ public class Player extends EntityVisible {
     }
 
     public void move(int x, int y) {
-        int xDiff = x - this.cellX ;
+        int xDiff = x - this.cellX;
         int yDiff = y - this.cellY;
 
         if (!checkCollision(2, x, y)) {
             this.setCellPos(x, y);
             Game.newStep = true;
             playFootstep();
+        } else {
+            // Előttünk van valami, nem tudunk mozogni, nincs különbség az előző pozícióhoz képest
+            xDiff = 0;
+            yDiff = 0;
+
+            // sima x és y igazából AHOVA szeretnénk menni- nem az, ahol vagyunk.
         }
+
         this.interactWith = getPaperSurface(x + xDiff, y + yDiff);
     }
 }

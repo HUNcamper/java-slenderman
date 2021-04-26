@@ -1,13 +1,9 @@
 package com.prog1.slenderman.game.level;
 
 import com.prog1.slenderman.game.Game;
-import com.prog1.slenderman.game.entities.Entity;
-import com.prog1.slenderman.game.entities.prop.PropRock;
-import com.prog1.slenderman.game.entities.prop.PropTreeSmall;
 import com.prog1.slenderman.game.entities.EntityVisible;
 
 import javax.swing.*;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +11,8 @@ public class Level {
     private final int rows;
     private final int columns;
     private final JLayeredPane display = Game.mainView;
+
+    private ArrayList<EntityVisible> entityList;
 
     private EntityVisible[][][] entities;
 
@@ -54,11 +52,16 @@ public class Level {
         return columns;
     }
 
+    public ArrayList<EntityVisible> getEntityList() {
+        return entityList;
+    }
+
     public Level(int layers, int rows, int columns) {
         this.rows = rows;
         this.columns = columns;
 
         this.entities = new EntityVisible[layers][rows][columns];
+        this.entityList = new ArrayList<EntityVisible>();
     }
 
     public boolean spawnEntity(EntityVisible entity, int layer, int cellX, int cellY) {
@@ -68,12 +71,16 @@ public class Level {
         entity.cellY = cellY;
         entity.setLayer(layer);
 
+        this.entityList.add(entity);
+
         for (int y = cellY; y < cellY + entity.getSizeY(); y++) {
             for (int x = cellX; x < cellX + entity.getSizeX(); x++) {
                 if (entities[layer][y][x] == null) {
                     entities[layer][y][x] = entity;
 
                     this.display.add(entity.getLabel(), layer, 0);
+
+                    entity.spawned(this);
                 } else {
                     return false;
                 }
@@ -87,7 +94,9 @@ public class Level {
         if (isOutOfBounds(cell_x, cell_y)) return false;
         if (entities[layer][cell_y][cell_x] == null) return false;
 
+        Game.mainView.remove(entities[layer][cell_y][cell_x].getLabel());
         entities[layer][cell_y][cell_x] = null;
+        this.entityList.remove(entities[layer][cell_y][cell_x]);
 
         return true;
     }

@@ -6,11 +6,11 @@ public class PropTreeSmall extends Prop {
 
     public PropTreeSmall() {
         super();
-        this.paperSurface = true;
-        this.sizeX = 2;
-        this.sizeY = 2;
+        this.paperSurface = false;
+        this.sizeX = 1;
+        this.sizeY = 1;
         this.collisions = false;
 
-        this.setTexture(TextureLoader.loadTexture("/textures/entities/tree.png"));
+        this.setTexture(TextureLoader.loadTexture("/textures/entities/tree_small.png"));
     }
 }

@@ -11,7 +11,7 @@ public class Prop extends EntityVisible {
     protected boolean paperSurface = false;
     protected Sound paperSound;
 
-    public boolean hasPaper = true;
+    public boolean hasPaper = false;
 
     public Prop() {
         super();
@@ -35,5 +35,9 @@ public class Prop extends EntityVisible {
 
     public boolean isPaperSurface() {
         return paperSurface;
+    }
+
+    public void setPaperSurface(boolean paperSurface) {
+        this.paperSurface = paperSurface;
     }
 }
