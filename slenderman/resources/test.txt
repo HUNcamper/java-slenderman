@@ -1,4 +1,53 @@
-Rock 5 10
-CarVer 9 10
-House 2 1
-House 9 1
+// Ez a beépített pálya fájlos megvalósítása.
+
+// A játékon belül az "Új játék fájlból" gombbal
+// e fájl megnyitása után tudunk a pályán játszani.
+
+// A formátum a következő: TerepTárgy X Y
+
+// A tereptárgyak a következőek lehetnek:
+
+// BarrelHor / BarrelVer: Vízszintes, függőleges hordó
+// CarHor / CarVer: Vízszintes, függőleges autó
+// TruckHor / TruckVer: Vízszintes, függőleges teherautó
+// TreeBig / TreeSmall: Nagy és kis fa
+// Rock: Szikla
+// House: 6x7-os Ház
+
+// Nyugodtan módosítsd a fájlt, és nyisd meg
+// újra a pályát a változások megtekintéséhez.
+
+// Ha az adott koordinátán már létezik tereptárgy, az újabb
+// nem lesz lehelyezve. Arra is érdemes figyelni, hogy minimum 8 db
+// olyan tereptárgy legyen, amin lehet papír (minden, kivéve kis fa)
+
+//////////////////////////////////////////////////////////////////////
+
+TreeSmall 7 0
+TreeSmall 14 0
+TreeBig 1 1
+House 7 1
+
+TreeSmall 14 4
+
+Rock 1 5
+CarVer 5 5
+
+TreeSmall 13 7
+
+TreeSmall 10 8
+CarHor 12 8
+
+TreeSmall 4 9
+TreeBig 5 9
+BarrelHor 8 9
+
+TreeSmall 1 10
+
+TreeSmall 9 11
+
+TruckHor 0 12
+Rock 10 12
+TreeSmall 13 12
+
+TreeSmall 6 14

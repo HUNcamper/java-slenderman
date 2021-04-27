@@ -35,7 +35,8 @@ public abstract class LevelGenerator {
             File file = new File(Objects.requireNonNull(URLHandler.convertString(path)).toURI());
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
-                EntityVisible ent = ParseLine(scanner.nextLine());
+                String line = scanner.nextLine().trim();
+                EntityVisible ent = ParseLine(line);
                 if (ent != null) {
                     level.spawnEntity(ent, 2, ent.cellX, ent.cellY);
                 }
@@ -112,7 +113,7 @@ public abstract class LevelGenerator {
     }
 
     /**
-     * Előre létrehozott pálya létrehozása
+     * Előre berögzített pálya létrehozása
      *
      * @return Pálya
      */
@@ -156,6 +157,10 @@ public abstract class LevelGenerator {
         return level;
     }
 
+    /**
+     * A megadott pályára járható fű felület generálása
+     * @param level Pálya
+     */
     public static void spawnGrass(Level level) {
         for (int y = 0; y < level.getRows(); y++) {
             for (int x = 0; x < level.getColumns(); x++) {
