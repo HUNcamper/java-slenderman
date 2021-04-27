@@ -14,6 +14,9 @@ public class MainWindow extends JFrame {
     private JLabel titleLabel;
     private JLabel interactLabel;
 
+    /**
+     * Fő ablak inicializálása
+     */
     public MainWindow() {
         setupWindow();
 
@@ -72,7 +75,7 @@ public class MainWindow extends JFrame {
     }
 
     /**
-     * Ablak frissítése, újrarajzolás, labelek frissítése
+     * Ablak újrarajzolás, labelek frissítése
      */
     public void update() {
         for (Texture texture : Game.texturePool.values()) {
