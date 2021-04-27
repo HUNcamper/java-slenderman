@@ -85,12 +85,15 @@ public class SlenderMan extends EntityVisible {
     public void overlayAppear(float opacity, int soundIndex, boolean jumpscare) {
         float cOpacity = Game.slenderOverlay.texture.getOpacity();
 
+        System.out.println("cOpacity: " + cOpacity + " new opacity: " + opacity);
+
         if (this.jumpscareAlreadyHappening && cOpacity == opacity) return;
 
         this.nearbySounds[soundIndex].play();
         if (jumpscare) this.pianoSound.play();
 
         Game.slenderOverlay.texture.setOpacity(opacity);
+        System.out.println("Supposedly set new opacity. Let's see: " + Game.slenderOverlay.texture.getOpacity());
         Game.slenderOverlay.setVisible(true);
         jumpscareAlreadyHappening = true;
         Game.update();
@@ -211,7 +214,7 @@ public class SlenderMan extends EntityVisible {
 
         stopSounds();
         moveSlender();
-        tryJumpscare();
         handleDistance();
+        tryJumpscare();
     }
 }

@@ -36,10 +36,15 @@ public class Game {
     public static int pagesCollected = 0;
     public static boolean gameOver = false;
 
+    private static Sound ambient;
+    private static MusicPlayer mp;
+
     /**
      * Játék inicializálása
      */
     public Game() {
+        Game.texturePool = new HashMap<String, Texture>();
+        Game.soundPool = new HashMap<String, Sound>();
         Game.mainWindow = new MainWindow();
 
         start();
@@ -70,8 +75,6 @@ public class Game {
         addKeyBinding("s", KeyEvent.VK_S, handleKeyPress);
         addKeyBinding("a", KeyEvent.VK_A, handleKeyPress);
         addKeyBinding("f", KeyEvent.VK_F, handleKeyPress);
-
-        Game.update();
     }
 
     private static void start() {
@@ -85,13 +88,15 @@ public class Game {
             Game.entityList.clear();
         }
 
-        Game.texturePool = new HashMap<String, Texture>();
-        Game.soundPool = new HashMap<String, Sound>();
+        if (Game.mp != null) {
+            Game.mp.stop();
+        }
+
         Game.entityList = new ArrayList<Entity>();
         Game.mainView = new MainView();
         Game.mainCamera = new MainCamera();
-        //Game.loadedLevel = LevelGenerator.preMade();
-        Game.loadedLevel = LevelGenerator.fromFile("/test.txt");
+        Game.loadedLevel = LevelGenerator.preMade();
+        //Game.loadedLevel = LevelGenerator.fromFile("/test.txt");
         Game.mainPlayer = new Player(0, 0, 1, 1);
         Game.slenderOverlay = new SlenderManOverlay();
         Game.slenderMan = new SlenderMan();
@@ -103,16 +108,22 @@ public class Game {
 
         Game.mainWindow.setupMainView(Game.mainView);
 
-        MusicPlayer mp = new MusicPlayer(); // automatikusan updateli a newStep metódus
+        Game.mp = new MusicPlayer(); // automatikusan updateli a newStep metódus
 
         try {
-            Sound ambient = new Sound("/sound/ambient/frogs_loop1.wav");
-            ambient.setLoop(true);
-            ambient.setVolume(0.1f);
-            ambient.play();
+            if (Game.ambient != null) {
+                Game.ambient.stop();
+            }
+
+            Game.ambient = new Sound("/sound/ambient/frogs_loop1.wav");
+            Game.ambient.setLoop(true);
+            Game.ambient.setVolume(0.1f);
+            Game.ambient.play();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        Game.update();
     }
 
     /**

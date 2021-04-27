@@ -36,10 +36,7 @@ public class MusicPlayer extends Entity {
         if (index < 0 || index >= this.music.size()) return;
 
         try {
-            if (this.nowPlaying != null) {
-                this.nowPlaying.stop();
-                this.nowPlaying = null;
-            }
+            stop();
 
             Sound music = new Sound(this.music.get(index));
             music.setLoop(true);
@@ -50,6 +47,16 @@ public class MusicPlayer extends Entity {
             this.playingIndex = index;
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * Jelenleg játszott zene teljes megállítása
+     */
+    public void stop() {
+        if (this.nowPlaying != null) {
+            this.nowPlaying.stop();
+            this.nowPlaying = null;
         }
     }
 
