@@ -19,12 +19,26 @@ public class MainView extends JLayeredPane {
 
     public int padding = 100;
 
+    private JLabel interactLabel;
+
     /**
      * A nézet beállítása egy fekete körvonallal
      */
     public MainView() {
         Border blackline = BorderFactory.createLineBorder(Color.black);
         this.setBorder(blackline);
+
+        setupInteractLabel();
+    }
+
+    /**
+     * "Press 'F' to pick up" label beállítása
+     */
+    private void setupInteractLabel() {
+        this.interactLabel = new JLabel("Press 'F' to pick up", SwingConstants.CENTER);
+        this.interactLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 32));
+        this.interactLabel.setForeground(Color.WHITE);
+        this.add(this.interactLabel, 4, 0);
     }
 
     /**
@@ -57,5 +71,16 @@ public class MainView extends JLayeredPane {
         int newWidth = Game.mainView.getWidth();
 
         this.zoom = ((float) newWidth / baseResolutionWidth) * baseZoom;
+
+        updateInteract();
+    }
+
+    private void updateInteract() {
+        if (Game.mainPlayer.canInteract()) {
+            this.interactLabel.setVisible(true);
+            this.interactLabel.setBounds(0, 0, this.getWidth(), this.getHeight());
+        } else if (this.interactLabel.isVisible()) {
+            this.interactLabel.setVisible(false);
+        }
     }
 }
