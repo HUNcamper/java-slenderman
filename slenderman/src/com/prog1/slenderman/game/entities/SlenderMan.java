@@ -185,7 +185,7 @@ public class SlenderMan extends EntityVisible {
     /**
      * Minden hang megállítása
      */
-    private void stopSounds() {
+    public void stopSounds() {
 
         for (Sound sound : nearbySounds) {
             sound.stop();
@@ -197,7 +197,7 @@ public class SlenderMan extends EntityVisible {
      */
     private void gameOver() {
         overlayAppear(1.0f, 2, false);
-        Game.gameOver(true);
+        Game.gameOver = true;
     }
 
     /**

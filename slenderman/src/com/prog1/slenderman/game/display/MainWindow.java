@@ -20,7 +20,7 @@ public class MainWindow extends JFrame {
     public MainWindow() {
         setupWindow();
 
-        setupMainView();
+        setupMainView(Game.mainView);
         setupInteractLabel();
         setupTitleLabel();
     }
@@ -28,13 +28,13 @@ public class MainWindow extends JFrame {
     /**
      * A játék panel beállítása
      */
-    private void setupMainView() {
-        Game.mainView.setBounds(0, 0, this.getWidth(), this.getHeight());
-        Game.mainView.setVisible(true);
-        Game.mainView.setSize(1280, 720);
-        Game.mainView.setLayout(null); //using no layout managers
+    public void setupMainView(MainView view) {
+        view.setBounds(0, 0, this.getWidth(), this.getHeight());
+        view.setVisible(true);
+        view.setSize(1280, 720);
+        view.setLayout(null); //using no layout managers
 
-        this.add(Game.mainView);
+        this.add(view);
     }
 
     /**
