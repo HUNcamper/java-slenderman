@@ -42,8 +42,6 @@ public abstract class EntityVisible extends Entity {
         this.sizeX = sizeX;
         this.sizeY = sizeY;
 
-        System.out.println("Spawned entity at x" + cellX + " y" + cellY);
-
         this.alignToCameraOffset();
     }
 
@@ -216,8 +214,6 @@ public abstract class EntityVisible extends Entity {
 
         if (Game.loadedLevel.getEntity(layer, this.cellX, this.cellY) != this) return false;
         if (!Game.loadedLevel.moveEntity(layer, this.cellX, this.cellY, layer, cellX, cellY)) return false;
-
-        System.out.println("Success");
 
         this.cellX = cellX;
         this.cellY = cellY;

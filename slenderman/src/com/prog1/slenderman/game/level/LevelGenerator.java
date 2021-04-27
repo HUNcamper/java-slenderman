@@ -195,8 +195,6 @@ public abstract class LevelGenerator {
 
         Random r = new Random();
 
-        System.out.println("Possible prop list: " + possiblePropList.size());
-
         for (int i = 0; i < maxAmount; i++) {
             if (possiblePropList.size() == 0) break;
 
@@ -206,8 +204,6 @@ public abstract class LevelGenerator {
             prop.hasPaper = true;
 
             possiblePropList.remove(prop);
-
-            System.out.println("Spawned paper #" + i);
         }
     }
 }

@@ -123,8 +123,6 @@ public class Game {
             }
         }
 
-        System.out.println("Currently used textures: " + Game.texturePool.size());
-
         System.gc();
     }
 

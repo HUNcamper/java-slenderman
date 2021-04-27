@@ -85,8 +85,6 @@ public class Player extends EntityVisible {
             Prop prop = (Prop) ent;
 
             if (prop.hasPaper) {
-                System.out.println("Paper!!");
-                //interactWithProp(prop);
                 return prop;
             }
         }
@@ -116,7 +114,6 @@ public class Player extends EntityVisible {
      * Lépés hang lejátszása attól függően, hogy milyen felületen sétálunk.
      */
     public void playFootstep() {
-        System.out.println("Trying to play sound at x" + this.cellX + " y" + this.cellY);
         EntityVisible floor = Game.loadedLevel.getEntity(0, this.cellX, this.cellY);
 
         if (floor != null) {
@@ -158,7 +155,6 @@ public class Player extends EntityVisible {
     @Override
     public void handleInput(ActionEvent e) {
         String key = e.getActionCommand();
-        //System.out.println("Pressed: " + key);
 
         switch (key) {
             case "w":
