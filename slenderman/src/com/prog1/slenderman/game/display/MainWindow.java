@@ -2,14 +2,14 @@ package com.prog1.slenderman.game.display;
 
 import com.prog1.slenderman.game.Game;
 import com.prog1.slenderman.game.entities.*;
-import com.prog1.slenderman.game.entities.floor.EntFloor;
-import com.prog1.slenderman.game.entities.floor.EntFloorGrass;
 import com.prog1.slenderman.game.resource.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 
+/**
+ * A fő ablak, amiben a játék fut.
+ */
 public class MainWindow extends JFrame {
     private JLabel titleLabel;
     private JLabel interactLabel;
