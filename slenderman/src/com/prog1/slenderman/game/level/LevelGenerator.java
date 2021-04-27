@@ -1,6 +1,9 @@
 package com.prog1.slenderman.game.level;
 
+import com.prog1.slenderman.game.Game;
 import com.prog1.slenderman.game.entities.Entity;
+import com.prog1.slenderman.game.entities.floor.EntFloor;
+import com.prog1.slenderman.game.entities.floor.EntFloorGrass;
 import com.prog1.slenderman.game.entities.prop.*;
 import com.prog1.slenderman.game.entities.prop.house.EntityHouse;
 
@@ -28,6 +31,8 @@ public abstract class LevelGenerator {
      */
     public static Level preMade() {
         Level level = new Level(5, 15, 15);
+
+        spawnGrass(level);
 
         level.spawnEntity(new PropTreeSmall(), 2, 7, 0);
         level.spawnEntity(new PropTreeSmall(), 2, 14, 0);
@@ -62,6 +67,16 @@ public abstract class LevelGenerator {
         spawnPapers(level, 8);
 
         return level;
+    }
+
+    public static void spawnGrass(Level level) {
+        for (int y = 0; y < level.getRows(); y++) {
+            for (int x = 0; x < level.getColumns(); x++) {
+                EntFloorGrass grassFloor = new EntFloorGrass(x, y, 1, 1);
+
+                level.spawnEntity(grassFloor, 0, x, y);
+            }
+        }
     }
 
     /**
