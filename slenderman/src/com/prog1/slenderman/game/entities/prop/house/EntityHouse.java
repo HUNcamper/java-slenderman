@@ -15,7 +15,7 @@ import java.util.Random;
 public class EntityHouse extends EntityVisible {
     private Prop[][] house; // [height][width]
     private final int width = 6;
-    private final int height = 6;
+    private final int height = 7;
 
     /**
      * Ház inicializálása egy megadott mérettel és elrendezéssel.<br>
@@ -30,7 +30,8 @@ public class EntityHouse extends EntityVisible {
         walls[2] = new int[] { 4,-1, 4,-1,-1, 4};
         walls[3] = new int[] { 4,-1, 4,-1, 5, 9};
         walls[4] = new int[] { 4,-1,-1,-1,-1, 4};
-        walls[5] = new int[] { 0, 5, 7, 5, 5, 1};
+        walls[5] = new int[] { 4,-1, 4,-1,-1, 4};
+        walls[6] = new int[] { 0, 5, 7, 5, 5, 1};
 
         createWalls(walls);
     }
