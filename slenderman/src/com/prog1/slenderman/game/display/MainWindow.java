@@ -22,6 +22,9 @@ public class MainWindow extends JFrame {
         setupTitleLabel();
     }
 
+    /**
+     * A játék panel beállítása
+     */
     private void setupMainView() {
         Game.mainView.setBounds(0, 0, this.getWidth(), this.getHeight());
         Game.mainView.setVisible(true);
@@ -31,6 +34,9 @@ public class MainWindow extends JFrame {
         this.add(Game.mainView);
     }
 
+    /**
+     * A GUI ablak beállítása
+     */
     private void setupWindow() {
         this.getContentPane().setBackground(Color.BLACK);
         this.setSize(1280, 720);
@@ -44,6 +50,9 @@ public class MainWindow extends JFrame {
         this.setVisible(true);//making the frame visible
     }
 
+    /**
+     * "Press 'F' to pick up" label beállítása
+     */
     private void setupInteractLabel() {
         this.interactLabel = new JLabel("Press 'F' to pick up", SwingConstants.CENTER);
         this.interactLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 32));
@@ -51,6 +60,9 @@ public class MainWindow extends JFrame {
         Game.mainView.add(this.interactLabel, 4, 0);
     }
 
+    /**
+     * Fő cím label beállítása, amely a papírok számát jelzi
+     */
     private void setupTitleLabel() {
         this.titleLabel = new JLabel("PAGES: ", SwingConstants.CENTER);
         this.titleLabel.setBounds(0, 0, 0, 32);
@@ -59,11 +71,9 @@ public class MainWindow extends JFrame {
         this.add(this.titleLabel);
     }
 
-    @Override
-    public int getHeight() {
-        return super.getHeight();
-    }
-
+    /**
+     * Ablak frissítése, újrarajzolás, labelek frissítése
+     */
     public void update() {
         for (Texture texture : Game.texturePool.values()) {
             if (texture.applyViewZoom) {
