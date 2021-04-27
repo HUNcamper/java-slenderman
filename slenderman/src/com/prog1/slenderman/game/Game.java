@@ -3,10 +3,7 @@ package com.prog1.slenderman.game;
 import com.prog1.slenderman.game.display.MainCamera;
 import com.prog1.slenderman.game.display.MainView;
 import com.prog1.slenderman.game.display.MainWindow;
-import com.prog1.slenderman.game.entities.Entity;
-import com.prog1.slenderman.game.entities.MusicPlayer;
-import com.prog1.slenderman.game.entities.Player;
-import com.prog1.slenderman.game.entities.SlenderManOverlay;
+import com.prog1.slenderman.game.entities.*;
 import com.prog1.slenderman.game.level.Level;
 import com.prog1.slenderman.game.level.LevelGenerator;
 import com.prog1.slenderman.game.resource.Sound;
@@ -24,6 +21,7 @@ import java.util.HashMap;
  */
 public class Game {
     public static SlenderManOverlay slenderOverlay;
+    public static SlenderMan slenderMan;
     public static float globalVolume = 1.0f;
     public static MainWindow mainWindow;
     public static MainCamera mainCamera;
@@ -36,42 +34,21 @@ public class Game {
     public static int gridSize = 50;
     public static boolean newStep = false;
     public static int pagesCollected = 0;
+    public static boolean gameOver = false;
 
     /**
      * Játék inicializálása
      */
     public Game() {
-        Game.texturePool = new HashMap<String, Texture>();
-        Game.soundPool = new HashMap<String, Sound>();
-        Game.entityList = new ArrayList<Entity>();
-        Game.mainView = new MainView();
-        Game.mainCamera = new MainCamera();
-        //Game.loadedLevel = LevelGenerator.preMade();
-        Game.loadedLevel = LevelGenerator.fromFile("/test.txt");
         Game.mainWindow = new MainWindow();
-        Game.mainPlayer = new Player(0, 0, 1, 1);
-        Game.slenderOverlay = new SlenderManOverlay();
 
-        Game.loadedLevel.spawnEntity(Game.slenderOverlay, 4, 0, 0);
+        start();
 
         Game.mainWindow.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent componentEvent) {
                 Game.update();
             }
         });
-
-        Game.loadedLevel.spawnEntity(Game.mainPlayer, 1, 0, 0);
-
-        MusicPlayer mp = new MusicPlayer(); // automatikusan updateli a newStep metódus
-
-        try {
-            Sound ambient = new Sound("/sound/ambient/frogs_loop1.wav");
-            ambient.setLoop(true);
-            ambient.setVolume(0.1f);
-            ambient.play();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         Action handleKeyPress = new AbstractAction() {
             @Override
@@ -80,6 +57,10 @@ public class Game {
                     if (ent.isAcceptInput()) {
                         ent.handleInput(e);
                     }
+                }
+
+                if (Game.gameOver) {
+                    Game.handleGameOver(true);
                 }
             }
         };
@@ -93,17 +74,62 @@ public class Game {
         Game.update();
     }
 
+    private static void start() {
+        Game.gameOver = false;
+
+        if (Game.slenderMan != null) {
+            Game.slenderMan.stopSounds();
+        }
+
+        if (Game.entityList != null) {
+            Game.entityList.clear();
+        }
+
+        Game.texturePool = new HashMap<String, Texture>();
+        Game.soundPool = new HashMap<String, Sound>();
+        Game.entityList = new ArrayList<Entity>();
+        Game.mainView = new MainView();
+        Game.mainCamera = new MainCamera();
+        //Game.loadedLevel = LevelGenerator.preMade();
+        Game.loadedLevel = LevelGenerator.fromFile("/test.txt");
+        Game.mainPlayer = new Player(0, 0, 1, 1);
+        Game.slenderOverlay = new SlenderManOverlay();
+        Game.slenderMan = new SlenderMan();
+        Game.pagesCollected = 0;
+
+        Game.loadedLevel.spawnEntity(Game.slenderMan, 3, 0, 0);
+        Game.loadedLevel.spawnEntity(Game.slenderOverlay, 4, 0, 0);
+        Game.loadedLevel.spawnEntity(Game.mainPlayer, 1, 0, 0);
+
+        Game.mainWindow.setupMainView(Game.mainView);
+
+        MusicPlayer mp = new MusicPlayer(); // automatikusan updateli a newStep metódus
+
+        try {
+            Sound ambient = new Sound("/sound/ambient/frogs_loop1.wav");
+            ambient.setLoop(true);
+            ambient.setVolume(0.1f);
+            ambient.play();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * A játék érjen véget.
      *
      * @param fail Vesztett a player?
      */
-    public static void gameOver(boolean fail) {
+    public static void handleGameOver(boolean fail) {
         if (fail) {
             System.out.println("Game over!");
             //Game.mainPlayer.setVisible(false);
-            Game.mainPlayer.setAcceptInput(false);
+            //Game.mainPlayer.setAcceptInput(false);
         }
+
+        Game.mainWindow.remove(Game.mainView);
+        start();
+        Game.mainWindow.repaint();
     }
 
     /**
