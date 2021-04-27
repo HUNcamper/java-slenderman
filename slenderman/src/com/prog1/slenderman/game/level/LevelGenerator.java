@@ -1,6 +1,5 @@
 package com.prog1.slenderman.game.level;
 
-import com.prog1.slenderman.game.Game;
 import com.prog1.slenderman.game.entities.Entity;
 import com.prog1.slenderman.game.entities.EntityVisible;
 import com.prog1.slenderman.game.entities.floor.EntFloorGrass;
@@ -9,8 +8,6 @@ import com.prog1.slenderman.game.entities.prop.house.EntityHouse;
 import com.prog1.slenderman.game.resource.URLHandler;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -42,8 +39,9 @@ public abstract class LevelGenerator {
                 }
             }
             scanner.close();
-        } catch (FileNotFoundException | URISyntaxException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            System.err.println("A pálya betöltése sikertelen!! Győződj meg róla, hogy a fájl létezik, és megfelelő formázású!");
             return preMade();
         }
 
@@ -70,12 +68,13 @@ public abstract class LevelGenerator {
             EntityVisible ent = GetEntity(entName);
             if (ent != null) {
                 ent.setCellPos(entPosX, entPosY);
+                return ent;
+            } else {
+                throw new Exception();
             }
-
-            return ent;
         } catch (Exception e) {
-            System.err.println("Tereptárgyat sikertelen volt beolvasni. Győződj meg róla, hogy jó formátumban van megadva!");
             e.printStackTrace();
+            System.err.println("Tereptárgyat sikertelen volt beolvasni. Győződj meg róla, hogy jó formátumban van megadva!");
             return null;
         }
     }

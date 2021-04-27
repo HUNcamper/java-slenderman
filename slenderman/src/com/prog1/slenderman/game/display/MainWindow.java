@@ -45,9 +45,9 @@ public class MainWindow extends JFrame {
         this.getRootPane().setWindowDecorationStyle( JRootPane. FRAME );
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        this.setSize(400, 500);//400 width and 500 height
-        this.setLayout(null);//using no layout managers
-        this.setVisible(true);//making the frame visible
+        this.setSize(500, 500); //500 width and 500 height
+        this.setLayout(null); //using no layout managers
+        this.setVisible(true); //making the frame visible
     }
 
     /**
