@@ -207,7 +207,12 @@ public abstract class EntityVisible extends Entity {
      * @return Igaz, ha sikerült, hamis, ha nem
      */
     public boolean setCellPos(int cellX, int cellY) {
-        System.out.println("Trying to move from: x" + this.cellX + " y" + this.cellY + " l" + this.layer + " to x" + cellX + " y" + cellY);
+        if (Game.loadedLevel == null) {
+            // Nincs még pálya betöltve, ne ellenőrizzünk semmit
+            this.cellX = cellX;
+            this.cellY = cellY;
+            return true;
+        }
 
         if (Game.loadedLevel.getEntity(layer, this.cellX, this.cellY) != this) return false;
         if (!Game.loadedLevel.moveEntity(layer, this.cellX, this.cellY, layer, cellX, cellY)) return false;

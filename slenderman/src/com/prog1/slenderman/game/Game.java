@@ -46,7 +46,8 @@ public class Game {
         Game.entityList = new ArrayList<Entity>();
         Game.mainView = new MainView();
         Game.mainCamera = new MainCamera();
-        Game.loadedLevel = LevelGenerator.preMade();
+        //Game.loadedLevel = LevelGenerator.preMade();
+        Game.loadedLevel = LevelGenerator.fromFile("/test.txt");
         Game.mainWindow = new MainWindow();
         Game.mainPlayer = new Player(0, 0, 1, 1);
         Game.slenderOverlay = new SlenderManOverlay();
@@ -58,8 +59,6 @@ public class Game {
                 Game.update();
             }
         });
-
-        Game.texturePool.put("dev.error", Texture.fallbackTexture);
 
         Game.loadedLevel.spawnEntity(Game.mainPlayer, 1, 0, 0);
 
