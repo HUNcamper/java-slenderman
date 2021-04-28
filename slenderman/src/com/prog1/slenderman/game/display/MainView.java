@@ -22,6 +22,14 @@ public class MainView extends JLayeredPane {
     private JLabel interactLabel;
 
     /**
+     * Interakció label lekérése
+     * @return Swing JLabel
+     */
+    public JLabel getInteractLabel() {
+        return interactLabel;
+    }
+
+    /**
      * A nézet beállítása egy fekete körvonallal
      */
     public MainView() {
@@ -38,7 +46,7 @@ public class MainView extends JLayeredPane {
         this.interactLabel = new JLabel("Press 'F' to pick up", SwingConstants.CENTER);
         this.interactLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 32));
         this.interactLabel.setForeground(Color.WHITE);
-        this.add(this.interactLabel, 4, 0);
+        this.add(this.interactLabel, 10, 0);
     }
 
     /**

@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Pályát leíró osztály
+ */
 public class Level {
     private final int rows;
     private final int columns;
@@ -43,7 +46,9 @@ public class Level {
 
         for (int y = 0; y < this.rows; y++) {
             for (int x = 0; x < this.columns; x++) {
-                if (x == cellX && y == cellY) continue;
+                // A játékosra ne teleportálhasson:
+                // if (x == cellX && y == cellY) continue;
+                // Leírás miatt kivéve.
 
                 int manhattan = Level.manhattanDistance(cellX, cellY, x, y);
 

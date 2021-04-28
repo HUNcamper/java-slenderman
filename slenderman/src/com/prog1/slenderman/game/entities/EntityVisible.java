@@ -223,6 +223,15 @@ public abstract class EntityVisible extends Entity {
     }
 
     /**
+     * Entitás frissítése és textúra átméretezése, mozgatása
+     */
+    @Override
+    public void update() {
+        super.update();
+        alignToCameraOffset();
+    }
+
+    /**
      * Kamerához igazítás, zoomhoz méretezés<br>
      *     Zoom akkor történhet, mikor megváltoztatjuk az ablak méretét
      */

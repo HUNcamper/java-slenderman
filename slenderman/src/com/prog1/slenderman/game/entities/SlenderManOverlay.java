@@ -16,7 +16,7 @@ public class SlenderManOverlay extends EntityVisible {
         this.sizeX = Game.loadedLevel.getColumns();
         this.sizeY = Game.loadedLevel.getRows();
 
-        Texture texture = TextureLoader.loadTexture("/textures/slenderman/close_shot.png");
+        Texture texture = TextureLoader.loadTexture("/textures/slenderman/overlay_static.png");
         texture.setOpacity(0.3f);
         this.setTexture(texture);
 

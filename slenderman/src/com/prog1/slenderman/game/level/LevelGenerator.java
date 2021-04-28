@@ -5,11 +5,9 @@ import com.prog1.slenderman.game.entities.EntityVisible;
 import com.prog1.slenderman.game.entities.floor.EntFloorGrass;
 import com.prog1.slenderman.game.entities.prop.*;
 import com.prog1.slenderman.game.entities.prop.house.EntityHouse;
-import com.prog1.slenderman.game.resource.URLHandler;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -29,12 +27,14 @@ public abstract class LevelGenerator {
         spawnGrass(level);
 
         try {
-            File file = new File(Objects.requireNonNull(URLHandler.convertString(path)).toURI());
+            File file = new File(path);
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
+                System.out.println("Új sor: " + line);
                 EntityVisible ent = ParseLine(line);
                 if (ent != null) {
+                    System.out.println("Entity beolvasva");
                     level.spawnEntity(ent, 2, ent.cellX, ent.cellY);
                 }
             }
@@ -47,11 +47,14 @@ public abstract class LevelGenerator {
 
         spawnPapers(level, 8);
 
+        System.out.println("A pálya betöltése sikeres.");
+
         return level;
     }
 
     /**
      * Fájl egy sorának feldolgozása, és az őt leíró entitás visszaadása
+     *
      * @param line Szöveges sor
      * @return Entitás, amelyet leír a sor
      */
@@ -65,7 +68,7 @@ public abstract class LevelGenerator {
             int entPosX = Integer.parseInt(split[1]);
             int entPosY = Integer.parseInt(split[2]);
 
-            EntityVisible ent = GetEntity(entName);
+            EntityVisible ent = parseEntity(entName);
             if (ent != null) {
                 ent.setCellPos(entPosX, entPosY);
                 return ent;
@@ -80,11 +83,29 @@ public abstract class LevelGenerator {
     }
 
     /**
+     * Pálya sarkainak vizsgálata, hogy a játékos le tudjon spawnolni
+     */
+    private static void checkCorners(Level level) {
+        int rows = level.getRows();
+        int cols = level.getColumns();
+
+        if (
+            level.getEntity(2, 0, 0) != null &&                 // bal felső sarok
+            level.getEntity(2, 0, rows - 1 ) != null &&             // bal alsó sarok
+            level.getEntity(2, cols - 1, 0 ) != null &&     // jobb felső sarok
+            level.getEntity(2, cols - 1, rows - 1) != null  // jobb alsó sarok
+        ) {
+            //throw new Exception("Minden sarokban van tereptárgy, így a játékot nem lehet megkezdeni.");
+        }
+    }
+
+    /**
      * Név alapján entitás létrehozása
+     *
      * @param entName Entitás neve
      * @return Entitás
      */
-    private static EntityVisible GetEntity(String entName) {
+    private static EntityVisible parseEntity(String entName) {
         switch (entName) {
             case "BarrelHor":
                 return new PropBarrelHor();
@@ -158,6 +179,7 @@ public abstract class LevelGenerator {
 
     /**
      * A megadott pályára járható fű felület generálása
+     *
      * @param level Pálya
      */
     public static void spawnGrass(Level level) {

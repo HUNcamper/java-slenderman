@@ -6,6 +6,7 @@ import com.prog1.slenderman.game.display.MainWindow;
 import com.prog1.slenderman.game.entities.*;
 import com.prog1.slenderman.game.level.Level;
 import com.prog1.slenderman.game.level.LevelGenerator;
+import com.prog1.slenderman.game.resource.SwingFileChooser;
 import com.prog1.slenderman.game.resource.Sound;
 import com.prog1.slenderman.game.resource.Texture;
 
@@ -22,7 +23,6 @@ import java.util.HashMap;
 public class Game {
     public static SlenderManOverlay slenderOverlay;
     public static SlenderMan slenderMan;
-    public static float globalVolume = 1.0f;
     public static MainWindow mainWindow;
     public static MainCamera mainCamera;
     public static MainView mainView;
@@ -31,6 +31,8 @@ public class Game {
     public static ArrayList<Entity> entityList;
     public static HashMap<String, Texture> texturePool;
     public static HashMap<String, Sound> soundPool;
+
+    public static float globalVolume = 1.0f;
     public static int gridSize = 50;
     public static boolean newStep = false;
     public static int pagesCollected = 0;
@@ -38,6 +40,9 @@ public class Game {
 
     private static Sound ambient;
     private static MusicPlayer mp;
+    
+    private static JButton bStart;
+    private static JButton bFile;
 
     /**
      * Játék inicializálása
@@ -47,7 +52,7 @@ public class Game {
         Game.soundPool = new HashMap<String, Sound>();
         Game.mainWindow = new MainWindow();
 
-        start();
+        Game.mainWindow.showMainMenu();
 
         Game.mainWindow.addComponentListener(new ComponentAdapter() {
             public void componentResized(ComponentEvent componentEvent) {
@@ -66,50 +71,11 @@ public class Game {
 
                 if (Game.gameOver) {
                     Game.handleGameOver(true);
+                    Game.gameOver = false;
                 }
             }
         };
-
-        addKeyBinding("w", KeyEvent.VK_W, handleKeyPress);
-        addKeyBinding("d", KeyEvent.VK_D, handleKeyPress);
-        addKeyBinding("s", KeyEvent.VK_S, handleKeyPress);
-        addKeyBinding("a", KeyEvent.VK_A, handleKeyPress);
-        addKeyBinding("f", KeyEvent.VK_F, handleKeyPress);
-    }
-
-    private static void start() {
-        Game.gameOver = false;
-
-        if (Game.slenderMan != null) {
-            Game.slenderMan.stopSounds();
-        }
-
-        if (Game.entityList != null) {
-            Game.entityList.clear();
-        }
-
-        if (Game.mp != null) {
-            Game.mp.stop();
-        }
-
-        Game.entityList = new ArrayList<Entity>();
-        Game.mainView = new MainView();
-        Game.mainCamera = new MainCamera();
-        Game.loadedLevel = LevelGenerator.preMade();
-        //Game.loadedLevel = LevelGenerator.fromFile("/test.txt");
-        Game.mainPlayer = new Player(0, 0, 1, 1);
-        Game.slenderOverlay = new SlenderManOverlay();
-        Game.slenderMan = new SlenderMan();
-        Game.pagesCollected = 0;
-
-        Game.loadedLevel.spawnEntity(Game.slenderMan, 3, 0, 0);
-        Game.loadedLevel.spawnEntity(Game.slenderOverlay, 4, 0, 0);
-        Game.loadedLevel.spawnEntity(Game.mainPlayer, 1, 0, 0);
-
-        Game.mainWindow.setupMainView(Game.mainView);
-
-        Game.mp = new MusicPlayer(); // automatikusan updateli a newStep metódus
-
+        
         try {
             if (Game.ambient != null) {
                 Game.ambient.stop();
@@ -123,6 +89,43 @@ public class Game {
             e.printStackTrace();
         }
 
+        addKeyBinding("w", KeyEvent.VK_W, handleKeyPress);
+        addKeyBinding("d", KeyEvent.VK_D, handleKeyPress);
+        addKeyBinding("s", KeyEvent.VK_S, handleKeyPress);
+        addKeyBinding("a", KeyEvent.VK_A, handleKeyPress);
+        addKeyBinding("f", KeyEvent.VK_F, handleKeyPress);
+
+        Game.update();
+    }
+
+    /**
+     * Adattagok inicializálása, játék elindítása
+     */
+    public static void startGame(String mapFile) {
+        Game.mainWindow.getTitleLabel().setVisible(true);
+        Game.gameOver = false;
+
+        Game.entityList = new ArrayList<Entity>();
+        Game.mainView = new MainView();
+        Game.mainCamera = new MainCamera();
+        if (mapFile != null) {
+            Game.loadedLevel = LevelGenerator.fromFile(mapFile);
+        } else {
+            Game.loadedLevel = LevelGenerator.preMade();
+        }
+        Game.mainPlayer = new Player(0, 0, 1, 1);
+        Game.slenderOverlay = new SlenderManOverlay();
+        Game.slenderMan = new SlenderMan();
+        Game.pagesCollected = 0;
+
+        Game.loadedLevel.spawnEntity(Game.slenderMan, 3, 0, 0);
+        Game.loadedLevel.spawnEntity(Game.slenderOverlay, 4, 0, 0);
+        Game.loadedLevel.spawnEntity(Game.mainPlayer, 1, 0, 0);
+
+        Game.mainWindow.setupMainView(Game.mainView);
+
+        Game.mp = new MusicPlayer(); // automatikusan updateli a newStep metódus
+
         Game.update();
     }
 
@@ -132,15 +135,59 @@ public class Game {
      * @param fail Vesztett a player?
      */
     public static void handleGameOver(boolean fail) {
-        if (fail) {
-            System.out.println("Game over!");
-            //Game.mainPlayer.setVisible(false);
-            //Game.mainPlayer.setAcceptInput(false);
+        System.out.println("Game over!");
+
+        for (Entity ent : Game.entityList) {
+            ent.setAcceptInput(false);
         }
 
+        String text = "GAME OVER";
+        if (!fail) text = "YOU WIN!";
+
+        setLabelText(text);
+
+        ActionListener taskPerformer = evt -> {
+            endGame();
+        };
+
+        Timer timer = new Timer(2000, taskPerformer);
+        timer.setRepeats(false);
+        timer.start();
+    }
+
+    /**
+     * Játék leállítása, visszatérés a főmenübe
+     */
+    private static void endGame() {
+        if (Game.slenderMan != null) {
+            Game.slenderMan.stopSounds();
+        }
+
+        if (Game.entityList != null) {
+            Game.entityList.clear();
+        }
+
+        if (Game.mp != null) {
+            Game.mp.stop();
+        }
+
+        Game.loadedLevel = null;
+
+        Game.mainWindow.getTitleLabel().setVisible(false);
         Game.mainWindow.remove(Game.mainView);
-        start();
         Game.mainWindow.repaint();
+
+        Game.mainWindow.showMainMenu();
+    }
+
+    /**
+     * Képernyő közepén levő labelen levő szöveg megváltoztatása
+     *
+     * @param text Szöveg, ami megjelenjen
+     */
+    private static void setLabelText(String text) {
+        Game.mainView.getInteractLabel().setText(text);
+        Game.mainView.getInteractLabel().setVisible(true);
     }
 
     /**
@@ -149,18 +196,50 @@ public class Game {
      */
     public static void update() {
         //Game.mainCamera.followPlayer();
-        Game.mainView.update();
-        Game.mainWindow.update();
+        if (Game.mainWindow != null) Game.mainWindow.update();
 
-        if (Game.newStep) {
+        if (Game.mainView != null) {
+            Game.mainView.update();
+            updateTextures();
+            updateEntities();
+            checkPages();
+        }
+
+        System.gc();
+    }
+
+    private static void checkPages() {
+        if (Game.pagesCollected >= 8) {
+            Game.handleGameOver(false);
+        }
+    }
+
+    /**
+     * Textúrák frissítése, átméretezése
+     */
+    private static void updateTextures() {
+        for (Texture tex : Game.texturePool.values()) {
+            if (tex.applyViewZoom) {
+                tex.resizeToCameraOffset();
+            }
+        }
+    }
+
+    /**
+     * Pályán levő entitások frissítése, és jelzés új lépésnél
+     */
+    private static void updateEntities() {
+        for (Entity ent : Game.entityList) {
+            ent.update();
+        }
+
+        if (Game.newStep && Game.entityList != null) {
             Game.newStep = false;
 
             for (Entity ent : Game.entityList) {
                 ent.newStep();
             }
         }
-
-        System.gc();
     }
 
     /**

@@ -18,6 +18,8 @@ public class SlenderMan extends EntityVisible {
     private int status = 0;
     private boolean jumpscareAlreadyHappening = false;
 
+    private int stepsNearPlayer = 0;
+
     /**
      * Slenderman inicializálása textúrákkal és hangeffektusokkal
      */
@@ -39,6 +41,7 @@ public class SlenderMan extends EntityVisible {
 
     /**
      * Koordináta páros listából random páros kiválasztása
+     *
      * @param list Koordináta párok listája
      * @return Egy random koordináta páros
      */
@@ -78,14 +81,13 @@ public class SlenderMan extends EntityVisible {
 
     /**
      * Slenderman overlay megjelenítése és hozzá kötött hang lejátszása
-     * @param opacity Áttetszőség mértéke 0.0 és 1.0 között
+     *
+     * @param opacity    Áttetszőség mértéke 0.0 és 1.0 között
      * @param soundIndex Hang indexe
-     * @param jumpscare Igaz, ha ez egy jumpscare, Hamis ha nem
+     * @param jumpscare  Igaz, ha ez egy jumpscare, Hamis ha nem
      */
     public void overlayAppear(float opacity, int soundIndex, boolean jumpscare) {
         float cOpacity = Game.slenderOverlay.texture.getOpacity();
-
-        System.out.println("cOpacity: " + cOpacity + " new opacity: " + opacity);
 
         if (this.jumpscareAlreadyHappening && cOpacity == opacity) return;
 
@@ -93,7 +95,6 @@ public class SlenderMan extends EntityVisible {
         if (jumpscare) this.pianoSound.play();
 
         Game.slenderOverlay.texture.setOpacity(opacity);
-        System.out.println("Supposedly set new opacity. Let's see: " + Game.slenderOverlay.texture.getOpacity());
         Game.slenderOverlay.setVisible(true);
         jumpscareAlreadyHappening = true;
         Game.update();
@@ -127,6 +128,49 @@ public class SlenderMan extends EntityVisible {
         int[] location = randomPos(possibleLocations);
 
         this.setCellPos(location[0], location[1]);
+
+        checkNearPlayer();
+    }
+
+    /**
+     * Megnézi, hogy a játékostól 1 távolságra van-e:<br>
+     * Ha igen, a számlálót növeli,<br>
+     * Ha nem, akkor a számlálót reseteli.
+     */
+    private void checkNearPlayer() {
+        int playerX = Game.mainPlayer.getCellX();
+        int playerY = Game.mainPlayer.getCellY();
+
+        if (Level.manhattanDistance(cellX, cellY, playerX, playerY) == 1) {
+            this.stepsNearPlayer++;
+            System.out.println("Steps near player: " + this.stepsNearPlayer);
+        } else {
+            this.stepsNearPlayer = 0;
+        }
+
+        boolean shouldCatchPlayer = false;
+
+        if (stepsNearPlayer == 3) {
+            Random r = new Random();
+            int random =  r.nextInt(100);
+
+            if (this.status == 2 && random <= 33) {
+                shouldCatchPlayer = true;
+            } else if(this.status == 3 && random <= 50) {
+                shouldCatchPlayer = true;
+            } else if(this.status == 4 && random <= 66) {
+                shouldCatchPlayer = true;
+            }
+        }
+
+        if (shouldCatchPlayer) {
+            System.out.println("Catching player :)");
+            gameOver();
+        }
+
+        if (this.cellX == playerX && this.cellY == playerY) {
+            gameOver();
+        }
     }
 
     /**
@@ -160,7 +204,7 @@ public class SlenderMan extends EntityVisible {
 
     /**
      * Jumpscare megkísérlése<br>
-     *     Akkor nem sikerül, ha slenderman nem a player előtt van, vagy már volt jumpscare meghívva egy lépéssel ezelőtt
+     * Akkor nem sikerül, ha slenderman nem a player előtt van, vagy már volt jumpscare meghívva egy lépéssel ezelőtt
      */
     public void tryJumpscare() {
         // Ha player előtt van, akkor legyen jumpscare
@@ -181,7 +225,7 @@ public class SlenderMan extends EntityVisible {
         }
 
         if (ok) {
-            overlayAppear(0.8f, 2, true);
+            overlayAppear(0.4f, 2, true);
         }
     }
 

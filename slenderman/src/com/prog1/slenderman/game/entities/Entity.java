@@ -42,6 +42,13 @@ public abstract class Entity {
     }
 
     /**
+     * Entitás frissítése
+     */
+    public void update() {
+
+    }
+
+    /**
      * A játékos által új lépés történt
      */
     public void newStep() {
