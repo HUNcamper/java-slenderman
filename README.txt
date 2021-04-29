@@ -55,6 +55,7 @@ Mozgás: WASD
 Papír felvétele: F
 
 Ahhoz, hogy papírt vehess fel, először a tereptárgy felé kell nézned.
+Megjelenik egy "Press 'F' to pick up" szöveg, ami jelzi, hogy a papírt fel tudod venni.
 Ha a tereptárgy, amin papír van, valamelyik oldaladon vagy mögötted van, a papírt nem veheted fel.
 
 //////////// /////////////
