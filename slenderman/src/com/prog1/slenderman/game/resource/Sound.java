@@ -9,7 +9,7 @@ import java.net.URL;
 /**
  * Hangfájlt kezelő osztály
  */
-public class Sound {
+public class Sound extends Resource {
     private AudioInputStream audioInputStream;
     private boolean loop = false;
     private float volume = 1.0f;
@@ -50,6 +50,8 @@ public class Sound {
      * @throws UnsupportedAudioFileException Ha a hang formátuma nem támogatott
      */
     public Sound(String soundPath) throws IOException, UnsupportedAudioFileException {
+        super(soundPath);
+
         // Egy db hang fájl
         URL url = URLHandler.convertString(soundPath);
 

@@ -6,7 +6,7 @@ import com.prog1.slenderman.game.resource.TextureLoader;
 
 /**
  * Slenderman overlay<br>
- *     Egy legfelső rétegben levő látható entitás, ami csak akkor jelenik meg, mikor a Slenderman a közelben van
+ * Egy legfelső rétegben levő látható entitás, ami csak akkor jelenik meg, mikor a Slenderman a közelben van
  */
 public class SlenderManOverlay extends EntityVisible {
     /**

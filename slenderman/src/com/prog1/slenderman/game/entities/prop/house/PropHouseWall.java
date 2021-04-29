@@ -17,6 +17,7 @@ public class PropHouseWall extends Prop {
 
     /**
      * Fal és textúrák inicializálása
+     *
      * @param texIndex Textúra indexe
      */
     public PropHouseWall(int texIndex) {
@@ -43,7 +44,7 @@ public class PropHouseWall extends Prop {
         this.texIndex = texIndex;
         this.setTexture(this.textures[texIndex]);
 
-        switch(texIndex) {
+        switch (texIndex) {
             case 4:
             case 5:
                 this.paperSurface = true;

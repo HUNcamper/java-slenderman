@@ -34,6 +34,7 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * Entitás megadott koordinátákon
+     *
      * @param cellX X koordináta
      * @param cellY Y koordináta
      * @param sizeX X cella szélesség
@@ -51,6 +52,7 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * Entitás láthatóságának beállítása
+     *
      * @param visible Igaz, ha látható legyen, hamis, ha nem
      */
     public void setVisible(boolean visible) {
@@ -60,6 +62,7 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * Látható-e az objektum?
+     *
      * @return Igaz, ha igen, hamis ha nem
      */
     public boolean isVisible() {
@@ -68,6 +71,7 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * Textúra beállítása URL-el
+     *
      * @param textureURL Textúra URL-je
      */
     public void setTexture(URL textureURL) {
@@ -76,6 +80,7 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * Textúra kicserélése másikra
+     *
      * @param texture Másik textúra
      */
     public void setTexture(Texture texture) {
@@ -87,6 +92,7 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * Textúra lekérdezése
+     *
      * @return Entitás textúrája
      */
     public Texture getTexture() {
@@ -95,6 +101,7 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * Swing-es komponens (JLabel) lekérdezése
+     *
      * @return Swing JLabel Component
      */
     public JLabel getLabel() {
@@ -103,6 +110,7 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * X koordináta beállítása
+     *
      * @param cellX X koordináta
      */
     public void setCellX(int cellX) {
@@ -111,6 +119,7 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * Y koordináta beállítása
+     *
      * @param cellY Y koordináta
      */
     public void setCellY(int cellY) {
@@ -119,6 +128,7 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * Réteg beállítása
+     *
      * @param layer Réteg
      */
     public void setLayer(int layer) {
@@ -127,6 +137,7 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * X koordináta lekérdezése
+     *
      * @return X koordináta
      */
     public int getCellX() {
@@ -135,6 +146,7 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * Y koordináta lekérdezése
+     *
      * @return Y koordináta
      */
     public int getCellY() {
@@ -143,7 +155,8 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * X térbeli pozíció lekérdezése<br>
-     *     Térbeli pozíció: koordináták megszorzása a pálya cellaméretével
+     * Térbeli pozíció: koordináták megszorzása a pálya cellaméretével
+     *
      * @return X térbeli pozíciója
      */
     public int getPosX() {
@@ -152,7 +165,8 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * Y térbeli pozíció lekérdezése<br>
-     *     Térbeli pozíció: koordináták megszorzása a pálya cellaméretével
+     * Térbeli pozíció: koordináták megszorzása a pálya cellaméretével
+     *
      * @return Y térbeli pozíciója
      */
     public int getPosY() {
@@ -161,6 +175,7 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * X méret lekérdezése
+     *
      * @return X méret
      */
     public int getSizeX() {
@@ -169,6 +184,7 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * Y méret lekérdezése
+     *
      * @return Y méret
      */
     public int getSizeY() {
@@ -177,7 +193,8 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * Térbeli szélesség lekérdezése<br>
-     *     Térbeli szélesség: méret megszorzása a pálya cellaméretével
+     * Térbeli szélesség: méret megszorzása a pálya cellaméretével
+     *
      * @return Térbeli szélesség
      */
     public int getWidth() {
@@ -186,7 +203,8 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * Térbeli magasság lekérdezése<br>
-     *     Térbeli szélesség: méret megszorzása a pálya cellaméretével
+     * Térbeli szélesség: méret megszorzása a pálya cellaméretével
+     *
      * @return Térbeli magasság
      */
     public int getHeight() {
@@ -195,6 +213,7 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * Akkor hívódik meg, mikor az entitás el lett helyezve egy pályán
+     *
      * @param level Pálya, amin el lett helyezve
      */
     public void spawned(Level level) {
@@ -203,7 +222,8 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * X és Y koordináta beállításának megkísérlése<br>
-     *     Esetleg nem sikerülhet, ha a pályán az adott cella már foglalt.
+     * Esetleg nem sikerülhet, ha a pályán az adott cella már foglalt.
+     *
      * @param cellX X koordináta
      * @param cellY Y koordináta
      * @return Igaz, ha sikerült, hamis, ha nem
@@ -237,7 +257,7 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * Kamerához igazítás, zoomhoz méretezés<br>
-     *     Zoom akkor történhet, mikor megváltoztatjuk az ablak méretét
+     * Zoom akkor történhet, mikor megváltoztatjuk az ablak méretét
      */
     public void alignToCameraOffset() {
         MainView view = Game.mainView;

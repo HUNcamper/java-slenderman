@@ -16,6 +16,7 @@ public class MainWindow extends JFrame {
 
     /**
      * Cím label lekérdezése
+     *
      * @return Swing JLabel
      */
     public JLabel getTitleLabel() {
@@ -71,6 +72,7 @@ public class MainWindow extends JFrame {
 
     /**
      * A játék panel beállítása
+     *
      * @param view Játék panel
      */
     public void setupMainView(MainView view) {
@@ -90,7 +92,7 @@ public class MainWindow extends JFrame {
         this.setSize(1280, 720);
 
         this.setUndecorated(true);
-        this.getRootPane().setWindowDecorationStyle( JRootPane. FRAME );
+        this.getRootPane().setWindowDecorationStyle(JRootPane.FRAME);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.setSize(500, 500); //500 width and 500 height
@@ -129,11 +131,11 @@ public class MainWindow extends JFrame {
         if (this.bStart != null && this.bFile != null) {
             int x = CenterFactory.CenterHorizontal(this.bStart, this.getWidth());
             int y = CenterFactory.CenterVertical(this.bStart, this.getHeight());
-            this.bStart.setBounds(x, y-75, this.bStart.getWidth(), this.bStart.getHeight());
+            this.bStart.setBounds(x, y - 75, this.bStart.getWidth(), this.bStart.getHeight());
 
             x = CenterFactory.CenterHorizontal(this.bFile, this.getWidth());
             y = CenterFactory.CenterVertical(this.bFile, this.getHeight());
-            this.bFile.setBounds(x, y+75, this.bFile.getWidth(), this.bFile.getHeight());
+            this.bFile.setBounds(x, y + 75, this.bFile.getWidth(), this.bFile.getHeight());
         }
     }
 }

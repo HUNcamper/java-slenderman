@@ -8,6 +8,7 @@ import com.prog1.slenderman.game.Game;
 public abstract class SoundLoader {
     /**
      * Hangfájl betöltése fájlból, vagy ha már be van töltve, lekérdezése a globális betöltött listából
+     *
      * @param soundName Hangfájl elérési útvonala
      * @return Hang osztály
      */

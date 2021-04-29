@@ -4,7 +4,7 @@ import com.prog1.slenderman.game.Game;
 
 /**
  * Mozgatható kamerát leíró osztály.<br>
- *     A feladat megkötései miatt nem teljesen használt.
+ * A feladat megkötései miatt nem teljesen használt.
  */
 public class MainCamera {
     public int posX = 0;
@@ -19,7 +19,8 @@ public class MainCamera {
 
     /**
      * Inicializálás X és Y koordináták alapján.<br>
-     *     A kamera ennyivel lesz eltolva a 0,0 koordinátához képest
+     * A kamera ennyivel lesz eltolva a 0,0 koordinátához képest
+     *
      * @param x X koordináta
      * @param y Y koordináta
      */
@@ -30,6 +31,7 @@ public class MainCamera {
 
     /**
      * Kamera mozgatása új X és Y koordinátákra
+     *
      * @param newX Új X koordináta
      * @param newY Új Y koordináta
      */
@@ -40,6 +42,7 @@ public class MainCamera {
 
     /**
      * Kamera relatív mozgatása X és Y értékekkel
+     *
      * @param offsetX Relatív X érték
      * @param offsetY Relatív Y érték
      */
@@ -52,8 +55,8 @@ public class MainCamera {
      * Játékos követése úgy, hogy a játékos maga a kép középpontján legyen.
      */
     public void followPlayer() {
-        int newX = (int) (Game.mainPlayer.getCellX() * Game.gridSize - (Game.mainView.baseResolutionWidth / Game.mainView.baseZoom)/2);
-        int newY = (int) (Game.mainPlayer.getCellY() * Game.gridSize - (Game.mainView.baseResolution_height / Game.mainView.baseZoom)/2);
+        int newX = (int) (Game.mainPlayer.getCellX() * Game.gridSize - (Game.mainView.baseResolutionWidth / Game.mainView.baseZoom) / 2);
+        int newY = (int) (Game.mainPlayer.getCellY() * Game.gridSize - (Game.mainView.baseResolution_height / Game.mainView.baseZoom) / 2);
 
         move(newX, newY);
     }

@@ -144,6 +144,7 @@ public class SlenderMan extends EntityVisible {
 
     /**
      * Egy random koordinátára teleportálás, egy megadott koordináta lista alapján
+     *
      * @param coordinateList X Y koordináta páros lista
      */
     private void teleportRandom(List<int[]> coordinateList) {
@@ -171,13 +172,13 @@ public class SlenderMan extends EntityVisible {
 
         if (stepsNearPlayer == 3) {
             Random r = new Random();
-            int random =  r.nextInt(100);
+            int random = r.nextInt(100);
 
             if (this.status == 2 && random <= 33) {
                 shouldCatchPlayer = true;
-            } else if(this.status == 3 && random <= 50) {
+            } else if (this.status == 3 && random <= 50) {
                 shouldCatchPlayer = true;
-            } else if(this.status == 4 && random <= 66) {
+            } else if (this.status == 4 && random <= 66) {
                 shouldCatchPlayer = true;
             }
         }

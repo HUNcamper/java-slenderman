@@ -10,6 +10,7 @@ import java.io.File;
 public abstract class SwingFileChooser {
     /**
      * Fájl választó ablak megnyitása a jelenlegi mappából
+     *
      * @param caller Meghívó komponens
      * @return Fájl elérési útvonala
      */
@@ -20,8 +21,9 @@ public abstract class SwingFileChooser {
 
     /**
      * Fájl választó ablak megnyitása a megadott mappából
+     *
      * @param caller Meghívó komponens
-     * @param start Megadott mappa
+     * @param start  Megadott mappa
      * @return Fájl elérési útvonala
      */
     public static String open(Component caller, File start) {

@@ -8,6 +8,7 @@ import com.prog1.slenderman.game.Game;
 public abstract class TextureLoader {
     /**
      * Textúra betöltése fájlból, vagy ha már be van töltve, lekérdezése a globális betöltött listából
+     *
      * @param imageName Textúra elérési útvonala
      * @return Textúra osztály
      */

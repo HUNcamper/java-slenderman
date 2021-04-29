@@ -8,7 +8,8 @@ import javax.swing.*;
 public abstract class CenterFactory {
     /**
      * Vízszintes középre helyezés
-     * @param component Swing Komponens
+     *
+     * @param component   Swing Komponens
      * @param parentWidth Szülő komponens szélessége
      * @return X koordináta, ahol mozgatva középre lesz helyezve a komponens
      */
@@ -18,7 +19,8 @@ public abstract class CenterFactory {
 
     /**
      * Függőleges középre helyezés
-     * @param component Swing Komponens
+     *
+     * @param component    Swing Komponens
      * @param parentHeight Szülő komponens magassága
      * @return Y koordináta, ahol mozgatva középre lesz helyezve a komponens
      */

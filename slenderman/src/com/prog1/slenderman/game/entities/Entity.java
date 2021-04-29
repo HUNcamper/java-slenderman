@@ -12,6 +12,7 @@ public abstract class Entity {
 
     /**
      * Elfogad billentyű inputot az osztály?
+     *
      * @return Igaz, ha igen, hamis, ha nem
      */
     public boolean isAcceptInput() {
@@ -20,6 +21,7 @@ public abstract class Entity {
 
     /**
      * Annak beállítása, hogy elfogadjon-e billentyű inputot az osztály
+     *
      * @param acceptInput Igaz, ha igen, hamis, ha nem
      */
     public void setAcceptInput(boolean acceptInput) {
@@ -35,6 +37,7 @@ public abstract class Entity {
 
     /**
      * Billentyű input lekezelése
+     *
      * @param e Swing ActionEvent
      */
     public void handleInput(ActionEvent e) {

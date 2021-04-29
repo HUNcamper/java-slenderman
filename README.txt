@@ -29,16 +29,20 @@ Követelmények:
 //////////// /////////////
 
 IntelliJ IDEA fejlesztői környezetben:
-        1. A "slenderman" mappa, ami ez a README.txt fájl mellett található maga a projekt gyökere. Ezt nyisd meg.
+        1. A "slenderman" mappa, ami ez a README.txt fájl mellett található, maga a projekt gyökere. Ezt nyisd meg.
         2. A jobb felső sarokban levő zöld háromszög futtatás gombbal tudod futtatni.
 
 Amennyiben az IDEA használata nem lehetséges, vagy probléma adódik:
-        A. WINDOWS esetén a "WIN_build.bat" script compile-olja a projektet, a "WIN_run.bat" pedig futtatja azt.
-        B. LINUX esetén a következő parancsokat futtasd a "slenderman" mappán belül:
-                - chmod +x LIN_build.sh
-                - chmod +x LIN_run.sh
-                - ./LIN_build.sh
-                - ./LIN_run.sh
+        A. WINDOWS esetén, tedd ezeket ebben a sorrendben:
+                1. futtasd a WIN_build.bat fájlt
+                2. futtasd a WIN_run.bat fájlt
+                3. Jó játékot :)
+        B. LINUX esetén a következő parancsokat futtasd a "slenderman" mappán belül, ebben a sorrendben:
+                1. chmod +x LIN_build.sh
+                2. chmod +x LIN_run.sh
+                3. ./LIN_build.sh
+                4. ./LIN_run.sh
+                5. Jó játékot :)
         - Ha ezen scriptek futtatásánál gondok adódnak, az .sh fájlokban levő
           parancsok kimásolásával és manuális futtatásával is tégy egy próbát.
         (IntelliJ IDEA teljesen ingyenes nekünk hallgatóknak és nagyon ajánlom a használatát :) )

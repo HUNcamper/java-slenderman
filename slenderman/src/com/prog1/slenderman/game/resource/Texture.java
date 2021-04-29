@@ -12,7 +12,7 @@ import java.net.URL;
 /**
  * Textúrát kezelő osztály
  */
-public class Texture {
+public class Texture extends Resource {
     public static Texture fallbackTexture = new Texture();
 
     private BufferedImage bufferedImage;
@@ -71,6 +71,7 @@ public class Texture {
      * @param imageURL Textúra elérési URL-je
      */
     public Texture(URL imageURL) {
+        super(imageURL.toString());
         setTexture(imageURL);
     }
 
@@ -79,6 +80,7 @@ public class Texture {
      * @param imagePath Textúra elérési útvonala
      */
     public Texture(String imagePath) {
+        super(imagePath);
         try {
             setTexture(URLHandler.convertString(imagePath));
         } catch (Exception e) {

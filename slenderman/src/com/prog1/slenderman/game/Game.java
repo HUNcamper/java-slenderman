@@ -40,7 +40,7 @@ public class Game {
 
     private static Sound ambient;
     private static MusicPlayer mp;
-    
+
     private static JButton bStart;
     private static JButton bFile;
 
@@ -75,7 +75,7 @@ public class Game {
                 }
             }
         };
-        
+
         try {
             if (Game.ambient != null) {
                 Game.ambient.stop();
@@ -100,6 +100,7 @@ public class Game {
 
     /**
      * Adattagok inicializálása, játék elindítása
+     *
      * @param mapFile Pálya txt elérési útvonala, vagy null, ha beépített pálya legyen
      */
     public static void startGame(String mapFile) {

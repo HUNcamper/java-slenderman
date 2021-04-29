@@ -30,6 +30,7 @@ public class MusicPlayer extends Entity {
 
     /**
      * Adott indexű zene lejátszása, és az előzőleg lejátszott megállítása
+     *
      * @param index Zene index
      */
     public void PlayMusic(int index) {
@@ -62,6 +63,7 @@ public class MusicPlayer extends Entity {
 
     /**
      * Billentyű input kezelése, amint a játékos felvesz papírt, a zene megváltozhat a papírok számának függvényében
+     *
      * @param e Swing ActionEvent
      */
     @Override
@@ -75,13 +77,13 @@ public class MusicPlayer extends Entity {
 
             if (pages >= 1 && pages < 3) {
                 toPlay = 0;
-            } else if(pages <= 4) {
+            } else if (pages <= 4) {
                 toPlay = 1;
-            } else if(pages <= 6) {
+            } else if (pages <= 6) {
                 toPlay = 2;
-            } else if(pages == 7) {
+            } else if (pages == 7) {
                 toPlay = 3;
-            } else if(pages == 8) {
+            } else if (pages == 8) {
                 this.nowPlaying.stop();
                 return;
             }

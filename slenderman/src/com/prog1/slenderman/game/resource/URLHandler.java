@@ -10,6 +10,7 @@ import java.net.URL;
 public class URLHandler {
     /**
      * String elérési útvonal átkonvertálása URL formátumba
+     *
      * @param path Elérési útvonal
      * @return URL osztály
      */

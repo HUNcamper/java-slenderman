@@ -8,7 +8,7 @@ import java.awt.*;
 
 /**
  * A játékhoz használatos nézetet leíró osztály, amely egy JLayeredPane-ből származik.<br>
- *     Azért a JLayeredPane használatos, mert egyes elemek mások felett lehetnek. pl. fa a player feje felett van.
+ * Azért a JLayeredPane használatos, mert egyes elemek mások felett lehetnek. pl. fa a player feje felett van.
  */
 public class MainView extends JLayeredPane {
     public final int baseResolutionWidth = 1500;
@@ -23,6 +23,7 @@ public class MainView extends JLayeredPane {
 
     /**
      * Interakció label lekérése
+     *
      * @return Swing JLabel
      */
     public JLabel getInteractLabel() {

@@ -34,6 +34,7 @@ public class Prop extends EntityVisible {
 
     /**
      * Lehet interakciót folytatni a tereptárggyal?
+     *
      * @return Igaz, ha lehet, hamis, ha nem
      */
     public boolean canInteract() {
@@ -42,6 +43,7 @@ public class Prop extends EntityVisible {
 
     /**
      * Ezen a tereptárgyon lehet papír?
+     *
      * @return Igaz ha lehet, hamis, ha nem
      */
     public boolean isPaperSurface() {
@@ -50,6 +52,7 @@ public class Prop extends EntityVisible {
 
     /**
      * Tereptárgyon lehessen, vagy ne lehessen papír
+     *
      * @param paperSurface Igaz ha lehessen papír, hamis ha nem
      */
     public void setPaperSurface(boolean paperSurface) {
