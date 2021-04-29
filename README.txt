@@ -20,6 +20,7 @@ A 100%-os működéshez kérlek, ezt használd.
 
 Követelmények:
         - Minimum JDK 11 vagy afeletti verzió
+          maga a projekt openjdk 11.0.10-ben volt írva és tesztelve.
         - Java Swing library (Ez alapból be van építve JDK 11-be)
         - Windows vagy Linux OS
         - minimum ~100 MB szabad RAM és 10 MB szabad tárhely
