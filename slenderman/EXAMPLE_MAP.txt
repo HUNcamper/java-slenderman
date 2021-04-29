@@ -4,6 +4,7 @@
 // e fájl megnyitása után tudunk a pályán játszani.
 
 // A formátum a következő: TerepTárgy X Y
+// 0 0 a bal felső sarok, 14 14 a jobb alsó.
 
 // A tereptárgyak a következőek lehetnek:
 

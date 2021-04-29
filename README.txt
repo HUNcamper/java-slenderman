@@ -30,8 +30,11 @@ Követelmények:
 //////////// /////////////
 
 IntelliJ IDEA fejlesztői környezetben:
-        1. A "slenderman" mappa, ami ez a README.txt fájl mellett található, maga a projekt gyökere. Ezt nyisd meg.
+        1. A "slenderman" mappa, ami ez a README.txt fájl mellett található, maga a projekt gyökere.
+           Ezt nyisd meg IDEA-n belül.
         2. A jobb felső sarokban levő zöld háromszög futtatás gombbal tudod futtatni.
+           (Több teendőd nincs. a .bat és .sh scriptek csak abban az esetben kellenek, ha nincs IDEA környezet.)
+        4. Jó játékot :)
 
 Amennyiben az IDEA használata nem lehetséges, vagy probléma adódik:
         A. WINDOWS esetén, tedd ezeket ebben a sorrendben:
