@@ -34,9 +34,13 @@ IntelliJ IDEA fejlesztői környezetben:
 
 Amennyiben az IDEA használata nem lehetséges, vagy probléma adódik:
         A. WINDOWS esetén a "WIN_build.bat" script compile-olja a projektet, a "WIN_run.bat" pedig futtatja azt.
-        B. LINUX esetén a "LIN_build.sh" script compile-olja a projektet, a "LIN_run.sh" pedig futtatja azt.
-        - Ha ezen scriptek futtatásánál gondok adódnak, a parancsok
-          kimásolásával és manuális futtatásával is tégy egy próbát.
+        B. LINUX esetén a következő parancsokat futtasd:
+                - chmod +x LIN_build.sh
+                - chmod +x LIN_run.sh
+                - ./LIN_build.sh
+                - ./LIN_run.sh
+        - Ha ezen scriptek futtatásánál gondok adódnak, az .sh fájlokban levő
+          parancsok kimásolásával és manuális futtatásával is tégy egy próbát.
         (IntelliJ IDEA teljesen ingyenes nekünk hallgatóknak és nagyon ajánlom a használatát :) )
 
 //////////// /////////////
