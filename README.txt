@@ -63,7 +63,8 @@ Ha a tereptárgy, amin papír van, valamelyik oldaladon vagy mögötted van, a p
 //////////// /////////////
 
 Saját pályát írni egyszerű, ennek a részletes leírását az EXAMPLE_MAP.txt fájlban találod.
-Az EXAMPLE_MAP.txt fájlt pedig be tudod tölteni, mint játszható pálya.
+Az EXAMPLE_MAP.txt fájlt pedig be tudod tölteni, mint játszható pálya a
+"JÁTÉK INDÍTÁSA FÁJLBÓL" menü opcióval.
 
 Alapjáraton a beépített pályának a szöveges változatát tárolja, de ezt nyugodtan lehet módosítani.
 (A beépített pálya kódban van rögzítve- a fájl változtatásával vagy a fájl hiányában az nem változik.)

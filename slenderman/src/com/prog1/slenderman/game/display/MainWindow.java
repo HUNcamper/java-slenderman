@@ -35,10 +35,10 @@ public class MainWindow extends JFrame {
      * Főmenü inicializálása és mutatása
      */
     public void showMainMenu() {
-        this.bStart = new JButton("START GAME");
+        this.bStart = new JButton("JÁTÉK INDÍTÁSA");
         this.bStart.setBounds(50, 0, 400, 100);
 
-        this.bFile = new JButton("START GAME FROM FILE");
+        this.bFile = new JButton("JÁTÉK INDÍTÁSA FÁJLBÓL");
         this.bFile.setBounds(50, 200, 400, 100);
 
         this.bStart.addActionListener(e -> {
