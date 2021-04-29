@@ -34,7 +34,7 @@ IntelliJ IDEA fejlesztői környezetben:
 
 Amennyiben az IDEA használata nem lehetséges, vagy probléma adódik:
         A. WINDOWS esetén a "WIN_build.bat" script compile-olja a projektet, a "WIN_run.bat" pedig futtatja azt.
-        B. LINUX esetén a következő parancsokat futtasd:
+        B. LINUX esetén a következő parancsokat futtasd a "slenderman" mappán belül:
                 - chmod +x LIN_build.sh
                 - chmod +x LIN_run.sh
                 - ./LIN_build.sh
