@@ -3,9 +3,6 @@ package com.prog1.slenderman.game.entities;
 import com.prog1.slenderman.game.Game;
 import com.prog1.slenderman.game.entities.floor.EntFloor;
 import com.prog1.slenderman.game.entities.prop.Prop;
-import com.prog1.slenderman.game.level.Level;
-import com.prog1.slenderman.game.resource.Sound;
-import com.prog1.slenderman.game.resource.SoundLoader;
 import com.prog1.slenderman.game.resource.Texture;
 import com.prog1.slenderman.game.resource.TextureLoader;
 

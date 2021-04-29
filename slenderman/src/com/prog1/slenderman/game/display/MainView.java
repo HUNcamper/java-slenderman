@@ -42,7 +42,9 @@ public class MainView extends JLayeredPane {
     /**
      * "Press 'F' to pick up" label beállítása
      */
-    private void setupInteractLabel() {
+    public void setupInteractLabel() {
+        if (this.interactLabel != null) this.remove(this.interactLabel);
+
         this.interactLabel = new JLabel("Press 'F' to pick up", SwingConstants.CENTER);
         this.interactLabel.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 32));
         this.interactLabel.setForeground(Color.WHITE);

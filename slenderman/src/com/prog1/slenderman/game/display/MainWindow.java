@@ -1,7 +1,6 @@
 package com.prog1.slenderman.game.display;
 
 import com.prog1.slenderman.game.Game;
-import com.prog1.slenderman.game.entities.*;
 import com.prog1.slenderman.game.resource.*;
 
 import javax.swing.*;
@@ -66,10 +65,13 @@ public class MainWindow extends JFrame {
 
         this.add(this.bStart);
         this.add(this.bFile);
+
+        Game.update();
     }
 
     /**
      * A játék panel beállítása
+     * @param view Játék panel
      */
     public void setupMainView(MainView view) {
         view.setBounds(0, 0, this.getWidth(), this.getHeight());

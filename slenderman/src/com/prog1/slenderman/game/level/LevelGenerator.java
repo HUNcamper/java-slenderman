@@ -1,7 +1,9 @@
 package com.prog1.slenderman.game.level;
 
+import com.prog1.slenderman.game.Game;
 import com.prog1.slenderman.game.entities.Entity;
 import com.prog1.slenderman.game.entities.EntityVisible;
+import com.prog1.slenderman.game.entities.Player;
 import com.prog1.slenderman.game.entities.floor.EntFloorGrass;
 import com.prog1.slenderman.game.entities.prop.*;
 import com.prog1.slenderman.game.entities.prop.house.EntityHouse;
@@ -22,6 +24,9 @@ public abstract class LevelGenerator {
      * @return Pálya
      */
     public static Level fromFile(String path) {
+        Game.mainView.removeAll();
+        Game.mainView.setupInteractLabel();
+
         Level level = new Level(5, 15, 15);
 
         spawnGrass(level);
@@ -31,15 +36,20 @@ public abstract class LevelGenerator {
             Scanner scanner = new Scanner(file);
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine().trim();
-                System.out.println("Új sor: " + line);
                 EntityVisible ent = ParseLine(line);
                 if (ent != null) {
-                    System.out.println("Entity beolvasva");
                     level.spawnEntity(ent, 2, ent.cellX, ent.cellY);
                 }
             }
             scanner.close();
+
+            int[] spawn = LevelGenerator.getCorner(level); // Exception-t dob, ha nincs üres sarok
+
+            Game.mainPlayer = new Player(spawn[0], spawn[1], 1, 1);
+            level.spawnEntity(Game.mainPlayer, 1, spawn[0], spawn[1]);
+
         } catch (Exception e) {
+            level = null;
             e.printStackTrace();
             System.err.println("A pálya betöltése sikertelen!! Győződj meg róla, hogy a fájl létezik, és megfelelő formázású!");
             return preMade();
@@ -48,6 +58,57 @@ public abstract class LevelGenerator {
         spawnPapers(level, 8);
 
         System.out.println("A pálya betöltése sikeres.");
+
+        return level;
+    }
+
+    /**
+     * Előre berögzített pálya létrehozása
+     *
+     * @return Pálya
+     */
+    public static Level preMade() {
+        Game.mainView.removeAll();
+        Game.mainView.setupInteractLabel();
+
+        Level level = new Level(5, 15, 15);
+
+        spawnGrass(level);
+
+        level.spawnEntity(new PropTreeSmall(), 2, 7, 0);
+        level.spawnEntity(new PropTreeSmall(), 2, 14, 0);
+
+        level.spawnEntity(new PropTree(), 2, 1, 1);
+        level.spawnEntity(new EntityHouse(), 2, 7, 1);
+
+        level.spawnEntity(new PropTreeSmall(), 2, 14, 4);
+
+        level.spawnEntity(new PropRock(), 2, 1, 5);
+        level.spawnEntity(new PropCarVer(), 2, 5, 5);
+
+        level.spawnEntity(new PropTreeSmall(), 2, 13, 7);
+
+        level.spawnEntity(new PropTreeSmall(), 2, 10, 8);
+        level.spawnEntity(new PropCarHor(), 2, 12, 8);
+
+        level.spawnEntity(new PropTreeSmall(), 2, 4, 9);
+        level.spawnEntity(new PropTree(), 2, 5, 9);
+        level.spawnEntity(new PropBarrelHor(), 2, 8, 9);
+
+        level.spawnEntity(new PropTreeSmall(), 2, 1, 10);
+
+        level.spawnEntity(new PropTreeSmall(), 2, 9, 11);
+
+        level.spawnEntity(new PropTruckHor(), 2, 0, 12);
+        level.spawnEntity(new PropRock(), 2, 10, 12);
+        level.spawnEntity(new PropTreeSmall(), 2, 13, 12);
+
+        level.spawnEntity(new PropTreeSmall(), 2, 6, 14);
+
+        Game.mainPlayer = new Player(0, 0, 1, 1);
+        level.spawnEntity(Game.mainPlayer, 1, 0, 0);
+
+        spawnPapers(level, 8);
 
         return level;
     }
@@ -84,19 +145,33 @@ public abstract class LevelGenerator {
 
     /**
      * Pálya sarkainak vizsgálata, hogy a játékos le tudjon spawnolni
+     * @param level Pálya
+     * @return X Y koordináta páros, ahol van üres sarok
+     * @throws Exception Ha nincs üres sarok, Exception-t dob
      */
-    private static void checkCorners(Level level) {
+    private static int[] getCorner(Level level) throws Exception {
         int rows = level.getRows();
         int cols = level.getColumns();
 
-        if (
-            level.getEntity(2, 0, 0) != null &&                 // bal felső sarok
-            level.getEntity(2, 0, rows - 1 ) != null &&             // bal alsó sarok
-            level.getEntity(2, cols - 1, 0 ) != null &&     // jobb felső sarok
-            level.getEntity(2, cols - 1, rows - 1) != null  // jobb alsó sarok
-        ) {
-            //throw new Exception("Minden sarokban van tereptárgy, így a játékot nem lehet megkezdeni.");
+        if (level.getEntity(2, 0, 0) == null) {
+            // bal felső sarok
+            System.out.println("Bal felső sarok");
+            return new int[]{0, 0};
+        } else if (level.getEntity(2, 0, rows - 1) == null) {
+            // bal alsó sarok
+            System.out.println("Bal alsó sarok");
+            return new int[]{0, rows - 1};
+        } else if (level.getEntity(2, cols - 1, 0) == null) {
+            // jobb felső sarok
+            System.out.println("Jobb felső sarok");
+            return new int[]{cols - 1, 0};
+        } else if (level.getEntity(2, cols - 1, rows - 1) == null) {
+            // jobb alsó sarok
+            System.out.println("Jobb alsó sarok");
+            return new int[]{cols - 1, rows - 1};
         }
+
+        throw new Exception("Minden sarokban van tereptárgy, így a játékot nem lehet megkezdeni.");
     }
 
     /**
@@ -130,51 +205,6 @@ public abstract class LevelGenerator {
             default:
                 return null;
         }
-    }
-
-    /**
-     * Előre berögzített pálya létrehozása
-     *
-     * @return Pálya
-     */
-    public static Level preMade() {
-        Level level = new Level(5, 15, 15);
-
-        spawnGrass(level);
-
-        level.spawnEntity(new PropTreeSmall(), 2, 7, 0);
-        level.spawnEntity(new PropTreeSmall(), 2, 14, 0);
-
-        level.spawnEntity(new PropTree(), 2, 1, 1);
-        level.spawnEntity(new EntityHouse(), 2, 7, 1);
-
-        level.spawnEntity(new PropTreeSmall(), 2, 14, 4);
-
-        level.spawnEntity(new PropRock(), 2, 1, 5);
-        level.spawnEntity(new PropCarVer(), 2, 5, 5);
-
-        level.spawnEntity(new PropTreeSmall(), 2, 13, 7);
-
-        level.spawnEntity(new PropTreeSmall(), 2, 10, 8);
-        level.spawnEntity(new PropCarHor(), 2, 12, 8);
-
-        level.spawnEntity(new PropTreeSmall(), 2, 4, 9);
-        level.spawnEntity(new PropTree(), 2, 5, 9);
-        level.spawnEntity(new PropBarrelHor(), 2, 8, 9);
-
-        level.spawnEntity(new PropTreeSmall(), 2, 1, 10);
-
-        level.spawnEntity(new PropTreeSmall(), 2, 9, 11);
-
-        level.spawnEntity(new PropTruckHor(), 2, 0, 12);
-        level.spawnEntity(new PropRock(), 2, 10, 12);
-        level.spawnEntity(new PropTreeSmall(), 2, 13, 12);
-
-        level.spawnEntity(new PropTreeSmall(), 2, 6, 14);
-
-        spawnPapers(level, 8);
-
-        return level;
     }
 
     /**

@@ -34,6 +34,10 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * Entitás megadott koordinátákon
+     * @param cellX X koordináta
+     * @param cellY Y koordináta
+     * @param sizeX X cella szélesség
+     * @param sizeY Y cella magasság
      */
     public EntityVisible(int cellX, int cellY, int sizeX, int sizeY) {
         this();
@@ -47,7 +51,7 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * Entitás láthatóságának beállítása
-     * @param visible
+     * @param visible Igaz, ha látható legyen, hamis, ha nem
      */
     public void setVisible(boolean visible) {
         this.label.setVisible(visible);
@@ -107,7 +111,7 @@ public abstract class EntityVisible extends Entity {
 
     /**
      * Y koordináta beállítása
-     * @param cellY
+     * @param cellY Y koordináta
      */
     public void setCellY(int cellY) {
         this.setCellPos(this.cellX, cellY);
@@ -174,7 +178,7 @@ public abstract class EntityVisible extends Entity {
     /**
      * Térbeli szélesség lekérdezése<br>
      *     Térbeli szélesség: méret megszorzása a pálya cellaméretével
-     * @return
+     * @return Térbeli szélesség
      */
     public int getWidth() {
         return this.sizeX * Game.gridSize;
@@ -183,7 +187,7 @@ public abstract class EntityVisible extends Entity {
     /**
      * Térbeli magasság lekérdezése<br>
      *     Térbeli szélesség: méret megszorzása a pálya cellaméretével
-     * @return
+     * @return Térbeli magasság
      */
     public int getHeight() {
         return this.sizeY * Game.gridSize;

@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * A játék osztály írja le a játék működését, és tárolja a fontosabb globális játékelemeket.
+ * A játék osztály írja le a játék működésének magját, és tárolja a fontosabb globális játékelemeket.<br>
  *
  * @version 1.0
  */
@@ -100,6 +100,7 @@ public class Game {
 
     /**
      * Adattagok inicializálása, játék elindítása
+     * @param mapFile Pálya txt elérési útvonala, vagy null, ha beépített pálya legyen
      */
     public static void startGame(String mapFile) {
         Game.mainWindow.getTitleLabel().setVisible(true);
@@ -113,14 +114,13 @@ public class Game {
         } else {
             Game.loadedLevel = LevelGenerator.preMade();
         }
-        Game.mainPlayer = new Player(0, 0, 1, 1);
+
         Game.slenderOverlay = new SlenderManOverlay();
         Game.slenderMan = new SlenderMan();
         Game.pagesCollected = 0;
 
         Game.loadedLevel.spawnEntity(Game.slenderMan, 3, 0, 0);
         Game.loadedLevel.spawnEntity(Game.slenderOverlay, 4, 0, 0);
-        Game.loadedLevel.spawnEntity(Game.mainPlayer, 1, 0, 0);
 
         Game.mainWindow.setupMainView(Game.mainView);
 

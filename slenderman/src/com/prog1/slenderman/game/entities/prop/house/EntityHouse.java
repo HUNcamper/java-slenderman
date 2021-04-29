@@ -1,6 +1,5 @@
 package com.prog1.slenderman.game.entities.prop.house;
 
-import com.prog1.slenderman.game.Game;
 import com.prog1.slenderman.game.entities.EntityVisible;
 import com.prog1.slenderman.game.entities.floor.EntFloorConcrete;
 import com.prog1.slenderman.game.entities.prop.Prop;

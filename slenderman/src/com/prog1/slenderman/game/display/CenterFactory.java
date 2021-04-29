@@ -1,7 +1,5 @@
 package com.prog1.slenderman.game.display;
 
-import com.prog1.slenderman.game.Game;
-
 import javax.swing.*;
 
 /**

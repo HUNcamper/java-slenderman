@@ -7,26 +7,28 @@
 
 // A tereptárgyak a következőek lehetnek:
 
-// BarrelHor / BarrelVer: Vízszintes, függőleges hordó
-// CarHor / CarVer: Vízszintes, függőleges autó
-// TruckHor / TruckVer: Vízszintes, függőleges teherautó
-// TreeBig / TreeSmall: Nagy és kis fa
+// BarrelHor / BarrelVer: Vízszintes / függőleges hordó
+// CarHor / CarVer: Vízszintes / függőleges autó
+// TruckHor / TruckVer: Vízszintes / függőleges teherautó
+// TreeBig / TreeSmall: Nagy / kis fa
 // Rock: Szikla
-// House: 6x7-os Ház
+// House: 6x7-es Ház
 
 // Nyugodtan módosítsd a fájlt, és nyisd meg
 // újra a pályát a változások megtekintéséhez.
 
 // Ha az adott koordinátán már létezik tereptárgy, az újabb
 // nem lesz lehelyezve. Arra is érdemes figyelni, hogy minimum 8 db
-// olyan tereptárgy legyen, amin lehet papír (minden, kivéve kis fa)
+// olyan tereptárgy legyen, amin lehet papír (minden, kivéve kis fa),
+// és minimum egy sarok legyen, ahol nincs egy tereptárgy sem.
+// Az utóbbi nélkül a beépített pálya töltődik be.
 
 //////////////////////////////////////////////////////////////////////
 
 TreeSmall 7 0
 TreeSmall 14 0
 TreeBig 1 1
-//House 7 1
+House 7 1
 
 TreeSmall 14 4
 

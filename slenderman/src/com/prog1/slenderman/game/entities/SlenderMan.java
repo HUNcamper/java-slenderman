@@ -18,6 +18,7 @@ public class SlenderMan extends EntityVisible {
     private int status = 0;
     private boolean jumpscareAlreadyHappening = false;
 
+    private int totalSteps = 0;
     private int stepsNearPlayer = 0;
 
     /**
@@ -124,12 +125,30 @@ public class SlenderMan extends EntityVisible {
             distance = 3;
         }
 
-        List<int[]> possibleLocations = Game.loadedLevel.getManhattanCoordinates(playerX, playerY, distance, maximum);
-        int[] location = randomPos(possibleLocations);
+        totalSteps++;
 
-        this.setCellPos(location[0], location[1]);
+        List<int[]> possibleLocations;
+        if (totalSteps % 5 == 0) {
+            // Minden ötödik lépésnél
+            // teljesen random, hova teleportál
+            possibleLocations = Game.loadedLevel.getAllCoordinates();
+        } else {
+            // Player mellé teleportál
+            possibleLocations = Game.loadedLevel.getManhattanCoordinates(playerX, playerY, distance, maximum);
+        }
+
+        teleportRandom(possibleLocations);
 
         checkNearPlayer();
+    }
+
+    /**
+     * Egy random koordinátára teleportálás, egy megadott koordináta lista alapján
+     * @param coordinateList X Y koordináta páros lista
+     */
+    private void teleportRandom(List<int[]> coordinateList) {
+        int[] location = randomPos(coordinateList);
+        this.setCellPos(location[0], location[1]);
     }
 
     /**

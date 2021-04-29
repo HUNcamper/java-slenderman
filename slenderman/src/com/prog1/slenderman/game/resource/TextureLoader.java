@@ -2,10 +2,6 @@ package com.prog1.slenderman.game.resource;
 
 import com.prog1.slenderman.game.Game;
 
-import javax.sound.sampled.UnsupportedAudioFileException;
-import java.io.IOException;
-import java.net.URL;
-
 /**
  * Textúra fájlok betöltésére és cache-elésére szolgáló osztály
  */

@@ -68,6 +68,23 @@ public class Level {
     }
 
     /**
+     * Az összes lehetséges X Y koordináta páros lekérése
+     *
+     * @return Az összes lehetséges X, Y koordináta pár
+     */
+    public List<int[]> getAllCoordinates() {
+        List<int[]> list = new ArrayList<int[]>();
+
+        for (int y = 0; y < this.rows; y++) {
+            for (int x = 0; x < this.columns; x++) {
+                list.add(new int[]{x, y});
+            }
+        }
+
+        return list;
+    }
+
+    /**
      * Pályán levő sorok száma
      *
      * @return Sorok száma
